@@ -43,7 +43,7 @@ namespace AWorldDestroyed
         /// <returns>Returns true if the point was successfully inserted into this QuadTree, otherwise false.</returns>
         public bool Insert(Vector2 point, T obj)
         {
-            if (Boundary.Contains(point)) return false;
+            if (!Boundary.Contains(point)) return false;
 
             if (points.Count < Capacity)
             {
