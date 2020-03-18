@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-namespace AWorldDestroyed
+namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Are used to efficiently store data of points, witch can be used to check for collisions.
