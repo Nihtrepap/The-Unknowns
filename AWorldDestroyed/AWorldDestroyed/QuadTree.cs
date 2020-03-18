@@ -8,30 +8,29 @@ namespace AWorldDestroyed
     /// <summary>
     /// Are used to efficiently store data of points, witch can be used to check for collisions.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of object to store at every point.</typeparam>
     public class QuadTree<T>
     {
-        public Rectangle Boundary { get; set; }
+        public RectangleF Boundary { get; set; }
         public int Capacity { get; set; }
+        public QuadTree<T> NorthWest { get; private set; }
+        public QuadTree<T> NorthEast { get; private set; }
+        public QuadTree<T> SouthWest { get; private set; }
+        public QuadTree<T> SouthEast { get; private set; }
 
         private List<Tuple<Vector2, T>> points;
         private bool divided;
-
-        private QuadTree<T> northWest;
-        private QuadTree<T> northEast;
-        private QuadTree<T> southWest;
-        private QuadTree<T> southEast;
 
         /// <summary>
         /// Initializes a new instance of the QuadTree class with a given boundary and capacity.
         /// </summary>
         /// <param name="boundary">The size of the QuadTree</param>
         /// <param name="capacity">The maximum amount of points to insert to the QuadTree before subdividing</param>
-        public QuadTree(Rectangle boundary, int capacity)
+        public QuadTree(RectangleF boundary, int capacity)
         {
             Boundary = boundary;
             Capacity = capacity;
-            
+
             points = new List<Tuple<Vector2, T>>(capacity);
         }
 
@@ -43,7 +42,8 @@ namespace AWorldDestroyed
         /// <returns>Returns true if the point was successfully inserted into this QuadTree, otherwise false.</returns>
         public bool Insert(Vector2 point, T obj)
         {
-            if (Boundary.Contains(point)) return false;
+            if (!Boundary.Contains(point))
+                return false;
 
             if (points.Count < Capacity)
             {
@@ -56,10 +56,14 @@ namespace AWorldDestroyed
                 Subdivide();
             }
 
-            if (northWest.Insert(point, obj)) return true;
-            if (northEast.Insert(point, obj)) return true;
-            if (southWest.Insert(point, obj)) return true;
-            if (southEast.Insert(point, obj)) return true;
+            if (NorthWest.Insert(point, obj))
+                return true;
+            if (NorthEast.Insert(point, obj))
+                return true;
+            if (SouthWest.Insert(point, obj))
+                return true;
+            if (SouthEast.Insert(point, obj))
+                return true;
 
             return false;
         }
@@ -69,7 +73,7 @@ namespace AWorldDestroyed
         /// </summary>
         /// <param name="range">The area to get objects from.</param>
         /// <returns>Returns all objects that are within the provided range.</returns>
-        public List<T> Query(Rectangle range)
+        public List<T> Query(RectangleF range)
         {
             List<T> found = new List<T>();
 
@@ -77,7 +81,8 @@ namespace AWorldDestroyed
             {
                 foreach (Tuple<Vector2, T> point in points)
                 {
-                    if (range.Contains(point.Item1)) found.Add(point.Item2);
+                    if (range.Contains(point.Item1))
+                        found.Add(point.Item2);
                 }
             }
             else
@@ -85,10 +90,10 @@ namespace AWorldDestroyed
 
             if (divided)
             {
-                found = found.Concat(northWest.Query(range)).ToList();
-                found = found.Concat(northEast.Query(range)).ToList();
-                found = found.Concat(southWest.Query(range)).ToList();
-                found = found.Concat(southEast.Query(range)).ToList();
+                found = found.Concat(NorthWest.Query(range)).ToList();
+                found = found.Concat(NorthEast.Query(range)).ToList();
+                found = found.Concat(SouthWest.Query(range)).ToList();
+                found = found.Concat(SouthEast.Query(range)).ToList();
             }
 
             return found;
@@ -99,19 +104,19 @@ namespace AWorldDestroyed
         /// </summary>
         private void Subdivide()
         {
-            Point position = Boundary.Location;
-            Point halfSize = new Point(Boundary.Width / 2, Boundary.Height / 2);
+            Vector2 position = Boundary.Position;
+            Vector2 halfSize = Boundary.Size / 2f;
 
-            Rectangle nw = new Rectangle(position, halfSize);
-            Rectangle ne = new Rectangle(position + new Point(halfSize.X, 0), halfSize);
-            Rectangle sw = new Rectangle(position + new Point(0, halfSize.Y), halfSize);
-            Rectangle se = new Rectangle(position + halfSize, halfSize);
+            RectangleF nw = new RectangleF(position, halfSize);
+            RectangleF ne = new RectangleF(position + new Vector2(halfSize.X, 0), halfSize);
+            RectangleF sw = new RectangleF(position + new Vector2(0, halfSize.Y), halfSize);
+            RectangleF se = new RectangleF(position + halfSize, halfSize);
 
-            northWest = new QuadTree<T>(nw, Capacity);
-            northEast = new QuadTree<T>(ne, Capacity);
-            southWest = new QuadTree<T>(sw, Capacity);
-            southEast = new QuadTree<T>(se, Capacity);
-            
+            NorthWest = new QuadTree<T>(nw, Capacity);
+            NorthEast = new QuadTree<T>(ne, Capacity);
+            SouthWest = new QuadTree<T>(sw, Capacity);
+            SouthEast = new QuadTree<T>(se, Capacity);
+
             divided = true;
         }
     }
