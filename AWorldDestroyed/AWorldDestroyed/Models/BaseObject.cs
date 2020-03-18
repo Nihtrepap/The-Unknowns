@@ -1,4 +1,4 @@
-﻿namespace AWorldDestroyed
+﻿namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Base class for all objects.
@@ -15,12 +15,8 @@
         /// Initialize a new BaseObject with a default name.
         /// </summary>
         public BaseObject()
+            : this($"Object{id}")
         {
-            Enabled = true;
-            Name = $"Object{id}";
-            Tag = 0;
-
-            id++;
         }
 
         /// <summary>
@@ -32,6 +28,8 @@
             Enabled = true;
             Name = name;
             Tag = 0;
+
+            id++;
         }
 
         /// <summary>
