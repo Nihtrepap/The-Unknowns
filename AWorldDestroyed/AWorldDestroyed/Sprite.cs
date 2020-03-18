@@ -13,9 +13,9 @@ namespace AWorldDestroyed
     /// </summary>
     public class Sprite
     {
-        public Texture2D Texture;
-        public Rectangle SourceRectangle;
-        public Vector2 Origin;
+        public Texture2D Texture { get; set; }
+        public Rectangle SourceRectangle { get; set; }
+        public Vector2 Origin { get; set; }
 
         /// <summary>
         /// Initialize a new Sprite with Texture
