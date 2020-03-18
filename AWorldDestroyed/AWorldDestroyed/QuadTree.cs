@@ -8,10 +8,10 @@ namespace AWorldDestroyed
     /// <summary>
     /// Are used to efficiently store data of points, witch can be used to check for collisions.
     /// </summary>
-    /// <typeparam name="T">The data to store.</typeparam>
+    /// <typeparam name="T">The type of object to store at every point.</typeparam>
     public class QuadTree<T>
     {
-        public Rectangle Boundary { get; set; }
+        public RectangleF Boundary { get; set; }
         public int Capacity { get; set; }
         public QuadTree<T> NorthWest { get; private set; }
         public QuadTree<T> NorthEast { get; private set; }
@@ -26,7 +26,7 @@ namespace AWorldDestroyed
         /// </summary>
         /// <param name="boundary">The size of the QuadTree</param>
         /// <param name="capacity">The maximum amount of points to insert to the QuadTree before subdividing</param>
-        public QuadTree(Rectangle boundary, int capacity)
+        public QuadTree(RectangleF boundary, int capacity)
         {
             Boundary = boundary;
             Capacity = capacity;
@@ -68,7 +68,7 @@ namespace AWorldDestroyed
         /// </summary>
         /// <param name="range">The area to get objects from.</param>
         /// <returns>Returns all objects that are within the provided range.</returns>
-        public List<T> Query(Rectangle range)
+        public List<T> Query(RectangleF range)
         {
             List<T> found = new List<T>();
 
@@ -98,13 +98,13 @@ namespace AWorldDestroyed
         /// </summary>
         private void Subdivide()
         {
-            Point position = Boundary.Location;
-            Point halfSize = new Point(Boundary.Width / 2, Boundary.Height / 2);
+            Vector2 position = Boundary.Position;
+            Vector2 halfSize = Boundary.Size / 2f;
 
-            Rectangle nw = new Rectangle(position, halfSize);
-            Rectangle ne = new Rectangle(position + new Point(halfSize.X, 0), halfSize);
-            Rectangle sw = new Rectangle(position + new Point(0, halfSize.Y), halfSize);
-            Rectangle se = new Rectangle(position + halfSize, halfSize);
+            RectangleF nw = new RectangleF(position, halfSize);
+            RectangleF ne = new RectangleF(position + new Vector2(halfSize.X, 0), halfSize);
+            RectangleF sw = new RectangleF(position + new Vector2(0, halfSize.Y), halfSize);
+            RectangleF se = new RectangleF(position + halfSize, halfSize);
 
             NorthWest = new QuadTree<T>(nw, Capacity);
             NorthEast = new QuadTree<T>(ne, Capacity);
@@ -114,4 +114,5 @@ namespace AWorldDestroyed
             divided = true;
         }
     }
+
 }

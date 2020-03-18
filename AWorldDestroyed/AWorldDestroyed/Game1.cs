@@ -56,6 +56,8 @@ namespace AWorldDestroyed
 
         protected override void Update(GameTime gameTime)
         {
+            Window.Title = $"FPS: {(1 / gameTime.ElapsedGameTime.TotalSeconds):.0}";
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
             if (Keyboard.GetState().IsKeyDown(Keys.Space))  Initialize();
 
