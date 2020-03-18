@@ -1,4 +1,16 @@
-﻿using Microsoft.Xna.Framework;
+﻿// =============================================
+//         Editor:     [Philip]  [Abrahamsson]
+//         Last edit:  [2020-03-18] 
+// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+//
+//       (\                 >+{{{o)> - kvaouk
+//    >+{{{{{0)> - kraouk      LL  
+//       /_\_
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                <333333><                     
+//         <3333333><           <33333>< 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
