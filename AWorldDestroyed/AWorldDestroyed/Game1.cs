@@ -1,83 +1,142 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace AWorldDestroyed
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
+        SpriteFont font;
+        MouseState lastMouse;
+        
+        Rectangle windowRect;
+        Rectangle queryRect;
+
+        QuadTree<Point> quadTree;
+        List<Point> queriedPoints;
+        List<Point> points;
+        bool doQuery;
+        int pointSize;
+        int treeMargin;
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            windowRect = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            queryRect = new Rectangle(0, 0, 200, 120);
+
+            lastMouse = Mouse.GetState();
+
+            quadTree = new QuadTree<Point>(windowRect, 4);
+            queriedPoints = new List<Point>();
+            points = new List<Point>();
+            pointSize = 6;
+            treeMargin = 30;
 
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            font = Content.Load<SpriteFont>("Font");
+            Paint.Init(GraphicsDevice);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))  Initialize();
 
-            // TODO: Add your update logic here
+            quadTree = new QuadTree<Point>(
+                new Rectangle(0, treeMargin, windowRect.Width, windowRect.Height - treeMargin * 2),
+                4);
 
+            // Left mouse clicked.
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed 
+                && (Mouse.GetState().Position.Y > treeMargin && Mouse.GetState().Position.Y < windowRect.Height - treeMargin))
+                points.Add(Mouse.GetState().Position - new Point(pointSize / 2));
+
+            // Add all points to the QuadTree.
+            foreach (Point position in points)
+                quadTree.Insert(position.ToVector2(), position);
+            
+            // Query all points and move queryRect.
+            doQuery = Mouse.GetState().RightButton == ButtonState.Pressed;
+            if (doQuery)
+            {
+                queryRect.Location = Mouse.GetState().Position - new Point(queryRect.Width / 2, queryRect.Height / 2);
+                queriedPoints = quadTree.Query(queryRect);
+            }
+            else
+                queriedPoints.Clear();
+
+            lastMouse = Mouse.GetState();
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(new Color(40, 40, 40));
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            // Draw the QuadTree.
+            DrawQuadTree(quadTree, 1);
+
+            // Draw queryRect
+            if (doQuery)
+                Paint.DrawOutlinedRect(spriteBatch, queryRect, 3, Color.Green);
+
+            // Draw all points.
+            foreach (Point point in points)
+            {
+                if (queriedPoints.Contains(point))
+                    Paint.DrawRect(spriteBatch, new Rectangle(point, new Point(pointSize)), Color.Blue);
+                else
+                    Paint.DrawRect(spriteBatch, new Rectangle(point, new Point(pointSize)), Color.White);
+            }
+
+            // Draw Text.
+            string text = $"Total points: {points.Count}  |  Total queried points: {queriedPoints.Count}";
+            string infoText = "left mouse to insert point  |  right mouse to query  |  press space to reset";
+            DrawCenteredText(text, new Vector2(windowRect.Width / 2f, treeMargin / 2f), windowRect.Width, Color.White);
+            DrawCenteredText(infoText, new Vector2(windowRect.Width / 2f, windowRect.Height - treeMargin / 2f), windowRect.Width, Color.White);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void DrawCenteredText(string text, Vector2 position, float totalWidth, Color color)
+        {
+            spriteBatch.DrawString(font, text, position, color, 0f,
+                font.MeasureString(text) / 2f,
+                1f, SpriteEffects.None, 0f);
+        }
+
+        private void DrawQuadTree<T>(QuadTree<T> quadTree, int stroke)
+        {
+            if (quadTree.Boundary.Intersects(queryRect) && doQuery)
+                Paint.DrawOutlinedRect(spriteBatch, quadTree.Boundary, stroke, new Color(25, 25, 25));
+            else
+                Paint.DrawOutlinedRect(spriteBatch, quadTree.Boundary, stroke, new Color(90, 90, 90));
+
+            if (quadTree.NorthWest != null) DrawQuadTree(quadTree.NorthWest, stroke);
+            if (quadTree.NorthEast != null) DrawQuadTree(quadTree.NorthEast, stroke);
+            if (quadTree.SouthWest != null) DrawQuadTree(quadTree.SouthWest, stroke);
+            if (quadTree.SouthEast != null) DrawQuadTree(quadTree.SouthEast, stroke);
         }
     }
 }

@@ -8,19 +8,18 @@ namespace AWorldDestroyed
     /// <summary>
     /// Are used to efficiently store data of points, witch can be used to check for collisions.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The data to store.</typeparam>
     public class QuadTree<T>
     {
         public Rectangle Boundary { get; set; }
         public int Capacity { get; set; }
+        public QuadTree<T> NorthWest { get; private set; }
+        public QuadTree<T> NorthEast { get; private set; }
+        public QuadTree<T> SouthWest { get; private set; }
+        public QuadTree<T> SouthEast { get; private set; }
 
         private List<Tuple<Vector2, T>> points;
         private bool divided;
-
-        private QuadTree<T> northWest;
-        private QuadTree<T> northEast;
-        private QuadTree<T> southWest;
-        private QuadTree<T> southEast;
 
         /// <summary>
         /// Initializes a new instance of the QuadTree class with a given boundary and capacity.
@@ -43,7 +42,7 @@ namespace AWorldDestroyed
         /// <returns>Returns true if the point was successfully inserted into this QuadTree, otherwise false.</returns>
         public bool Insert(Vector2 point, T obj)
         {
-            if (Boundary.Contains(point)) return false;
+            if (!Boundary.Contains(point)) return false;
 
             if (points.Count < Capacity)
             {
@@ -56,10 +55,10 @@ namespace AWorldDestroyed
                 Subdivide();
             }
 
-            if (northWest.Insert(point, obj)) return true;
-            if (northEast.Insert(point, obj)) return true;
-            if (southWest.Insert(point, obj)) return true;
-            if (southEast.Insert(point, obj)) return true;
+            if (NorthWest.Insert(point, obj)) return true;
+            if (NorthEast.Insert(point, obj)) return true;
+            if (SouthWest.Insert(point, obj)) return true;
+            if (SouthEast.Insert(point, obj)) return true;
 
             return false;
         }
@@ -85,10 +84,10 @@ namespace AWorldDestroyed
 
             if (divided)
             {
-                found = found.Concat(northWest.Query(range)).ToList();
-                found = found.Concat(northEast.Query(range)).ToList();
-                found = found.Concat(southWest.Query(range)).ToList();
-                found = found.Concat(southEast.Query(range)).ToList();
+                found = found.Concat(NorthWest.Query(range)).ToList();
+                found = found.Concat(NorthEast.Query(range)).ToList();
+                found = found.Concat(SouthWest.Query(range)).ToList();
+                found = found.Concat(SouthEast.Query(range)).ToList();
             }
 
             return found;
@@ -107,10 +106,10 @@ namespace AWorldDestroyed
             Rectangle sw = new Rectangle(position + new Point(0, halfSize.Y), halfSize);
             Rectangle se = new Rectangle(position + halfSize, halfSize);
 
-            northWest = new QuadTree<T>(nw, Capacity);
-            northEast = new QuadTree<T>(ne, Capacity);
-            southWest = new QuadTree<T>(sw, Capacity);
-            southEast = new QuadTree<T>(se, Capacity);
+            NorthWest = new QuadTree<T>(nw, Capacity);
+            NorthEast = new QuadTree<T>(ne, Capacity);
+            SouthWest = new QuadTree<T>(sw, Capacity);
+            SouthEast = new QuadTree<T>(se, Capacity);
             
             divided = true;
         }
