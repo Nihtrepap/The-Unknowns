@@ -49,6 +49,7 @@
     <Compile Include="Models\QuadTree.cs" />
     <Compile Include="Models\Sprite.cs" />
     <Compile Include="RectangleF.cs" />
+    <Compile Include="Tag.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
