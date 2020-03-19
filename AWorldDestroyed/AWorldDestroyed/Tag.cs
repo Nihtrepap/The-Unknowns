@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AWorldDestroyed
+﻿namespace AWorldDestroyed
 {
+    /// <summary>
+    /// Marker values that you can use to identify objects.
+    /// </summary>
     public enum Tag
     {
-        Untagged,
+        Untagged = 0x00, // Default tag.
         Player,
         Enemy,
     }
