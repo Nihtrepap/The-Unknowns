@@ -1,0 +1,155 @@
+﻿// =============================================
+//         Editor:     Daniel Abdulahad
+//         Last edit:  2020-03-19
+// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+//
+//       (\                 >+{{{o)> - kvaouk
+//    >+{{{{{0)> - kraouk      LL  
+//       /_\_
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                <333333><                     
+//         <3333333><           <33333>< 
+
+using System;
+using Microsoft.Xna.Framework;
+
+namespace AWorldDestroyed.Models
+{
+    /// <summary>
+    /// Position, rotation and scale of an object.
+    /// </summary>
+    public class Transform : Component
+    {
+        public Vector2 Position { get; set; }
+        public Vector2 Scale { get; set; }
+        public float Rotation { get; set; }
+
+        /// <summary>
+        /// Creates a new instance of Transform, with the specified GameObject reference.
+        /// </summary>
+        /// <param name="gameObject">The GameObject this Transform is attached to.</param>
+        public Transform(GameObject gameObject) : this(gameObject, Vector2.Zero)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of Transform, with the specified GameObject reference and position.
+        /// </summary>
+        /// <param name="gameObject">The GameObject this Transform is attached to.</param>
+        /// <param name="position">The position of this Transform.</param>
+        public Transform(GameObject gameObject, Vector2 position) : this(gameObject, position, Vector2.One, 0f)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of Transform, with the specified GameObject reference, position, scale and rotation.
+        /// </summary>
+        /// <param name="gameObject">The GameObject this Transform is attached to.</param>
+        /// <param name="position">The position of this Transform.</param>
+        /// <param name="scale">The scale of this Transform.</param>
+        /// <param name="rotation">The rotation of this Transform.</param>
+        public Transform(GameObject gameObject, Vector2 position, Vector2 scale, float rotation)
+        {
+            GameObject = gameObject;
+            Position = position;
+            Scale = scale;
+            Rotation = rotation;
+        }
+
+        /// <summary>
+        /// Get the normalized forward vector of this Transform.
+        /// </summary>
+        public Vector2 Forward
+        {
+            get
+            {
+                float x = -(float)Math.Sin(MathHelper.ToRadians(Rotation));
+                float y = -(float)Math.Cos(MathHelper.ToRadians(Rotation));
+
+                return new Vector2(x, y);
+            }
+        }
+
+        /// <summary>
+        /// Get the actual position in the world relative to the transform of the GameObject parent.
+        /// </summary>
+        public Vector2 WorldPosition
+        {
+            get
+            {
+                if (GameObject.Parent == null) return Position;
+                else
+                {
+                    float angle = MathHelper.ToRadians(GameObject.Parent.Transform.Rotation);
+                    Vector2 center = GameObject.Parent.Transform.Position;
+
+                    float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X);
+                    float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
+
+                    return new Vector2(rotatedX, rotatedY) + GameObject.Parent.Transform.WorldPosition;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get the actual rotation in the world relative to the rotation of the GameObject parent.
+        /// </summary>
+        public float WorldRotation
+        {
+            get 
+            { 
+                if (GameObject.Parent == null) return Rotation;
+                else return Rotation + GameObject.Parent.Transform.WorldRotation;
+            }
+        }
+
+        /// <summary>
+        /// Get a copy of this Transform.
+        /// </summary>
+        /// <returns>A copy of this Transform.</returns>
+        public override Component Copy()
+        {
+            return new Transform(GameObject, Position, Scale, Rotation);
+        }
+
+        /// <summary>
+        /// Rotates the transform so the forward vector points at target's current position.
+        /// </summary>
+        /// <param name="target">The Transform to point towards.</param>
+        public void LookAt(Transform target)
+        {
+            LookAt(target.Position);
+        }
+
+        /// <summary>
+        /// Rotates the transform so the forward vector points at the specified point.
+        /// </summary>
+        /// <param name="target">The point to point towards.</param>
+        public void LookAt(Vector2 point)
+        {
+            Vector2 deltaPosition = Position - point;
+
+            this.Rotation = -MathHelper.ToRadians((float)Math.Atan2(deltaPosition.Y, deltaPosition.X));
+        }
+
+        /// <summary>
+        /// Moves the transform in the direction and distance of translation.
+        /// </summary>
+        /// <param name="translation">The distance to move.</param>
+        public void Translate(Vector2 translation)
+        {
+            Position += translation;
+        }
+
+        /// <summary>
+        /// Moves the transform by x along the x axis and y along the y axis.
+        /// </summary>
+        /// <param name="x">The amount to move along the x axis.</param>
+        /// <param name="y">The amount to move along the y axis.</param>
+        public void Translate(float x, float y)
+        {
+            Translate(new Vector2(x, y));
+        }
+    }
+}
