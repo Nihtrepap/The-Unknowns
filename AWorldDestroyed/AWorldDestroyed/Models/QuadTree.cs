@@ -1,4 +1,17 @@
-﻿using System;
+﻿// =============================================
+//         Editor:     Daniel Abdulahad
+//         Last edit:  2020-03-18 
+// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+//
+//       (\                 >+{{{o)> - kvaouk
+//    >+{{{{{0)> - kraouk      LL  
+//       /_\_
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                <333333><                     
+//         <3333333><           <33333>< 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
