@@ -1,4 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿// =============================================
+//         Editor:     Daniel Abdulahad
+//         Last edit:  2020-03-19
+// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+//
+//       (\                 >+{{{o)> - kvaouk
+//    >+{{{{{0)> - kraouk      LL  
+//       /_\_
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                <333333><                     
+//         <3333333><           <33333>< 
+
+using Microsoft.Xna.Framework;
 
 namespace AWorldDestroyed
 {
@@ -102,11 +115,9 @@ namespace AWorldDestroyed
         /// <returns>true if the instances are equal; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
+            if (obj == null) return false;
 
-            if (obj is RectangleF rectF)
-                return this == rectF;
+            if (obj is RectangleF other) return this == other;
 
             return false;
         }
