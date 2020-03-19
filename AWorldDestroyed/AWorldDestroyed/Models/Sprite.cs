@@ -1,6 +1,6 @@
 ﻿// =============================================
-//         Editor:     [Philip]  [Abrahamsson]
-//         Last edit:  [2020-03-18] 
+//         Editor:     Philip Abrahamsson
+//         Last edit:  2020-03-18 
 // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 //
 //       (\                 >+{{{o)> - kvaouk
@@ -10,18 +10,14 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //                <333333><                     
 //         <3333333><           <33333>< 
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AWorldDestroyed
+namespace AWorldDestroyed.Models
 {
     /// <summary>
-    /// Sprite class for Sprites ;)
+    /// A texture.
     /// </summary>
     public class Sprite
     {
@@ -30,23 +26,24 @@ namespace AWorldDestroyed
         public Vector2 Origin { get; set; }
 
         /// <summary>
-        /// Initialize a new Sprite with Texture
+        /// Initialize a new Sprite with Texture.
         /// </summary>
-        /// <param name="texture"></param>
+        /// <param name="texture">A texture for the sprite.</param>
         public Sprite(Texture2D texture) 
         {
             Texture = texture;
+            SourceRectangle = texture.Bounds;
         }
+
         /// <summary>
-        /// Initialize a new Sprite with Texture and Rectangle
+        /// Initialize a new Sprite with Texture and Rectangle.
         /// </summary>
-        /// <param name="texture"></param>
-        /// <param name="sourceRectangle"></param>
+        /// <param name="texture">A texture for the sprite.</param>
+        /// <param name="sourceRectangle">An optional region on the texture which will be rendered.</param>
         public Sprite(Texture2D texture, Rectangle sourceRectangle) 
         {
             Texture = texture;
             SourceRectangle = sourceRectangle;
         }
-
     }
 }
