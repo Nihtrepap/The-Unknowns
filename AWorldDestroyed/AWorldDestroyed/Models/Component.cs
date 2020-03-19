@@ -15,11 +15,16 @@ namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Base class for all components.
+    /// Holds a refenrence to the GameObject a component subclass should act upon.
     /// </summary>
     class Component : BaseObject
     {
         public GameObject GameObject { get; protected set; }
 
+        /// <summary>
+        /// Creates a new instance of Component, with the specified GameObject reference. 
+        /// </summary>
+        /// <param name="gameObject">The GameObject a component subclass should act upon.</param>
         public Component(GameObject gameObject)
         {
             GameObject = gameObject;
