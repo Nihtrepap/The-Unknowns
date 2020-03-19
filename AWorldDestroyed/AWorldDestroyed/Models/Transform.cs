@@ -26,32 +26,32 @@ namespace AWorldDestroyed.Models
         public float Rotation { get; set; }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified GameObject reference.
+        /// Creates a new instance of Transform, with the specified SceneObject reference.
         /// </summary>
-        /// <param name="gameObject">The GameObject this Transform is attached to.</param>
-        public Transform(GameObject gameObject) : this(gameObject, Vector2.Zero)
+        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
+        public Transform(SceneObject sceneObject) : this(sceneObject, Vector2.Zero)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified GameObject reference and position.
+        /// Creates a new instance of Transform, with the specified SceneObject reference and position.
         /// </summary>
-        /// <param name="gameObject">The GameObject this Transform is attached to.</param>
+        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
-        public Transform(GameObject gameObject, Vector2 position) : this(gameObject, position, Vector2.One, 0f)
+        public Transform(SceneObject sceneObject, Vector2 position) : this(sceneObject, position, Vector2.One, 0f)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified GameObject reference, position, scale and rotation.
+        /// Creates a new instance of Transform, with the specified SceneObject reference, position, scale and rotation.
         /// </summary>
-        /// <param name="gameObject">The GameObject this Transform is attached to.</param>
+        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
         /// <param name="scale">The scale of this Transform.</param>
         /// <param name="rotation">The rotation of this Transform.</param>
-        public Transform(GameObject gameObject, Vector2 position, Vector2 scale, float rotation)
+        public Transform(SceneObject sceneObject, Vector2 position, Vector2 scale, float rotation)
         {
-            GameObject = gameObject;
+            SceneObject = sceneObject;
             Position = position;
             Scale = scale;
             Rotation = rotation;
@@ -72,35 +72,35 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Get the actual position in the world relative to the transform of the GameObject parent.
+        /// Get the actual position in the world relative to the transform of the SceneObject parent.
         /// </summary>
         public Vector2 WorldPosition
         {
             get
             {
-                if (GameObject.Parent == null) return Position;
+                if (SceneObject.Parent == null) return Position;
                 else
                 {
-                    float angle = MathHelper.ToRadians(GameObject.Parent.Transform.Rotation);
-                    Vector2 center = GameObject.Parent.Transform.Position;
+                    float angle = MathHelper.ToRadians(SceneObject.Parent.Transform.Rotation);
+                    Vector2 center = SceneObject.Parent.Transform.Position;
 
                     float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X);
                     float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
 
-                    return new Vector2(rotatedX, rotatedY) + GameObject.Parent.Transform.WorldPosition;
+                    return new Vector2(rotatedX, rotatedY) + SceneObject.Parent.Transform.WorldPosition;
                 }
             }
         }
 
         /// <summary>
-        /// Get the actual rotation in the world relative to the rotation of the GameObject parent.
+        /// Get the actual rotation in the world relative to the rotation of the SceneObject parent.
         /// </summary>
         public float WorldRotation
         {
             get 
             { 
-                if (GameObject.Parent == null) return Rotation;
-                else return Rotation + GameObject.Parent.Transform.WorldRotation;
+                if (SceneObject.Parent == null) return Rotation;
+                else return Rotation + SceneObject.Parent.Transform.WorldRotation;
             }
         }
 
@@ -110,7 +110,7 @@ namespace AWorldDestroyed.Models
         /// <returns>A copy of this Transform.</returns>
         public override Component Copy()
         {
-            return new Transform(GameObject, Position, Scale, Rotation);
+            return new Transform(SceneObject, Position, Scale, Rotation);
         }
 
         /// <summary>
