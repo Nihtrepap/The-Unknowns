@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\QuadTree.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="RectangleF.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
