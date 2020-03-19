@@ -11,8 +11,6 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
-using System;
-
 namespace AWorldDestroyed.Models
 {
     /// <summary>
@@ -40,25 +38,24 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Determines what happens when the object is out of scope of the camera.
         /// </summary>
-        public void OnOutOfScope()
+        public virtual void OnOutOfScope()
         {
-            Enabled = false;
         }
 
         /// <summary>
         /// Determines what happens when the object collisions with another GameObject.
         /// </summary>
-        public void OnCollision(GameObject other)
+        /// <param name="other">The GameObject this object collided with.</param>
+        public virtual void OnCollision(GameObject other)
         {
-            Destroy();
         }
 
         /// <summary>
-        /// Determines what happens when a GameObject triggers another GameObject.
+        /// Determines what happens when this GameObject is triggered another GameObject.
         /// </summary>
-        public void OnTrigger(GameObject other)
+        /// <param name="other">The GameObject that triggered this object.</param>
+        public virtual void OnTrigger(GameObject other)
         {
-            throw new NotImplementedException();
         }
     }
 }
