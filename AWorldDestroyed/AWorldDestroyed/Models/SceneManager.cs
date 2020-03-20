@@ -48,7 +48,7 @@ namespace AWorldDestroyed.Models
         /// </summary>
         /// <param name="name">A name that references the Scene.</param>
         /// <returns>A Scene object, or null if an invalid name was given.</returns>
-        public SceneManager GetScene(string name)
+        public Scene GetScene(string name)
         {
             if (scenes.ContainsKey(name)) return scenes[name];
             return null;
