@@ -26,21 +26,14 @@ namespace AWorldDestroyed.Models
         private List<SceneLayer> sceneLayers;
 
         /// <summary>
-        /// Creates a new instance of the Scene class. 
-        /// </summary>
-        public Scene()
-        {
-            camera = new Camera();
-            objectHandler = new ObjectHandler();
-            sceneLayers = new List<SceneLayer>();
-        }
-
-        /// <summary>
         /// Creates a new instance of the Scene class, with the specified SceneLayers. 
         /// </summary>
         /// <params name="layers">A variable number of SceneLayers.</param>
         public Scene(params SceneLayer[] layers) : this()
-        {   
+        {
+            camera = new Camera();
+            objectHandler = new ObjectHandler();
+            sceneLayers = new List<SceneLayer>();
             sceneLayers.AddRange(layers);
         }
 
