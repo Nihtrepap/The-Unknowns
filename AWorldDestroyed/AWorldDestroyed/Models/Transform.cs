@@ -72,7 +72,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Get the actual position in the world relative to the transform of the SceneObject parent.
+        /// Get the actual position in the world adjusted to the transform of the SceneObject parent.
         /// </summary>
         public Vector2 WorldPosition
         {
@@ -93,7 +93,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Get the actual rotation in the world relative to the rotation of the SceneObject parent.
+        /// Get the actual rotation in the world adjusted to the rotation of the SceneObject parent.
         /// </summary>
         public float WorldRotation
         {
