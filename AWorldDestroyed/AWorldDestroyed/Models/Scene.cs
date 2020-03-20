@@ -17,7 +17,7 @@ using System.Collections.Generic;
 namespace AWorldDestroyed.Models
 {
     /// <summary>
-    /// Holds information about a scene and 
+    /// Holds information about a scene and connects a Camera and an ObjectHandler with the objects of SceneLayers.
     /// </summary>
     class Scene
     {
