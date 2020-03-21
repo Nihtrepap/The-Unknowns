@@ -11,6 +11,9 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 namespace AWorldDestroyed.Models
 {
     /// <summary>
