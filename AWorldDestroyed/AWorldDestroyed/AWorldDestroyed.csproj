@@ -45,6 +45,7 @@
     <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\GameObject.cs" />
+    <Compile Include="Models\Transform.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\QuadTree.cs" />
