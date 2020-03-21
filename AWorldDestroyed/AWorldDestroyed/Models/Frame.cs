@@ -1,24 +1,16 @@
-﻿// =============================================
-//         Editor:     Philip  Abrahamsson
-//         Last edit:  2020-03-19 
-// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-//
-//       (\                 >+{{{o)> - kvaouk
-//    >+{{{{{0)> - kraouk      LL  
-//       /_\_
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//                <333333><                     
-//         <3333333><           <33333>< 
-
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AWorldDestroyed.Models
 {
     /// <summary>
-    /// To get frames for sprites.
+    /// Frame is a structure with Sprite.
+    /// And will be used as a container for sprite sheets.
     /// </summary>
-    class Frame
+    public struct Frame
     {
         public Sprite Sprite { get; set; }
         public int Duration { get; set; }
