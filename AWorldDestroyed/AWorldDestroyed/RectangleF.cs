@@ -41,7 +41,7 @@ namespace AWorldDestroyed
         }
 
         /// <summary>
-        /// Creates a new instance of RectangleF struct, with the specified location and size.
+        /// Creates a new instance of RectangleF struct, with the specified position and size.
         /// </summary>
         /// <param name="position">The top-left position of this RectangleF.</param>
         /// <param name="size">The size of this RectangleF.</param>
@@ -115,8 +115,6 @@ namespace AWorldDestroyed
         /// <returns>true if the instances are equal; false otherwise.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null) return false;
-
             if (obj is RectangleF other) return this == other;
 
             return false;
@@ -154,10 +152,10 @@ namespace AWorldDestroyed
 
         #region Operator overloading
         /// <summary>
-        /// Implicitly convert a RectangleF to a Rectangle.
+        /// Explicitly convert a RectangleF to a Rectangle.
         /// </summary>
         /// <param name="rect">The RectangleF to convert.</param>
-        public static implicit operator Rectangle(RectangleF rect)
+        public static explicit operator Rectangle(RectangleF rect)
         {
             return new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height);
         }
