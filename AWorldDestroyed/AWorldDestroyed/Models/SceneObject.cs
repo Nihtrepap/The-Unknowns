@@ -1,6 +1,6 @@
 ﻿// =============================================
 //         Editor:     Daniel Abdulahad
-//         Last edit:  2020-03-21 
+//         Last edit:  2020-03-22 
 // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 //
 //       (\                 >+{{{o)> - kvaouk
@@ -21,7 +21,7 @@ namespace AWorldDestroyed.Models
     /// </summary>
     public class SceneObject : BaseObject
     {
-        public Transform Position { get; private set; }
+        public Transform Transform { get; private set; }
         public SceneObject Parent { get; private set; }
         public bool Destroyed { get; private set; }
 
@@ -41,30 +41,30 @@ namespace AWorldDestroyed.Models
         /// Initialize a new GameObject within the context of a given SceneLayer, with a given Transform component.
         /// </summary>
         /// <param name="sceneLayer">The SceneLayer related to this object.</param>
-        /// <param name="position">A Transform component supplying transformation capabilities to this object.</param>
-        public SceneObject(ISceneLayer sceneLayer, Transform position) : base()
+        /// <param name="transform">A Transform component supplying transformation capabilities to this object.</param>
+        public SceneObject(ISceneLayer sceneLayer, Transform transform) : base()
         {
             this.sceneLayer = sceneLayer;
 
-            if (position == null) Position = new Transform(this);
-            else Position = position;
+            if (transform == null) Transform = new Transform(this);
+            else Transform = transform;
 
             Parent = null;
             children = new List<SceneObject>();
 
             components = new List<Component>()
             {
-                Position
+                Transform
             };
         }
 
         /// <summary>
-        /// Returns all components attached to this SceneObject.
+        /// Returns all components attached to this object.
         /// </summary>
         public Component[] Components => components.ToArray();
 
         /// <summary>
-        /// Returns all children of this SceneObject.
+        /// Returns all children of this object.
         /// </summary>
         public SceneObject[] Children => children.ToArray();
 
@@ -93,7 +93,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Try getting a component that is attached to this SceneObject of the specified Type.
+        /// Try getting a component that is attached to this object of the specified Type.
         /// </summary>
         /// <typeparam name="T">The type of component to retrieve.</typeparam>
         /// <returns>The first component of the specified Type found; null if it failed.</returns>
@@ -106,7 +106,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Try getting a component that is attached to this SceneObject with the specified name.
+        /// Try getting a component that is attached to this object with the specified name.
         /// </summary>
         /// <param name="name">The name of the component to find.</param>
         /// <returns>The first component named name; null if no one was found.</returns>
@@ -126,6 +126,10 @@ namespace AWorldDestroyed.Models
             AddComponent(component);
         }
 
+        /// <summary>
+        /// Adds a component to this object.
+        /// </summary>
+        /// <param name="component">The component to add.</param>
         public void AddComponent(Component component)
         {
             if (component == null) return;
@@ -133,11 +137,20 @@ namespace AWorldDestroyed.Models
             components.Add(component);
         }
 
+        /// <summary>
+        /// Try getting a object that is a child of this object with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the child to find.</param>
+        /// <returns>The first child named name; null if no one was found.</returns>
         public SceneObject GetChild(string name)
         {
             return children.Find((child) => child.Name == name);
         }
 
+        /// <summary>
+        /// Adds a child to this object.
+        /// </summary>
+        /// <param name="child">THe child to add.</param>
         public void AddChild(SceneObject child)
         {
             if (child == null) return;
@@ -149,18 +162,9 @@ namespace AWorldDestroyed.Models
             }
         }
 
+        /// <summary>
+        /// Mark this object for destruction.
+        /// </summary>
         public void Destroy() => Destroyed = true;
     }
-    public class Component : BaseObject
-    {
-        public Component()
-        {
-
-        }
-        public Component(SceneObject p)
-        {
-
-        }
-    }
-    public interface ISceneLayer { }
 }
