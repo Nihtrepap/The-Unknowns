@@ -44,9 +44,12 @@
   <ItemGroup>
     <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Game1.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\Transform.cs" />
+=======
     <Compile Include="Models\SceneManager.cs" />
+>>>>>>> 48-SceneManager
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\QuadTree.cs" />
