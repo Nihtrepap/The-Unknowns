@@ -30,6 +30,10 @@ namespace AWorldDestroyed.Models
             GameObject = gameObject;
         }
 
+        /// <summary>
+        /// All subclasses must define a method that creates a copy of an instance and its attribute values.
+        /// </summary>
+        /// <returns>Retruns a new instance of the Component subclass, with the same attribute values as this instance.</returns>
         public abstract Component Copy();
     }
 }
