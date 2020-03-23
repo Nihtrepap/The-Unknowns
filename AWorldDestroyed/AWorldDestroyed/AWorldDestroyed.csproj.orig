@@ -47,9 +47,10 @@
 <<<<<<< HEAD
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\Transform.cs" />
-=======
     <Compile Include="Models\SceneManager.cs" />
->>>>>>> 48-SceneManager
+=======
+    <Compile Include="Models\Camera.cs" />
+>>>>>>> 47-Camera
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\QuadTree.cs" />
