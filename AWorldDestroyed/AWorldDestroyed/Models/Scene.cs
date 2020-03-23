@@ -70,7 +70,7 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Add a SceneLayer to the list of SceneLayers.
         /// </summary>
-        /// <param name="layer"></param>
+        /// <param name="layer">The SceneLayer to add.</param>
         public void AddSceneLayer(SceneLayer layer)
         {
             sceneLayers.Add(layer);
@@ -79,12 +79,10 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Add a GameObject to the Scene.
         /// </summary>
-        /// <param name="gameObject"></param>
+        /// <param name="gameObject">The GameObject to add.</param>
         public void AddObject(GameObject gameObject)
         {
             throw new NotImplementedException();
         }
-
-
     }
 }
