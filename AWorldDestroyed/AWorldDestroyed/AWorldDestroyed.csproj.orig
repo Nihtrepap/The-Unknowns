@@ -42,9 +42,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Models\Animator.cs" />
+=======
     <Compile Include="Models\Animation.cs" />
-    <Compile Include="Models\Frame.cs" />
+>>>>>>> 52-Animation
     <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\GameObject.cs" />
