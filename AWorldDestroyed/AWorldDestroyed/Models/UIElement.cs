@@ -1,15 +1,24 @@
-﻿using Microsoft.Xna.Framework;
+﻿// =============================================
+//         Editor:     Daniel Abdulahad
+//         Last edit:  2020-03-24 
+// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+//
+//       (\                 >+{{{o)> - kvaouk
+//    >+{{{{{0)> - kraouk      LL  
+//       /_\_
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                <333333><                     
+//         <3333333><           <33333>< 
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AWorldDestroyed.Models
 {
-    public class UIElement
+    public class UIElement : SceneObject
     {
         public static SpriteFont DefaultFont { get; set; }
         public static Color DefaultForeColor { get; set; }
@@ -30,7 +39,7 @@ namespace AWorldDestroyed.Models
         public event KeyEventHandler KeyDown;
         public event KeyEventHandler KeyUp;
 
-        public UIElement()
+        public UIElement() : base()
         {
 
         }
