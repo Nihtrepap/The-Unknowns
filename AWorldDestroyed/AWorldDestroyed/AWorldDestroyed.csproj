@@ -52,6 +52,7 @@
     <Compile Include="Models\Sprite.cs" />
     <Compile Include="RectangleF.cs" />
     <Compile Include="Tag.cs" />
+	<Compile Include="Models\UIElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
