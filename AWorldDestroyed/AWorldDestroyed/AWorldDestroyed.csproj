@@ -51,6 +51,7 @@
     <Compile Include="Models\SortingLayer.cs" />
     <Compile Include="Models\RigidBody.cs" />
     <Compile Include="Models\SpriteRenderer.cs" />
+    <Compile Include="Models\Collider.cs" />
     <Compile Include="Models\Transform.cs" />
     <Compile Include="Models\SceneManager.cs" />
     <Compile Include="Models\Camera.cs" />
