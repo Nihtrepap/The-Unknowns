@@ -46,6 +46,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Models\SortingLayer.cs" />
+    <Compile Include="Models\RigidBody.cs" />
     <Compile Include="Models\Transform.cs" />
     <Compile Include="Models\SceneManager.cs" />
     <Compile Include="Models\Camera.cs" />
