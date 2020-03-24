@@ -16,27 +16,45 @@ using System;
 namespace AWorldDestroyed
 {
     /// <summary>
-    /// Get the Sprite sheet to an animation. 
-    /// Using the Frame to get the sprite "moving".
+    /// Used to simulate a movement by changing a series of frames.
     /// </summary>
     class Animation
     {
         public string Name { get; set; }
         public bool Loop { get; set; }
-        private Frame[] _frames;
-        private double _timer;
-        private int _currentFrameIndex;
+        private Frame[] frames;
+        private double timer;
+        private int currentFrameIndex;
 
-        public void Animation(string name, Frame[] frames)
+        /// <summary>
+        /// Create new instance of Animation class with given animation frames.
+        /// </summary>
+        /// <param name="frames">The animation frames that make up an animation.</param>
+        public void Animation(Frame[] frames)
         {
-            Name = name;
-            _frames = frame;
+            this.frames = frames;
             Loop = true;
         }
+
         /// <summary>
-        /// This method is used to update the animation frame.
-        /// It will check each millisecond and change frames after
-        /// how you choose.
+        /// Creates a new instance of Animation from a given array of Sprites and a varable number of durations.
+        /// </summary>
+        /// <param name="sprites">An array of Sprites to use in the animation.</param>
+        /// <param name="durations">The durations each frame should play, if sprites excede durations remaning sprites get the last duration value.</param>
+        public Animation(Sprite[] sprites, params int[] durations)
+        {
+            frames = new Frame[sprites.Length];
+            if (durations.Length == 0) durations = new int[] { 1000/12 };
+
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                frames[i] = new Frame(sprites[i], (durations.Length > i ? durations[i] : durations[durations.Length - 1]));
+            }
+            
+        }
+
+        /// <summary>
+        /// This method is used to update the animation.
         /// </summary>
         /// <param name="deltaTime">Time in milliseconds since last update</param>
         public void Update(double deltaTime)
@@ -45,6 +63,15 @@ namespace AWorldDestroyed
             //if(_timer > frames.)
 
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns the Sprite of the current Frame.
+        /// </summary>
+        /// <returns>The Sprite of the current Frame.</returns>
+        public Sprite GetCurrentFrameSprite()
+        {
+            return frames[currentFrameIndex].Sprite;
         }
     }
 }
