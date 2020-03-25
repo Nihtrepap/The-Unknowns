@@ -13,7 +13,7 @@
 
 using System;
 
-namespace AWorldDestroyed
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Used to simulate a movement by changing a series of frames.

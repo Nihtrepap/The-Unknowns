@@ -11,7 +11,7 @@
 //                <333333><                     
 //         <3333333><           <33333><
 
-namespace AWorldDestroyed
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Marker values that you can use to identify objects.
