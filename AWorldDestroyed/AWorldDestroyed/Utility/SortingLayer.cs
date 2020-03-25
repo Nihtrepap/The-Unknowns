@@ -11,7 +11,7 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Represents a layer in which a SpriteRenderer will render a Sprite.

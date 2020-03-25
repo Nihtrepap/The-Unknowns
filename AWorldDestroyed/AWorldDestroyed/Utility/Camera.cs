@@ -15,7 +15,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// A camera like object that determines what is displayed on the screen.

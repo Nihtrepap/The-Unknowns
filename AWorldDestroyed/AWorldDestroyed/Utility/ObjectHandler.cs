@@ -14,7 +14,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Handles a collection of GameObjects with the help of a QuadTree.

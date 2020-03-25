@@ -15,7 +15,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     public delegate void RawMouseEventHandler(object sender, MouseState state);
     public delegate void RawKeyboardEventHandler(object sender, KeyboardState state);

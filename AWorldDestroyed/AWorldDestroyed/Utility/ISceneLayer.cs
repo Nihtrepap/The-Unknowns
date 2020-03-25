@@ -11,7 +11,7 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Represents a collection of objects that share a purpose in a game. 
