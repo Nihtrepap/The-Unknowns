@@ -67,6 +67,8 @@
     <Compile Include="Tag.cs" />
     <Compile Include="Models\SceneObject.cs" />
     <Compile Include="Models\UIElement.cs" />
+	<Compile Include="Models\InputManager.cs" />
+	<Compile Include="Models\InputEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
