@@ -18,7 +18,7 @@ namespace AWorldDestroyed.Utility
     /// </summary>
     public enum Tag
     {
-        Untagged = 0x00, // Default tag.
+        Untagged, // Default tag.
         Player,
         Enemy,
     }

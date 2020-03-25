@@ -12,6 +12,7 @@
 //         <3333333><           <33333>< 
 
 using System;
+using AWorldDestroyed.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -37,7 +38,7 @@ namespace AWorldDestroyed.Models.Components
             Sprite = sprite;
             Color = Color.White;
             SortingOrder = 0;
-            SortingLayer = Enum.Parse(SortingLayer, "default");
+            SortingLayer = (SortingLayer)Enum.Parse(typeof(SortingLayer), "Default");
             SpriteEffect = SpriteEffects.None;
         }
 

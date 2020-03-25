@@ -11,6 +11,7 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
+using AWorldDestroyed.Utility;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace AWorldDestroyed.Models.Components
     /// <summary>
     /// Animator takes care of what animation to run.
     /// </summary>
-    class Animator : Component
+    public class Animator : Component
     {
         private Dictionary<string, Animation> animations;
         private Animation currentAnimation;
@@ -29,7 +30,7 @@ namespace AWorldDestroyed.Models.Components
         /// <summary>
         /// Create a new instance of the Animator class.
         /// </summary>
-        public Animator() :base() 
+        public Animator() : base() 
         {
             animations = new Dictionary<string, Animation>();
         }

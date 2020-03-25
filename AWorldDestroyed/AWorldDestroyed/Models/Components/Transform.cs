@@ -29,7 +29,7 @@ namespace AWorldDestroyed.Models.Components
         /// Creates a new instance of Transform, with the specified SceneObject reference.
         /// </summary>
         /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
-        public Transform(SceneObject sceneObject) : this(sceneObject, Vector2.Zero)
+        public Transform() : this(Vector2.Zero)
         {
         }
 
@@ -38,7 +38,7 @@ namespace AWorldDestroyed.Models.Components
         /// </summary>
         /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
-        public Transform(SceneObject sceneObject, Vector2 position) : this(sceneObject, position, Vector2.One, 0f)
+        public Transform(Vector2 position) : this(position, Vector2.One, 0f)
         {
         }
 
@@ -49,9 +49,8 @@ namespace AWorldDestroyed.Models.Components
         /// <param name="position">The position of this Transform.</param>
         /// <param name="scale">The scale of this Transform.</param>
         /// <param name="rotation">The rotation of this Transform.</param>
-        public Transform(SceneObject sceneObject, Vector2 position, Vector2 scale, float rotation)
+        public Transform(Vector2 position, Vector2 scale, float rotation)
         {
-            SceneObject = sceneObject;
             Position = position;
             Scale = scale;
             Rotation = rotation;
@@ -110,7 +109,7 @@ namespace AWorldDestroyed.Models.Components
         /// <returns>A copy of this Transform.</returns>
         public override Component Copy()
         {
-            return new Transform(SceneObject, Position, Scale, Rotation);
+            return new Transform(Position, Scale, Rotation);
         }
 
         /// <summary>

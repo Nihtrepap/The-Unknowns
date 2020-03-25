@@ -19,14 +19,14 @@ namespace AWorldDestroyed.Models.Components
     /// <summary>
     /// Physics for our sprites.
     /// </summary>
-    class RigidBody : Component
+    public class RigidBody : Component
     {
         public Vector2 Velocity { get; set; }
         public float Gravity { get; set; }
         public float Mass { get; set; }
         public float Friction { get; set; }
 
-        public RigidBody(GameObject gameObject) : base(gameObject) { }
+        public RigidBody() : base() { }
 
         /// <summary>
         /// Adds velocity to the object.

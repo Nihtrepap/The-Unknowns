@@ -17,7 +17,7 @@ namespace AWorldDestroyed.Utility
     /// Represents a collection of objects that share a purpose in a game. 
     /// Supplies modularity to scene design and a unified way to handle scene objects.
     /// </summary>
-    interface ISceneLayer
+    public interface ISceneLayer
     {
     }
 }

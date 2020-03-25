@@ -11,18 +11,21 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
+using AWorldDestroyed.Models.Components;
+using AWorldDestroyed.Utility;
+
 namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Base class for all objects related to the actual game, such as creatures and maptiles.
     /// </summary>
-    class GameObject : SceneObject
+    public class GameObject : SceneObject
     {
         /// <summary>
         /// Initialize a new GameObject within the context of a given SceneLayer.
         /// </summary>
         /// <param name="sceneLayer">The SceneLayer related to this object.</param>
-        public GameObject(SceneLayer sceneLayer) : base(sceneLayer)
+        public GameObject(ISceneLayer sceneLayer) : base(sceneLayer)
         {
         }
 
@@ -31,7 +34,7 @@ namespace AWorldDestroyed.Models
         /// </summary>
         /// <param name="sceneLayer">The SceneLayer related to this object.</param>
         /// <param name="transform">A Transform component supplying transformation capabilites to this object.</param>
-        public GameObject(SceneLayer sceneLayer, Transform transform) : base(sceneLayer, transform)
+        public GameObject(ISceneLayer sceneLayer, Transform transform) : base(sceneLayer, transform)
         {
         }
 

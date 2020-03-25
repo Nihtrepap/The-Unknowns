@@ -12,13 +12,14 @@
 //         <3333333><           <33333>< 
 
 using System;
+using AWorldDestroyed.Models;
 
 namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Used to simulate a movement by changing a series of frames.
     /// </summary>
-    class Animation
+    public class Animation
     {
         public string Name { get; set; }
         public bool Loop { get; set; }
@@ -30,7 +31,7 @@ namespace AWorldDestroyed.Utility
         /// Create new instance of Animation class with given animation frames.
         /// </summary>
         /// <param name="frames">The animation frames that make up an animation.</param>
-        public void Animation(Frame[] frames)
+        public Animation(Frame[] frames)
         {
             this.frames = frames;
             Loop = true;

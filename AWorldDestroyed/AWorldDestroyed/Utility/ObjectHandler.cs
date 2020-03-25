@@ -13,13 +13,14 @@
 
 using System;
 using System.Collections.Generic;
+using AWorldDestroyed.Models;
 
 namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Handles a collection of GameObjects with the help of a QuadTree.
     /// </summary>
-    class ObjectHandler
+    public class ObjectHandler
     {
         public List<GameObject> GameObjects;
         private QuadTree<GameObject> quadTree;
@@ -30,7 +31,7 @@ namespace AWorldDestroyed.Utility
         public ObjectHandler()
         {
             GameObjects = new List<GameObject>();
-            quadTree = new QuadTree<GameObject>(); // TODO: Add boundary and capacitiy.
+            quadTree = new QuadTree<GameObject>(Microsoft.Xna.Framework.Rectangle.Empty, 3); // TODO: Add boundary and capacitiy.
         }
 
         /// <summary>

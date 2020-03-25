@@ -13,6 +13,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using AWorldDestroyed.Models.Components;
+using AWorldDestroyed.Utility;
 
 namespace AWorldDestroyed.Models
 {
@@ -46,7 +48,7 @@ namespace AWorldDestroyed.Models
         {
             this.sceneLayer = sceneLayer;
 
-            if (transform == null) Transform = new Transform(this);
+            if (transform == null) Transform = new Transform();
             else Transform = transform;
 
             Parent = null;

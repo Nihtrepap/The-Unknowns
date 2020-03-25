@@ -13,27 +13,28 @@
 
 using System;
 using System.Collections.Generic;
+using AWorldDestroyed.Utility;
 
 namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Holds information about a scene and connects a Camera and an ObjectHandler with the objects of SceneLayers.
     /// </summary>
-    class Scene
+    public class Scene
     {
         private Camera camera;
         private ObjectHandler objectHandler;
-        private List<SceneLayer> sceneLayers;
+        private List<ISceneLayer> sceneLayers;
 
         /// <summary>
         /// Creates a new instance of the Scene class, with the specified SceneLayers. 
         /// </summary>
         /// <params name="layers">A variable number of SceneLayers.</param>
-        public Scene(params SceneLayer[] layers) : this()
+        public Scene(params ISceneLayer[] layers)
         {
             camera = new Camera();
             objectHandler = new ObjectHandler();
-            sceneLayers = new List<SceneLayer>();
+            sceneLayers = new List<ISceneLayer>();
             sceneLayers.AddRange(layers);
         }
 
@@ -71,7 +72,7 @@ namespace AWorldDestroyed.Models
         /// Add a SceneLayer to the list of SceneLayers.
         /// </summary>
         /// <param name="layer">The SceneLayer to add.</param>
-        public void AddSceneLayer(SceneLayer layer)
+        public void AddSceneLayer(ISceneLayer layer)
         {
             sceneLayers.Add(layer);
         }
