@@ -42,33 +42,33 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\Animator.cs" />
-    <Compile Include="Models\Animation.cs" />
+    <Compile Include="Models\Components\Animator.cs" />
+    <Compile Include="Utility\Animation.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\GameObject.cs" />
-    <Compile Include="Models\SortingLayer.cs" />
-    <Compile Include="Models\RigidBody.cs" />
-    <Compile Include="Models\SpriteRenderer.cs" />
-    <Compile Include="Models\Collider.cs" />
-    <Compile Include="Models\Transform.cs" />
+    <Compile Include="Utility\SortingLayer.cs" />
+    <Compile Include="Models\Components\RigidBody.cs" />
+    <Compile Include="Models\Components\SpriteRenderer.cs" />
+    <Compile Include="Models\Components\Collider.cs" />
+    <Compile Include="Models\Components\Transform.cs" />
     <Compile Include="Models\SceneManager.cs" />
-    <Compile Include="Models\Camera.cs" />
-    <Compile Include="Models\ObjectHandler.cs" />
-    <Compile Include="Models\ISceneLayer.cs" />
+    <Compile Include="Utility\Camera.cs" />
+    <Compile Include="Utility\ObjectHandler.cs" />
+    <Compile Include="Utility\ISceneLayer.cs" />
     <Compile Include="Models\Scene.cs" />
     <Compile Include="Models\Component.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\QuadTree.cs" />
+    <Compile Include="Utility\QuadTree.cs" />
     <Compile Include="Models\Sprite.cs" />
-    <Compile Include="RectangleF.cs" />
-    <Compile Include="Tag.cs" />
+    <Compile Include="Models\RectangleF.cs" />
+    <Compile Include="Utility\Tag.cs" />
     <Compile Include="Models\SceneObject.cs" />
-    <Compile Include="Models\UIElement.cs" />
-	<Compile Include="Models\InputManager.cs" />
-	<Compile Include="Models\InputEvents.cs" />
+    <Compile Include="GUI\UIElement.cs" />
+    <Compile Include="Utility\InputManager.cs" />
+    <Compile Include="Utility\InputEvents.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -128,6 +128,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GameObjects\_info.txt" />
+    <Content Include="GUI\_info.txt" />
+    <Content Include="Models\Components\_info.txt" />
+    <Content Include="Models\_info.txt" />
+    <Content Include="Scenes\_info.txt" />
+    <Content Include="Utility\_info.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Sounds\Effects\" />
+    <Folder Include="Content\Sounds\Songs\" />
+    <Folder Include="Content\Sprites\Enemies\" />
+    <Folder Include="Content\Sprites\Player\" />
+    <Folder Include="Content\Sprites\Tiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
