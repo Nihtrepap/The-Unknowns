@@ -14,7 +14,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Position, rotation and scale of an object.

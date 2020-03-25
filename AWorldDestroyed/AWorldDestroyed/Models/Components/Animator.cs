@@ -16,7 +16,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Animator takes care of what animation to run.

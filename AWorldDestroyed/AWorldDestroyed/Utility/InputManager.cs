@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Managers any keyboard and mouse presses/changes.

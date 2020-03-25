@@ -15,7 +15,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Determines how to render a sprite.
