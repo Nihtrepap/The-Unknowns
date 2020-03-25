@@ -13,7 +13,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Define bounds for collision detection.

@@ -42,11 +42,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Models\Animator.cs" />
-=======
     <Compile Include="Models\Animation.cs" />
->>>>>>> 52-Animation
+    <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\GameObject.cs" />
@@ -66,7 +64,11 @@
     <Compile Include="Models\Sprite.cs" />
     <Compile Include="RectangleF.cs" />
     <Compile Include="Tag.cs" />
+<<<<<<< HEAD
 	<Compile Include="Models\SceneObject.cs" />
+=======
+	<Compile Include="Models\UIElement.cs" />
+>>>>>>> 61-UIElement
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

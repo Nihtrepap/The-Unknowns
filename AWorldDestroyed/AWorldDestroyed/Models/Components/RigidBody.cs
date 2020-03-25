@@ -14,7 +14,7 @@
 using Microsoft.Xna.Framework;
 using System;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Physics for our sprites.
