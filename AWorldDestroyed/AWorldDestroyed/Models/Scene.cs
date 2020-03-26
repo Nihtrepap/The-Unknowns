@@ -13,55 +13,78 @@
 
 using System;
 using System.Collections.Generic;
+using AWorldDestroyed.GUI;
+using AWorldDestroyed.Models.Components;
 using AWorldDestroyed.Utility;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Holds information about a scene and connects a Camera and an ObjectHandler with the objects of SceneLayers.
     /// </summary>
-    public class Scene
+    public abstract class Scene
     {
+        public SpriteBatch SpriteBatch { get; set; }
+
         private Camera camera;
         private ObjectHandler objectHandler;
-        private List<ISceneLayer> sceneLayers;
+        private List<GameObject> gameObjects;
+        private List<UIElement> uIElements;
 
         /// <summary>
-        /// Creates a new instance of the Scene class, with the specified SceneLayers. 
+        /// Creates a new instance of the Scene class, with the specified GameObject. 
         /// </summary>
-        /// <params name="layers">A variable number of SceneLayers.</param>
-        public Scene(params ISceneLayer[] layers)
+        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
+        /// <params name="gameObjects">A variable number of gameObjects.</param>
+        public Scene(SpriteBatch spriteBatch, params GameObject[] gameObjects)
+            : this(spriteBatch, new Vector2(800, 480), gameObjects)
         {
-            camera = new Camera();
-            objectHandler = new ObjectHandler();
-            sceneLayers = new List<ISceneLayer>();
-            sceneLayers.AddRange(layers);
         }
 
+        /// <summary>
+        /// Creates a new instance of the Scene class, with the specified GameObject. 
+        /// </summary>
+        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
+        /// <params name="gameObjects">A variable number of gameObjects.</param>
+        public Scene(SpriteBatch spriteBatch, Vector2 cameraViewSize, params GameObject[] gameObjects)
+        {
+            SpriteBatch = spriteBatch;
+
+            camera = new Camera(cameraViewSize);
+            objectHandler = new ObjectHandler();
+            this.gameObjects = new List<GameObject>();
+            this.uIElements = new List<UIElement>();
+
+            this.gameObjects.AddRange(gameObjects);
+        }
+
+        /// <summary>
+        /// Initializes all GameObjects and UIElements in this Scene.
+        /// </summary>
         public void Initialize()
         {
-            //foreach (ISceneLayer layer in sceneLayers)
-            //    layer.Initialize();
+            foreach (GameObject obj in gameObjects)
+                obj.Initialize();
+
+            foreach (UIElement elem in uIElements)
+                elem.Initialize();
         }
 
         /// <summary>
-        /// Load SceneLayer contents.
+        /// 
         /// </summary>
         public void LoadContent()
         {
             objectHandler.GameObjects.Clear();
 
-            //foreach (ISceneLayer layer in sceneLayers)
-            //{
-            //}
-        }
+            foreach (GameObject obj in gameObjects)
+                objectHandler.AddObject(obj);
 
-        /// <summary>
-        /// Unload SceneLayer contents.
-        /// </summary>
-        public void UnloadContent()
-        {
-            throw new NotImplementedException();
+            // TODO: add elem to a UIObjectManager
+            //foreach (UIElement elem in uIElements)
+            //    elem.Initialize();
         }
 
         /// <summary>
@@ -70,17 +93,37 @@ namespace AWorldDestroyed.Models
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
-            //foreach (ISceneLayer layer in sceneLayers)
-            //    layer.Update(deltaTime);
+            objectHandler.Update(deltaTime, camera.View);
         }
 
-        /// <summary>
-        /// Add a SceneLayer to the list of SceneLayers.
-        /// </summary>
-        /// <param name="layer">The SceneLayer to add.</param>
-        public void AddSceneLayer(ISceneLayer layer)
+        public void Draw()
         {
-            sceneLayers.Add(layer);
+            GameObject[] gameObjects = objectHandler.Query(camera.View);
+
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+
+            foreach (GameObject obj in gameObjects)
+            {
+                if (obj.HasSpriteRenderer)
+                {
+                    SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+                    float sortingOrder = ((float)renderer.SortingLayer * 1000f + renderer.SortingOrder + 1000f) 
+                        / (Enum.GetValues(typeof(SortingLayer)).Length * 1000f + 1000f);
+
+                    SpriteBatch.Draw(
+                        renderer.Sprite.Texture, 
+                        obj.Transform.Position,
+                        renderer.Sprite.SourceRectangle,
+                        renderer.Color,
+                        obj.Transform.Rotation,
+                        renderer.Sprite.Origin,
+                        obj.Transform.Scale,
+                        renderer.SpriteEffect,
+                        sortingOrder);
+                }
+            }
+
+            SpriteBatch.End();
         }
 
         /// <summary>
@@ -89,7 +132,22 @@ namespace AWorldDestroyed.Models
         /// <param name="gameObject">The GameObject to add.</param>
         public void AddObject(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            if (gameObject == null || gameObjects.Contains(gameObject)) return;
+            
+            gameObjects.Add(gameObject);
+            objectHandler.AddObject(gameObject);
+        }
+
+        /// <summary>
+        /// Add a UIElement to the Scene.
+        /// </summary>
+        /// <param name="uIElement">The UIElement to add.</param>
+        public void AddUIObject(UIElement uIElement)
+        {
+            if (uIElement == null || uIElements.Contains(uIElement))
+                return;
+
+            uIElements.Add(uIElement);
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AWorldDestroyed.Models;
+using AWorldDestroyed.Scenes;
+using AWorldDestroyed.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,6 +12,8 @@ namespace AWorldDestroyed
     /// </summary>
     public class Game1 : Game
     {
+        public static Sprite Sprite;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
@@ -26,7 +31,6 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
 
             base.Initialize();
         }
@@ -37,10 +41,12 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
+                new Rectangle(0, 0, 42, 72));
+
+            SceneManager.AddScene("1", new FirstScene(spriteBatch));
         }
 
         /// <summary>
@@ -49,7 +55,6 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -59,10 +64,13 @@ namespace AWorldDestroyed
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            InputManager.Update();
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
+                || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            SceneManager.ActiveScene.Update(gameTime.ElapsedGameTime.TotalMilliseconds);
 
             base.Update(gameTime);
         }
@@ -74,9 +82,9 @@ namespace AWorldDestroyed
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            
+            SceneManager.ActiveScene.Draw();
+            
             base.Draw(gameTime);
         }
     }

@@ -21,7 +21,8 @@ namespace AWorldDestroyed.Models
     /// </summary>
     public static class SceneManager
     {
-        private static Scene activeScene;
+        public static Scene ActiveScene { get; private set; }
+
         private static Dictionary<string, Scene> scenes;
         private static Stack<Scene> sceneHistory;
 
@@ -30,7 +31,7 @@ namespace AWorldDestroyed.Models
         /// </summary>
         static SceneManager()
         {
-            activeScene = null;
+            ActiveScene = null;
             scenes = new Dictionary<string, Scene>();
             sceneHistory = new Stack<Scene>();
         }
@@ -42,7 +43,7 @@ namespace AWorldDestroyed.Models
         /// <param name="scene">The Scene to add.</param>
         public static void AddScene(string name, Scene scene)
         {
-            if (activeScene == null) activeScene = scene;
+            if (ActiveScene == null) ActiveScene = scene;
 
             scenes.Add(name, scene);
         }
@@ -67,7 +68,7 @@ namespace AWorldDestroyed.Models
             if (scenes.ContainsKey(name))
             {
                 sceneHistory.Push(scenes[name]);
-                activeScene = scenes[name];
+                ActiveScene = scenes[name];
             }
         }
 
@@ -76,7 +77,7 @@ namespace AWorldDestroyed.Models
         /// </summary>
         public static void PreviousScene()
         {
-            if (sceneHistory.Count > 0) activeScene = sceneHistory.Pop();
+            if (sceneHistory.Count > 0) ActiveScene = sceneHistory.Pop();
         }
 
         /// <summary>

@@ -26,28 +26,25 @@ namespace AWorldDestroyed.Models
         public Transform Transform { get; private set; }
         public SceneObject Parent { get; private set; }
         public bool Destroyed { get; private set; }
+        public bool HasCollider { get; private set; }
+        public bool HasSpriteRenderer { get; private set; }
 
-        private ISceneLayer sceneLayer;
         private List<Component> components;
         private List<SceneObject> children;
 
         /// <summary>
-        /// Initialize a new SceneObject within the context of a given SceneLayer.
+        /// Initialize a new SceneObject.
         /// </summary>
-        /// <param name="sceneLayer">The SceneLayer related to this object.</param>
-        public SceneObject(ISceneLayer sceneLayer) : this(sceneLayer, null)
+        public SceneObject() : this(null)
         {
         }
 
         /// <summary>
-        /// Initialize a new GameObject within the context of a given SceneLayer, with a given Transform component.
+        /// Initialize a new GameObject with a given Transform component.
         /// </summary>
-        /// <param name="sceneLayer">The SceneLayer related to this object.</param>
         /// <param name="transform">A Transform component supplying transformation capabilities to this object.</param>
-        public SceneObject(ISceneLayer sceneLayer, Transform transform) : base()
+        public SceneObject(Transform transform) : base()
         {
-            this.sceneLayer = sceneLayer;
-
             if (transform == null) Transform = new Transform();
             else Transform = transform;
 
@@ -141,10 +138,22 @@ namespace AWorldDestroyed.Models
         public void AddComponent(Component component)
         {
             if (component == null) return;
-
+            
             component.AttachedTo = this;
             components.Add(component);
+            
+            if (component is Collider) HasCollider = true;
+            if (component is SpriteRenderer) HasSpriteRenderer = true;
         }
+
+        private bool HasComponent<T>() where T : Component
+        {
+            foreach (Component component in components)
+                if (component is T) return true;
+        
+            return false;
+        }
+
 
         /// <summary>
         /// Try getting a object that is a child of this object with the specified name.
@@ -172,8 +181,14 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Mark this object for destruction.
+        /// Mark this object and all its children for destruction. |P[
         /// </summary>
-        public void Destroy() => Destroyed = true;
+        public void Destroy()
+        {
+            foreach (SceneObject child in children)
+                child.Destroy();
+            
+            Destroyed = true;
+        }
     }
 }

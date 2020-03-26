@@ -35,16 +35,49 @@ namespace AWorldDestroyed.Utility
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bounds"></param>
+        /// <returns></returns>
+        public GameObject[] Query(RectangleF bounds) => quadTree.Query(bounds).ToArray();
+
+        /// <summary>
         /// Update GameObjects handled by the ObjectHandler.
         /// </summary>
-        public void Update()
+        /// <param name="deltaTime">Time in milliseconds since last update.</param>
+        /// <param name="bounds"></param>
+        public void Update(double deltaTime, RectangleF bounds)
         {
-            throw new NotImplementedException();
+            quadTree = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
+            foreach (var o in GameObjects)
+            {
+                quadTree.Insert(o.Transform.Position, o);
+            }
 
-            //foreach (GameObject gameObject in GameObjects)
-            //{
-            //    gameObject.Update();
-            //}
+            //TODO: Expand bounds
+            GameObject[] objects = Query(bounds);
+
+            foreach (GameObject obj in objects)
+            {
+                obj.Update(deltaTime);
+
+                /*
+                 * if (obj have Collider)
+                 * {
+                 *      CheckCollision(obj, objects);
+                 * }
+                 * 
+                 * void CheckCollision(GameObject obj, GameObject[] otherObjects)
+                 * {
+                 *      QuadTree<GameObject> others = new QuadTree<GameObject>(?, ?);
+                 *      
+                 *      foreach (var o in otherObjects)
+                 *          others.Insert(o);
+                 *          
+                 *       GameObject[] closeObjects = others.Quary(obj.ColliderBounds);
+                 * }
+                 */
+            }
         }
 
         /// <summary>

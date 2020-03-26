@@ -41,7 +41,7 @@ namespace AWorldDestroyed.GUI
         public event KeyEventHandler KeyDown;
         public event KeyEventHandler KeyUp;
 
-        public UIElement(ISceneLayer sceneLayer) : base(sceneLayer)
+        public UIElement() : base()
         {
 
         }

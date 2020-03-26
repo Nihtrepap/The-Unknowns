@@ -29,6 +29,11 @@ namespace AWorldDestroyed.Models.Components
         public SortingLayer SortingLayer { get; set; }
         public SpriteEffects SpriteEffect { get; set; }
 
+        public SpriteRenderer()
+        {
+
+        }
+
         /// <summary>
         /// Create a new SpriteRenderer instance.
         /// </summary>

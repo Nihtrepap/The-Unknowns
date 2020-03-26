@@ -22,19 +22,17 @@ namespace AWorldDestroyed.Models
     public class GameObject : SceneObject
     {
         /// <summary>
-        /// Initialize a new GameObject within the context of a given SceneLayer.
+        /// Initialize a new GameObject.
         /// </summary>
-        /// <param name="sceneLayer">The SceneLayer related to this object.</param>
-        public GameObject(ISceneLayer sceneLayer) : base(sceneLayer)
+        public GameObject() : base()
         {
         }
 
         /// <summary>
-        /// Initialize a new GameObject within the context of a given SceneLayer, with a given Transform component.
+        /// Initialize a new GameObject with a given Transform component.
         /// </summary>
-        /// <param name="sceneLayer">The SceneLayer related to this object.</param>
         /// <param name="transform">A Transform component supplying transformation capabilites to this object.</param>
-        public GameObject(ISceneLayer sceneLayer, Transform transform) : base(sceneLayer, transform)
+        public GameObject(Transform transform) : base(transform)
         {
         }
 

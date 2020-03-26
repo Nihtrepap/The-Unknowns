@@ -22,34 +22,20 @@ namespace AWorldDestroyed.Utility
     /// A camera like object that determines what is displayed on the screen.
     /// </summary>
 
-    class Camera
+    public class Camera
     {
         public Transform Transform { get; private set; }
-        public SpriteBatch SpriteBatch { get; set; }
+        public Vector2 ViewSize { get; set; }
+        public RectangleF View => new RectangleF(Transform.Position, ViewSize);
 
         /// <summary>
         /// Creates a new instance of the Camera class.
         /// </summary>
-        public Camera()
+        /// <param name="viewSize">The view size of this Camera.</param>
+        public Camera(Vector2 viewSize) 
         {
+            ViewSize = viewSize;
             Transform = new Transform();
-        }
-
-        /// <summary>
-        /// Creates a new instance of the Camera class, connected to a given SpriteBatch.
-        /// </summary>
-        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
-        public Camera(SpriteBatch spriteBatch) : this()
-        {
-            SpriteBatch = spriteBatch;
-        }
-
-        /// <summary>
-        /// Update the logic of the Camera.
-        /// </summary>
-        public void Update()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -67,9 +53,12 @@ namespace AWorldDestroyed.Utility
         /// </summary>
         /// <param name="point">The camera point to convert.</param>
         /// <returns></returns>
-        public Vector2 ScreenToWorldPoint(Point point)
+        public Vector2 ScreenToWorldPoint(Vector2 point)
         {
-            throw new NotImplementedException();
+            //return Vector2((point.x + self.transform.position.x) / self.transform.scale.x,
+            //           (point.y + self.transform.position.y) / self.transform.scale.y)
+
+            return new Vector2();
         }
 
         /// <summary>
@@ -77,17 +66,12 @@ namespace AWorldDestroyed.Utility
         /// </summary>
         /// <param name="point">The world point to convert.</param>
         /// <returns></returns>
-        public Vector2 WorldToScreenPoint(Point point)
+        public Vector2 WorldToScreenPoint(Vector2 point)
         {
-            throw new NotImplementedException();
-        }
+            //return Vector2((point.x * self.transform.scale.x - self.transform.position.x),
+            //           (point.y * self.transform.scale.y - self.transform.position.y))
 
-        /// <summary>
-        /// Render what the Camera sees to the screen.
-        /// </summary>
-        public void Render()
-        {
-            throw new NotImplementedException();
+            return new Vector2();
         }
     }
 }
