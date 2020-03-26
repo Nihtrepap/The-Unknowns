@@ -24,24 +24,24 @@ namespace AWorldDestroyed.Models
     {
         private Camera camera;
         private ObjectHandler objectHandler;
-        private List<ISceneLayer<SceneObject>> sceneLayers;
+        private List<ISceneLayer> sceneLayers;
 
         /// <summary>
         /// Creates a new instance of the Scene class, with the specified SceneLayers. 
         /// </summary>
         /// <params name="layers">A variable number of SceneLayers.</param>
-        public Scene(params ISceneLayer<SceneObject>[] layers)
+        public Scene(params ISceneLayer[] layers)
         {
             camera = new Camera();
             objectHandler = new ObjectHandler();
-            sceneLayers = new List<ISceneLayer<SceneObject>>();
+            sceneLayers = new List<ISceneLayer>();
             sceneLayers.AddRange(layers);
         }
 
         public void Initialize()
         {
-            foreach (ISceneLayer<SceneObject> layer in sceneLayers)
-                layer.Initialize();
+            //foreach (ISceneLayer layer in sceneLayers)
+            //    layer.Initialize();
         }
 
         /// <summary>
@@ -51,16 +51,9 @@ namespace AWorldDestroyed.Models
         {
             objectHandler.GameObjects.Clear();
 
-            foreach (ISceneLayer<SceneObject> layer in sceneLayers)
-            {
-                if (layer.Type == typeof(GameObject))
-                {
-                    foreach (SceneObject obj in layer.sceneObjects)
-                    {
-                        objectHandler.GameObjects.Add((GameObject)obj);
-                    }
-                }
-            }
+            //foreach (ISceneLayer layer in sceneLayers)
+            //{
+            //}
         }
 
         /// <summary>
@@ -77,8 +70,8 @@ namespace AWorldDestroyed.Models
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
-            foreach (ISceneLayer layer in sceneLayers)
-                layer.Update(deltaTime);
+            //foreach (ISceneLayer layer in sceneLayers)
+            //    layer.Update(deltaTime);
         }
 
         /// <summary>
