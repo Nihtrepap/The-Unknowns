@@ -39,7 +39,7 @@ namespace AWorldDestroyed.Models.Components
         /// <returns>Floating point 2D-rectangle.</returns>
         public RectangleF GetRectangle()
         {
-            Vector2 position = SceneObject.Transform.Position + Offset;
+            Vector2 position = AttachedTo.Transform.Position + Offset;
             return new RectangleF(position, Size);
         }
 

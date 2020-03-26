@@ -19,16 +19,18 @@ namespace AWorldDestroyed.Models
     /// <summary>
     /// Manages the Scenes in a program.
     /// </summary>
-    class SceneManager
+    public static class SceneManager
     {
-        private Dictionary<string, Scene> scenes;
-        private Stack<Scene> sceneHistory;
+        private static Scene activeScene;
+        private static Dictionary<string, Scene> scenes;
+        private static Stack<Scene> sceneHistory;
 
         /// <summary>
-        /// Creates a new instance of the SceneManager class. 
+        /// Used to initialize the SceneManager class.
         /// </summary>
-        public SceneManager()
+        static SceneManager()
         {
+            activeScene = null;
             scenes = new Dictionary<string, Scene>();
             sceneHistory = new Stack<Scene>();
         }
@@ -38,8 +40,10 @@ namespace AWorldDestroyed.Models
         /// </summary>
         /// <param name="name">A name by which to reference the Scene.</param>
         /// <param name="scene">The Scene to add.</param>
-        public void AddScene(string name, Scene scene)
+        public static void AddScene(string name, Scene scene)
         {
+            if (activeScene == null) activeScene = scene;
+
             scenes.Add(name, scene);
         }
 
@@ -48,7 +52,7 @@ namespace AWorldDestroyed.Models
         /// </summary>
         /// <param name="name">A name that references the Scene.</param>
         /// <returns>A Scene object, or null if an invalid name was given.</returns>
-        public Scene GetScene(string name)
+        public static Scene GetScene(string name)
         {
             if (scenes.ContainsKey(name)) return scenes[name];
             return null;
@@ -58,24 +62,28 @@ namespace AWorldDestroyed.Models
         /// Change the active Scene to the Scene referenced by the given name.
         /// </summary>
         /// <param name="name">A name that references the Scene.</param>
-        public void ChangeScene(string name)
+        public static void ChangeScene(string name)
         {
-            if (scenes.ContainsKey(name)) sceneHistory.Push(scenes[name]);
+            if (scenes.ContainsKey(name))
+            {
+                sceneHistory.Push(scenes[name]);
+                activeScene = scenes[name];
+            }
         }
 
         /// <summary>
         /// Change the active Scene to the previous Scene.
         /// </summary>
-        public void PreviousScene()
+        public static void PreviousScene()
         {
-            if (sceneHistory.Count > 0) sceneHistory.Pop();
+            if (sceneHistory.Count > 0) activeScene = sceneHistory.Pop();
         }
 
         /// <summary>
         /// Reset the Scene object referenced by the given name.
         /// </summary>
         /// <param name="name">A name that references the Scene.</param>
-        public void ResetScene(string name)
+        public static void ResetScene(string name)
         {
             throw new NotImplementedException();
         }

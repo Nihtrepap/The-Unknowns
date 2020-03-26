@@ -54,10 +54,9 @@ namespace AWorldDestroyed.Models
             Parent = null;
             children = new List<SceneObject>();
 
-            components = new List<Component>()
-            {
-                Transform
-            };
+            components = new List<Component>() { Transform };
+
+            Initialize();
         }
 
         /// <summary>
@@ -84,6 +83,13 @@ namespace AWorldDestroyed.Models
 
                 return siblings.ToArray();
             }
+        }
+
+        /// <summary>
+        /// ---
+        /// </summary>
+        public virtual void Initialize()
+        {
         }
 
         /// <summary>
@@ -136,6 +142,7 @@ namespace AWorldDestroyed.Models
         {
             if (component == null) return;
 
+            component.AttachedTo = this;
             components.Add(component);
         }
 

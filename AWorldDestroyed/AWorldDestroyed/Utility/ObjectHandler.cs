@@ -22,7 +22,7 @@ namespace AWorldDestroyed.Utility
     /// </summary>
     public class ObjectHandler
     {
-        public List<GameObject> GameObjects;
+        public List<GameObject> GameObjects { get; set; }
         private QuadTree<GameObject> quadTree;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace AWorldDestroyed.Utility
         public ObjectHandler()
         {
             GameObjects = new List<GameObject>();
-            quadTree = new QuadTree<GameObject>(Microsoft.Xna.Framework.Rectangle.Empty, 3); // TODO: Add boundary and capacitiy.
+            quadTree = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3); // TODO: Add boundary and capacitiy.
         }
 
         /// <summary>

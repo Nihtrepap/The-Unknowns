@@ -19,7 +19,7 @@ namespace AWorldDestroyed.Models
     /// </summary>
     public abstract class Component : BaseObject
     {
-        public SceneObject SceneObject { get; protected set; }
+        private SceneObject _attachedTo;
 
         /// <summary>
         /// Instantiates the Component bas class, with the specified GameObject reference. 
@@ -27,6 +27,15 @@ namespace AWorldDestroyed.Models
         /// <param name="gameObject">The GameObject a component subclass should act upon.</param>
         public Component() : base()
         {
+        }
+
+        public SceneObject AttachedTo {
+            get => _attachedTo;
+
+            set
+            {
+                if (value != null && _attachedTo == null) _attachedTo = value;
+            }
         }
 
         /// <summary>

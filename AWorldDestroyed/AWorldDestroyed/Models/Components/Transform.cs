@@ -77,16 +77,16 @@ namespace AWorldDestroyed.Models.Components
         {
             get
             {
-                if (SceneObject.Parent == null) return Position;
+                if (AttachedTo.Parent == null) return Position;
                 else
                 {
-                    float angle = MathHelper.ToRadians(SceneObject.Parent.Transform.Rotation);
-                    Vector2 center = SceneObject.Parent.Transform.Position;
+                    float angle = MathHelper.ToRadians(AttachedTo.Parent.Transform.Rotation);
+                    Vector2 center = AttachedTo.Parent.Transform.Position;
 
                     float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X);
                     float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
 
-                    return new Vector2(rotatedX, rotatedY) + SceneObject.Parent.Transform.WorldPosition;
+                    return new Vector2(rotatedX, rotatedY) + AttachedTo.Parent.Transform.WorldPosition;
                 }
             }
         }
@@ -98,8 +98,8 @@ namespace AWorldDestroyed.Models.Components
         {
             get 
             { 
-                if (SceneObject.Parent == null) return Rotation;
-                else return Rotation + SceneObject.Parent.Transform.WorldRotation;
+                if (AttachedTo.Parent == null) return Rotation;
+                else return Rotation + AttachedTo.Parent.Transform.WorldRotation;
             }
         }
 
