@@ -50,8 +50,9 @@ namespace AWorldDestroyed.Models
 
             Parent = null;
             children = new List<SceneObject>();
-
-            components = new List<Component>() { Transform };
+            components = new List<Component>();
+            
+            AddComponent(Transform);
 
             Initialize();
         }

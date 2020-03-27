@@ -77,16 +77,26 @@ namespace AWorldDestroyed.Models.Components
         {
             get
             {
-                if (AttachedTo.Parent == null) return Position;
+                if (AttachedTo?.Parent == null) return Position;
                 else
                 {
-                    float angle = MathHelper.ToRadians(AttachedTo.Parent.Transform.Rotation);
-                    Vector2 center = AttachedTo.Parent.Transform.Position;
+                    //angle = (angle) * (Math.PI / 180); // Convert to radians
+                    //var rotatedX = Math.cos(angle) * (point.x - center.x) - Math.sin(angle) * (point.y-center.y) + center.x;
+                    //var rotatedY = Math.sin(angle) * (point.x - center.x) + Math.cos(angle) * (point.y - center.y) + center.y;
 
-                    float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X);
-                    float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
+                    float angle = MathHelper.ToRadians(AttachedTo.Parent.Transform.WorldRotation);
+                    Vector2 center = AttachedTo.Parent.Transform.WorldPosition;
+                    Vector2 deltaPos =  Position;
 
-                    return new Vector2(rotatedX, rotatedY) + AttachedTo.Parent.Transform.WorldPosition;
+                    float rotatedX = (float)(Math.Cos(angle) * deltaPos.X - Math.Sin(angle) * deltaPos.Y) + center.X;
+                    float rotatedY = (float)(Math.Sin(angle) * deltaPos.X + Math.Cos(angle) * deltaPos.Y) + center.Y;
+
+                    //Vector2 center = AttachedTo.Parent.Transform.Position;
+
+                    //float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X); 
+                    //float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
+
+                    return new Vector2(rotatedX, rotatedY);
                 }
             }
         }
@@ -98,7 +108,7 @@ namespace AWorldDestroyed.Models.Components
         {
             get 
             { 
-                if (AttachedTo.Parent == null) return Rotation;
+                if (AttachedTo?.Parent == null) return Rotation;
                 else return Rotation + AttachedTo.Parent.Transform.WorldRotation;
             }
         }

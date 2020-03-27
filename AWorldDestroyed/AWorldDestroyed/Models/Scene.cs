@@ -112,10 +112,10 @@ namespace AWorldDestroyed.Models
 
                     SpriteBatch.Draw(
                         renderer.Sprite.Texture, 
-                        obj.Transform.Position,
+                        obj.Transform.WorldPosition,
                         renderer.Sprite.SourceRectangle,
                         renderer.Color,
-                        obj.Transform.Rotation,
+                        MathHelper.ToRadians(obj.Transform.WorldRotation),
                         renderer.Sprite.Origin,
                         obj.Transform.Scale,
                         renderer.SpriteEffect,
