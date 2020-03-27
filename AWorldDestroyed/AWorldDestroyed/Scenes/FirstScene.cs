@@ -23,6 +23,8 @@ namespace AWorldDestroyed.Scenes
             Player p = new Player();    // Red   , parent = a
             Player p2 = new Player();   // White , parent = p
 
+            CameraFollow = a;
+
             p.GetComponent<SpriteRenderer>().Color = Color.Red;
             p.Transform.Rotation = 45;
             p2.Transform.Rotation = 45;
@@ -69,7 +71,6 @@ namespace AWorldDestroyed.Scenes
             if (InputManager.IsKeyPressed(Keys.PageUp))
                 Transform.Rotation += speed * 5;
 
-            SceneManager.ActiveScene.Camera.Transform.Position = Transform.Position - new Vector2(400, 240);
 
             base.Update(deltaTime);
         }

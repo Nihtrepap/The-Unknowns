@@ -13,6 +13,7 @@ namespace AWorldDestroyed
     public class Game1 : Game
     {
         public static Sprite Sprite;
+        public static Texture2D Pixel;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -46,6 +47,9 @@ namespace AWorldDestroyed
 
             Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
                 new Rectangle(0, 0, 42, 72));
+            Pixel = new Texture2D(GraphicsDevice, 1, 1);
+            Color[] data = { Color.White };
+            Pixel.SetData(data);
 
             SceneManager.AddScene("1", new FirstScene(spriteBatch));
         }

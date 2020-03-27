@@ -27,7 +27,9 @@ namespace AWorldDestroyed.Models
     public abstract class Scene
     {
         public SpriteBatch SpriteBatch { get; set; }
-        public Camera Camera { get; set; }
+
+        protected Camera Camera;
+        protected SceneObject CameraFollow;
 
         private ObjectHandler objectHandler;
         private List<GameObject> gameObjects;
@@ -94,6 +96,7 @@ namespace AWorldDestroyed.Models
         public void Update(double deltaTime)
         {
             objectHandler.Update(deltaTime, Camera.View);
+            if (CameraFollow != null) Camera.Transform.Position = CameraFollow.Transform.Position - Camera.ViewSize * 0.5f;
         }
 
         public void Draw()
@@ -102,6 +105,8 @@ namespace AWorldDestroyed.Models
 
             SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, 
                 null, null, Camera.GetTranslationMatrix());
+
+            SpriteBatch.Draw(Game1.Pixel, new Rectangle(-1000, -1000, 2000, 2000), Color.White);
 
             foreach (GameObject obj in gameObjects)
             {

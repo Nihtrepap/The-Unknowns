@@ -51,7 +51,7 @@ namespace AWorldDestroyed.Utility
             quadTree = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
             foreach (var o in GameObjects)
             {
-                quadTree.Insert(o.Transform.Position, o);
+                quadTree.Insert(o.Transform.WorldPosition, o);
             }
 
             //TODO: Expand bounds
