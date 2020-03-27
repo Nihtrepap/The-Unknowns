@@ -16,6 +16,9 @@ namespace AWorldDestroyed.Scenes
     {
         public FirstScene(SpriteBatch spriteBatch) : base(spriteBatch)
         {
+            GameObject o = new GameObject();
+            o.AddComponent(new SpriteRenderer(Game1.Sprite));
+
             Test a = new Test();        // Black , parent = None
             Player p = new Player();    // Red   , parent = a
             Player p2 = new Player();   // White , parent = p
@@ -26,6 +29,7 @@ namespace AWorldDestroyed.Scenes
             p.AddChild(p2);
             a.AddChild(p);
 
+            AddObject(o);
             AddObject(a);
             AddObject(p);
             AddObject(p2);
@@ -64,6 +68,8 @@ namespace AWorldDestroyed.Scenes
                 Transform.Rotation -= speed * 5;
             if (InputManager.IsKeyPressed(Keys.PageUp))
                 Transform.Rotation += speed * 5;
+
+            SceneManager.ActiveScene.Camera.Transform.Position = Transform.Position - new Vector2(400, 240);
 
             base.Update(deltaTime);
         }

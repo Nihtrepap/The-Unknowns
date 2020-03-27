@@ -26,7 +26,7 @@ namespace AWorldDestroyed.Utility
     {
         public Transform Transform { get; private set; }
         public Vector2 ViewSize { get; set; }
-        public RectangleF View => new RectangleF(Transform.Position, ViewSize);
+        public RectangleF View => new RectangleF(Transform.Position / Transform.Scale, ViewSize);
 
         /// <summary>
         /// Creates a new instance of the Camera class.
@@ -36,6 +36,14 @@ namespace AWorldDestroyed.Utility
         {
             ViewSize = viewSize;
             Transform = new Transform();
+        }
+
+        public Matrix GetTranslationMatrix()
+        {
+            Vector3 position = new Vector3(-Transform.Position.X, -Transform.Position.Y, 0);
+            Vector3 zoom = new Vector3(Transform.Scale.X, Transform.Scale.Y, 0);
+
+            return Matrix.CreateTranslation(position) * Matrix.CreateScale(zoom);
         }
 
         /// <summary>

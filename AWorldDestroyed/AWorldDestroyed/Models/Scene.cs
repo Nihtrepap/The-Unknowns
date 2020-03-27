@@ -27,8 +27,8 @@ namespace AWorldDestroyed.Models
     public abstract class Scene
     {
         public SpriteBatch SpriteBatch { get; set; }
+        public Camera Camera { get; set; }
 
-        private Camera camera;
         private ObjectHandler objectHandler;
         private List<GameObject> gameObjects;
         private List<UIElement> uIElements;
@@ -52,7 +52,7 @@ namespace AWorldDestroyed.Models
         {
             SpriteBatch = spriteBatch;
 
-            camera = new Camera(cameraViewSize);
+            Camera = new Camera(cameraViewSize);
             objectHandler = new ObjectHandler();
             this.gameObjects = new List<GameObject>();
             this.uIElements = new List<UIElement>();
@@ -93,14 +93,15 @@ namespace AWorldDestroyed.Models
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
-            objectHandler.Update(deltaTime, camera.View);
+            objectHandler.Update(deltaTime, Camera.View);
         }
 
         public void Draw()
         {
-            GameObject[] gameObjects = objectHandler.Query(camera.View);
+            GameObject[] gameObjects = objectHandler.Query(Camera.View);
 
-            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, 
+                null, null, Camera.GetTranslationMatrix());
 
             foreach (GameObject obj in gameObjects)
             {
