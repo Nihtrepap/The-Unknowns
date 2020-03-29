@@ -44,7 +44,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Determines what happens when the object collisions with another GameObject.
+        /// Determines what happens when this object collisions with another GameObject.
         /// </summary>
         /// <param name="other">The GameObject this object collided with.</param>
         public virtual void OnCollision(GameObject other)
@@ -52,7 +52,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Determines what happens when this GameObject is triggered another GameObject.
+        /// Determines what happens when another GameObject triggered this GameObject.
         /// </summary>
         /// <param name="other">The GameObject that triggered this object.</param>
         public virtual void OnTrigger(GameObject other)

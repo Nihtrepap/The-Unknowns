@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace AWorldDestroyed.Models
 {
     /// <summary>
-    /// Holds information about a scene and connects a Camera and an ObjectHandler with the objects of SceneLayers.
+    /// Holds information about a scene and connects a Camera and an ObjectHandler with the objects of this scene.
     /// </summary>
     public abstract class Scene
     {
@@ -36,20 +36,21 @@ namespace AWorldDestroyed.Models
         private List<UIElement> uIElements;
 
         /// <summary>
-        /// Creates a new instance of the Scene class, with the specified GameObject. 
+        /// Creates a new instance of the Scene class, with the specified spriteBatch and a collection of GameObjects. 
         /// </summary>
-        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
-        /// <params name="gameObjects">A variable number of gameObjects.</param>
+        /// <param name="spriteBatch">A MonoGame SpriteBatch for the camera.</param>
+        /// <params name="gameObjects">A list of GameObjects this scene should start with.</param>
         public Scene(SpriteBatch spriteBatch, params GameObject[] gameObjects)
             : this(spriteBatch, new Vector2(800, 480), gameObjects)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of the Scene class, with the specified GameObject. 
+        /// Creates a new instance of the Scene class, with the specified spriteBatch, camera view size and a collection of GameObjects. 
         /// </summary>
-        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
-        /// <params name="gameObjects">A variable number of gameObjects.</param>
+        /// <param name="spriteBatch">A MonoGame SpriteBatch for the camera.</param>
+        /// <param name="cameraViewSize">The view size of the camera in this Scene.</param>
+        /// <params name="gameObjects">A list of GameObjects this scene should start with.</param>
         public Scene(SpriteBatch spriteBatch, Vector2 cameraViewSize, params GameObject[] gameObjects)
         {
             SpriteBatch = spriteBatch;
@@ -77,7 +78,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// 
+        /// Loads all GameObjects and UIElements to their respective handlers.
         /// </summary>
         public void LoadContent()
         {
@@ -92,7 +93,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Update the logic of the Scene.
+        /// Update the logic of this Scene.
         /// </summary>
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
@@ -101,6 +102,9 @@ namespace AWorldDestroyed.Models
             if (CameraFollow != null) Camera.Transform.Position = CameraFollow.Transform.Position - Camera.ViewSize * 0.5f;
         }
 
+        /// <summary>
+        /// Draws all GameObjects within the Camera and displays any UIElements in this Scene.
+        /// </summary>
         public void Draw()
         {
             GameObject[] gameObjects = objectHandler.Query(Camera.View);
@@ -135,7 +139,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Add a GameObject to the Scene.
+        /// Add a GameObject to this Scene.
         /// </summary>
         /// <param name="gameObject">The GameObject to add.</param>
         public void AddObject(GameObject gameObject)
@@ -147,7 +151,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Add a UIElement to the Scene.
+        /// Add a UIElement to this Scene.
         /// </summary>
         /// <param name="uIElement">The UIElement to add.</param>
         public void AddUIObject(UIElement uIElement)

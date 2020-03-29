@@ -26,7 +26,6 @@ namespace AWorldDestroyed.Utility
     {
         public Transform Transform { get; private set; }
         public Vector2 ViewSize { get; set; }
-        public RectangleF View => new RectangleF(Transform.Position / Transform.Scale, ViewSize);
 
         /// <summary>
         /// Creates a new instance of the Camera class.
@@ -38,6 +37,15 @@ namespace AWorldDestroyed.Utility
             Transform = new Transform();
         }
 
+        /// <summary>
+        /// Get the area this Camera sees.
+        /// </summary>
+        public RectangleF View => new RectangleF(Transform.Position / Transform.Scale, ViewSize);
+
+        /// <summary>
+        /// Get the translation matrix of this camera; containing information about the position, rotation and scale.
+        /// </summary>
+        /// <returns>A matrix that contains information about the position, rotation and scale of this camera.</returns>
         public Matrix GetTranslationMatrix()
         {
             Vector3 position = new Vector3(-Transform.Position.X, -Transform.Position.Y, 0);
@@ -50,7 +58,7 @@ namespace AWorldDestroyed.Utility
         /// Zoom the Camera a given amount towards a given position.
         /// </summary>
         /// <param name="amount">How much to zoom.</param>
-        /// <param name="towards">A position, given by a Vector2, to zoom towards.</param>
+        /// <param name="towards">The position to zoom towards.</param>
         public void Zoom(float amount, Vector2 towards)
         {
             throw new NotImplementedException();
@@ -60,7 +68,7 @@ namespace AWorldDestroyed.Utility
         /// Convert a point on the screen (camera) to a point in the world.
         /// </summary>
         /// <param name="point">The camera point to convert.</param>
-        /// <returns></returns>
+        /// <returns>The world point of the given screen point.</returns>
         public Vector2 ScreenToWorldPoint(Vector2 point)
         {
             //return Vector2((point.x + self.transform.position.x) / self.transform.scale.x,
@@ -73,7 +81,7 @@ namespace AWorldDestroyed.Utility
         /// Convert a point in the world to a point on the screen (camera).
         /// </summary>
         /// <param name="point">The world point to convert.</param>
-        /// <returns></returns>
+        /// <returns>The screen point of the given world point.</returns>
         public Vector2 WorldToScreenPoint(Vector2 point)
         {
             //return Vector2((point.x * self.transform.scale.x - self.transform.position.x),

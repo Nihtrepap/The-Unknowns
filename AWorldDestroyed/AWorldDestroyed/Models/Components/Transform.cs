@@ -26,26 +26,23 @@ namespace AWorldDestroyed.Models.Components
         public float Rotation { get; set; }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified SceneObject reference.
+        /// Creates a new instance of Transform.
         /// </summary>
-        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         public Transform() : this(Vector2.Zero)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified SceneObject reference and position.
+        /// Creates a new instance of Transform, with the specified position.
         /// </summary>
-        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
         public Transform(Vector2 position) : this(position, Vector2.One, 0f)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified SceneObject reference, position, scale and rotation.
+        /// Creates a new instance of Transform, with the specified position, scale and rotation.
         /// </summary>
-        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
         /// <param name="scale">The scale of this Transform.</param>
         /// <param name="rotation">The rotation of this Transform.</param>
@@ -80,21 +77,12 @@ namespace AWorldDestroyed.Models.Components
                 if (AttachedTo?.Parent == null) return Position;
                 else
                 {
-                    //angle = (angle) * (Math.PI / 180); // Convert to radians
-                    //var rotatedX = Math.cos(angle) * (point.x - center.x) - Math.sin(angle) * (point.y-center.y) + center.x;
-                    //var rotatedY = Math.sin(angle) * (point.x - center.x) + Math.cos(angle) * (point.y - center.y) + center.y;
-
                     float angle = MathHelper.ToRadians(AttachedTo.Parent.Transform.WorldRotation);
                     Vector2 center = AttachedTo.Parent.Transform.WorldPosition;
                     Vector2 deltaPos =  Position;
 
                     float rotatedX = (float)(Math.Cos(angle) * deltaPos.X - Math.Sin(angle) * deltaPos.Y) + center.X;
                     float rotatedY = (float)(Math.Sin(angle) * deltaPos.X + Math.Cos(angle) * deltaPos.Y) + center.Y;
-
-                    //Vector2 center = AttachedTo.Parent.Transform.Position;
-
-                    //float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X); 
-                    //float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
 
                     return new Vector2(rotatedX, rotatedY);
                 }

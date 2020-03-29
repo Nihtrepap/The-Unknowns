@@ -53,8 +53,6 @@ namespace AWorldDestroyed.Models
             components = new List<Component>();
             
             AddComponent(Transform);
-
-            //Initialize();
         }
 
         /// <summary>
@@ -84,7 +82,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// ---
+        /// Used to initialize this object.
         /// </summary>
         public virtual void Initialize()
         {
@@ -147,14 +145,18 @@ namespace AWorldDestroyed.Models
             if (component is SpriteRenderer) HasSpriteRenderer = true;
         }
 
-        private bool HasComponent<T>() where T : Component
+        /// <summary>
+        /// Check if this object have a component of a specific type.
+        /// </summary>
+        /// <typeparam name="T">The type of component to for.</typeparam>
+        /// <returns>true if this object have a component of the specific type; false otherwise.</returns>
+        public bool HasComponent<T>() where T : Component
         {
             foreach (Component component in components)
                 if (component is T) return true;
         
             return false;
         }
-
 
         /// <summary>
         /// Try getting a object that is a child of this object with the specified name.
@@ -182,7 +184,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Mark this object and all its children for destruction. |P[
+        /// Mark this object and all its children for destruction.
         /// </summary>
         public void Destroy()
         {

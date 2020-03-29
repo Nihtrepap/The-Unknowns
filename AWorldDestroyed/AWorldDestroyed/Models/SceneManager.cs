@@ -37,7 +37,8 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Add a Scene object to the SceneManager.
+        /// Add a Scene object to the SceneManager with the specified name.
+        /// If it is the first scene to be added, then that scene will be used as the ActiveScene scene.
         /// </summary>
         /// <param name="name">A name by which to reference the Scene.</param>
         /// <param name="scene">The Scene to add.</param>
@@ -56,6 +57,7 @@ namespace AWorldDestroyed.Models
         public static Scene GetScene(string name)
         {
             if (scenes.ContainsKey(name)) return scenes[name];
+
             return null;
         }
 

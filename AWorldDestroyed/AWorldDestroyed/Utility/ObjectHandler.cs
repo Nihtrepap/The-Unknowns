@@ -35,10 +35,10 @@ namespace AWorldDestroyed.Utility
         }
 
         /// <summary>
-        /// 
+        /// Get all objects in the world within the provided range.
         /// </summary>
-        /// <param name="bounds"></param>
-        /// <returns></returns>
+        /// <param name="bounds">The area to get objects from.</param>
+        /// <returns>Returns all objects in the world that are within the provided range.</returns>
         public GameObject[] Query(RectangleF bounds) => quadTree.Query(bounds).ToArray();
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace AWorldDestroyed.Utility
         public void Update(double deltaTime, RectangleF bounds)
         {
             quadTree = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
-            foreach (var o in GameObjects)
+            foreach (GameObject obj in GameObjects)
             {
-                quadTree.Insert(o.Transform.WorldPosition, o);
+                quadTree.Insert(obj.Transform.WorldPosition, obj);
             }
 
             //TODO: Expand bounds
