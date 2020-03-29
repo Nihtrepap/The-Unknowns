@@ -43,9 +43,9 @@ namespace AWorldDestroyed.Models
         /// <param name="scene">The Scene to add.</param>
         public static void AddScene(string name, Scene scene)
         {
-            if (ActiveScene == null) ActiveScene = scene;
-
             scenes.Add(name, scene);
+
+            if (ActiveScene == null) ChangeScene(name);
         }
 
         /// <summary>
@@ -69,6 +69,7 @@ namespace AWorldDestroyed.Models
             {
                 sceneHistory.Push(scenes[name]);
                 ActiveScene = scenes[name];
+                ActiveScene.Initialize();
             }
         }
 

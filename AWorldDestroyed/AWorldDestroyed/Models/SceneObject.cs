@@ -54,7 +54,7 @@ namespace AWorldDestroyed.Models
             
             AddComponent(Transform);
 
-            Initialize();
+            //Initialize();
         }
 
         /// <summary>

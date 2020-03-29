@@ -65,13 +65,15 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Initializes all GameObjects and UIElements in this Scene.
         /// </summary>
-        public void Initialize()
+        public virtual void Initialize()
         {
             foreach (GameObject obj in gameObjects)
                 obj.Initialize();
 
             foreach (UIElement elem in uIElements)
                 elem.Initialize();
+
+            LoadContent();
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace AWorldDestroyed.Models
             foreach (GameObject obj in gameObjects)
                 objectHandler.AddObject(obj);
 
-            // TODO: add elem to a UIObjectManager
+            // TODO: add elem to a UIObjectHandler
             //foreach (UIElement elem in uIElements)
             //    elem.Initialize();
         }
@@ -139,7 +141,7 @@ namespace AWorldDestroyed.Models
         public void AddObject(GameObject gameObject)
         {
             if (gameObject == null || gameObjects.Contains(gameObject)) return;
-            
+
             gameObjects.Add(gameObject);
             objectHandler.AddObject(gameObject);
         }

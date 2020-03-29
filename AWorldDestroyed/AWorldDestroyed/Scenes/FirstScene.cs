@@ -16,6 +16,10 @@ namespace AWorldDestroyed.Scenes
     {
         public FirstScene(SpriteBatch spriteBatch) : base(spriteBatch)
         {
+        }
+
+        public override void Initialize()
+        {
             GameObject o = new GameObject();
             o.AddComponent(new SpriteRenderer(Game1.Sprite));
 
@@ -25,16 +29,19 @@ namespace AWorldDestroyed.Scenes
 
             CameraFollow = a;
 
+            AddObject(p);
+            AddObject(p2);
+            AddObject(a);
+            AddObject(o);
+
+            base.Initialize();
+
             p.GetComponent<SpriteRenderer>().Color = Color.Red;
             p.Transform.Rotation = 45;
             p2.Transform.Rotation = 45;
             p.AddChild(p2);
             a.AddChild(p);
 
-            AddObject(o);
-            AddObject(a);
-            AddObject(p);
-            AddObject(p2);
         }
     }
 
