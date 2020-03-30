@@ -38,12 +38,12 @@ namespace AWorldDestroyed.Utility
         }
 
         /// <summary>
-        /// Get the area this Camera sees.
+        /// Get the area that this Camera sees.
         /// </summary>
         public RectangleF View => new RectangleF(Transform.Position / Transform.Scale, ViewSize);
 
         /// <summary>
-        /// Get the translation matrix of this camera; containing information about the position, rotation and scale.
+        /// Get the translation matrix of this camera, containing information about the position, rotation and scale.
         /// </summary>
         /// <returns>A matrix that contains information about the position, rotation and scale of this camera.</returns>
         public Matrix GetTranslationMatrix()

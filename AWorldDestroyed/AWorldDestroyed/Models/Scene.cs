@@ -38,7 +38,7 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Creates a new instance of the Scene class, with the specified spriteBatch and a collection of GameObjects. 
         /// </summary>
-        /// <param name="spriteBatch">A MonoGame SpriteBatch for the camera.</param>
+        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
         /// <params name="gameObjects">A list of GameObjects this scene should start with.</param>
         public Scene(SpriteBatch spriteBatch, params GameObject[] gameObjects)
             : this(spriteBatch, new Vector2(800, 480), gameObjects)
@@ -48,7 +48,7 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Creates a new instance of the Scene class, with the specified spriteBatch, camera view size and a collection of GameObjects. 
         /// </summary>
-        /// <param name="spriteBatch">A MonoGame SpriteBatch for the camera.</param>
+        /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
         /// <param name="cameraViewSize">The view size of the camera in this Scene.</param>
         /// <params name="gameObjects">A list of GameObjects this scene should start with.</param>
         public Scene(SpriteBatch spriteBatch, Vector2 cameraViewSize, params GameObject[] gameObjects)

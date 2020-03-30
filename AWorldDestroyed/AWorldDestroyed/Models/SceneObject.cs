@@ -146,10 +146,10 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Check if this object have a component of a specific type.
+        /// Check if this object has a component of a specific type.
         /// </summary>
-        /// <typeparam name="T">The type of component to for.</typeparam>
-        /// <returns>true if this object have a component of the specific type; false otherwise.</returns>
+        /// <typeparam name="T">The type of component to check for.</typeparam>
+        /// <returns>true if this object has a component of the specific type, otherwise false.</returns>
         public bool HasComponent<T>() where T : Component
         {
             foreach (Component component in components)
@@ -159,7 +159,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Try getting a object that is a child of this object with the specified name.
+        /// Try getting an object that is a child of this object with the specified name.
         /// </summary>
         /// <param name="name">The name of the child to find.</param>
         /// <returns>The first child named name; null if no one was found.</returns>
@@ -171,7 +171,7 @@ namespace AWorldDestroyed.Models
         /// <summary>
         /// Adds a child to this object.
         /// </summary>
-        /// <param name="child">THe child to add.</param>
+        /// <param name="child">The child to add.</param>
         public void AddChild(SceneObject child)
         {
             if (child == null) return;

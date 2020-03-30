@@ -45,7 +45,7 @@ namespace AWorldDestroyed.Models.Components
         /// </summary>
         /// <param name="position">The position of this Transform.</param>
         /// <param name="scale">The scale of this Transform.</param>
-        /// <param name="rotation">The rotation of this Transform.</param>
+        /// <param name="rotation">The rotation of this Transform in degrees.</param>
         public Transform(Vector2 position, Vector2 scale, float rotation)
         {
             Position = position;

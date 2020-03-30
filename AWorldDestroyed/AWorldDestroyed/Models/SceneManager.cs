@@ -37,7 +37,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Add a Scene object to the SceneManager with the specified name.
+        /// Add a Scene object with a specified name to the SceneManager.
         /// If it is the first scene to be added, then that scene will be used as the ActiveScene scene.
         /// </summary>
         /// <param name="name">A name by which to reference the Scene.</param>
