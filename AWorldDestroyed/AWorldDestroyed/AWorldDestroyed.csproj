@@ -43,7 +43,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Models\Components\Animator.cs" />
+    <Compile Include="Models\Components\Script.cs" />
     <Compile Include="Scenes\FirstScene.cs" />
+    <Compile Include="Scripts\PlayerMovement.cs" />
     <Compile Include="Utility\Animation.cs" />
     <Compile Include="Models\Frame.cs" />
     <Compile Include="Models\BaseObject.cs" />

@@ -82,18 +82,15 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Used to initialize this object.
-        /// </summary>
-        public virtual void Initialize()
-        {
-        }
-
-        /// <summary>
         /// Used to update this object.
         /// </summary>
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public virtual void Update(double deltaTime)
         {
+            foreach (Component component in components)
+            {
+                if (component is Script script) script.Update(deltaTime);
+            }
         }
 
         /// <summary>

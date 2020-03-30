@@ -32,16 +32,14 @@ namespace AWorldDestroyed.Models
         protected SceneObject CameraFollow;
 
         private ObjectHandler objectHandler;
-        private List<GameObject> gameObjects;
-        private List<UIElement> uIElements;
+        //private UIObjectHandler uiObjectHandler;
+        private bool _initialized;
 
         /// <summary>
         /// Creates a new instance of the Scene class, with the specified spriteBatch and a collection of GameObjects. 
         /// </summary>
         /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
-        /// <params name="gameObjects">A list of GameObjects this scene should start with.</param>
-        public Scene(SpriteBatch spriteBatch, params GameObject[] gameObjects)
-            : this(spriteBatch, new Vector2(800, 480), gameObjects)
+        public Scene(SpriteBatch spriteBatch) : this(spriteBatch, new Vector2(800, 480))
         {
         }
 
@@ -50,46 +48,40 @@ namespace AWorldDestroyed.Models
         /// </summary>
         /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
         /// <param name="cameraViewSize">The view size of the camera in this Scene.</param>
-        /// <params name="gameObjects">A list of GameObjects this scene should start with.</param>
-        public Scene(SpriteBatch spriteBatch, Vector2 cameraViewSize, params GameObject[] gameObjects)
+        public Scene(SpriteBatch spriteBatch, Vector2 cameraViewSize)
         {
             SpriteBatch = spriteBatch;
 
             Camera = new Camera(cameraViewSize);
             objectHandler = new ObjectHandler();
-            this.gameObjects = new List<GameObject>();
-            this.uIElements = new List<UIElement>();
-
-            this.gameObjects.AddRange(gameObjects);
         }
 
+        public bool IsInitialized => _initialized;
+
         /// <summary>
-        /// Initializes all GameObjects and UIElements in this Scene.
+        /// Loads all GameObjects and UIElements in this Scene.
+        /// All subscenes must define a Load method, it should contain all subscene specific content.
         /// </summary>
-        public virtual void Initialize()
+        public abstract void Load();
+
+        /// <summary>
+        /// Perfom a first time setup of the Scene.
+        /// </summary>
+        public void Initialize()
         {
-            foreach (GameObject obj in gameObjects)
-                obj.Initialize();
-
-            foreach (UIElement elem in uIElements)
-                elem.Initialize();
-
-            LoadContent();
+            Load();
+            _initialized = true;
         }
 
         /// <summary>
-        /// Loads all GameObjects and UIElements to their respective handlers.
+        /// Removes all objects in this scene and then reinstantiates them.
         /// </summary>
-        public void LoadContent()
+        public void ReLoad()
         {
             objectHandler.GameObjects.Clear();
+            //uiObjectHandler.UIObjects.Clear();
 
-            foreach (GameObject obj in gameObjects)
-                objectHandler.AddObject(obj);
-
-            // TODO: add elem to a UIObjectHandler
-            //foreach (UIElement elem in uIElements)
-            //    elem.Initialize();
+            Load();
         }
 
         /// <summary>
@@ -112,7 +104,11 @@ namespace AWorldDestroyed.Models
             SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, 
                 null, null, Camera.GetTranslationMatrix());
 
-            SpriteBatch.Draw(Game1.Pixel, new Rectangle(-1000, -1000, 2000, 2000), Color.White);
+            for (int i = 0; i < 50; i++)
+            {
+                SpriteBatch.Draw(Game1.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
+                SpriteBatch.Draw(Game1.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
+            }
 
             foreach (GameObject obj in gameObjects)
             {
@@ -144,10 +140,15 @@ namespace AWorldDestroyed.Models
         /// <param name="gameObject">The GameObject to add.</param>
         public void AddObject(GameObject gameObject)
         {
-            if (gameObject == null || gameObjects.Contains(gameObject)) return;
+            if (gameObject == null || objectHandler.GameObjects.Contains(gameObject)) return;
 
-            gameObjects.Add(gameObject);
+            //gameObjects.Add(gameObject);
             objectHandler.AddObject(gameObject);
+
+            foreach (GameObject obj in gameObject.Children)
+            {
+                AddObject(obj);
+            }
         }
 
         /// <summary>
@@ -156,10 +157,11 @@ namespace AWorldDestroyed.Models
         /// <param name="uIElement">The UIElement to add.</param>
         public void AddUIObject(UIElement uIElement)
         {
-            if (uIElement == null || uIElements.Contains(uIElement))
-                return;
+            // Need UIHandler.
+            //if (uIElement == null || uIElements.Contains(uIElement))
+            //    return;
 
-            uIElements.Add(uIElement);
+            //uIElements.Add(uIElement);
         }
     }
 }

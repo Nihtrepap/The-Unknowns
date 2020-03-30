@@ -71,7 +71,9 @@ namespace AWorldDestroyed.Models
             {
                 sceneHistory.Push(scenes[name]);
                 ActiveScene = scenes[name];
-                ActiveScene.Initialize();
+
+                if (!ActiveScene.IsInitialized)
+                    ActiveScene.Initialize();
             }
         }
 
@@ -89,7 +91,8 @@ namespace AWorldDestroyed.Models
         /// <param name="name">A name that references the Scene.</param>
         public static void ResetScene(string name)
         {
-            throw new NotImplementedException();
+            if (scenes.ContainsKey(name))
+                ActiveScene.ReLoad();
         }
     }
 }
