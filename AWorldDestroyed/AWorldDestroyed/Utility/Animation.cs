@@ -26,6 +26,7 @@ namespace AWorldDestroyed.Utility
         private Frame[] frames;
         private double timer;
         private int currentFrameIndex;
+        public bool Done { get; private set; }
 
         /// <summary>
         /// Create new instance of Animation class with given animation frames.
@@ -41,7 +42,7 @@ namespace AWorldDestroyed.Utility
         /// Creates a new instance of Animation from a given array of Sprites and a varable number of durations.
         /// </summary>
         /// <param name="sprites">An array of Sprites to use in the animation.</param>
-        /// <param name="durations">The durations each frame should play, if sprites excede durations remaning sprites get the last duration value.</param>
+        /// <param name="durations">The durations in milliseconds each frame should play, if sprites excede durations remaning sprites get the last duration value.</param>
         public Animation(Sprite[] sprites, params int[] durations)
         {
             frames = new Frame[sprites.Length];
@@ -51,19 +52,31 @@ namespace AWorldDestroyed.Utility
             {
                 frames[i] = new Frame(sprites[i], (durations.Length > i ? durations[i] : durations[durations.Length - 1]));
             }
-            
+
+            Loop = true;
         }
 
         /// <summary>
         /// This method is used to update the animation.
         /// </summary>
-        /// <param name="deltaTime">Time in milliseconds since last update</param>
+        /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
-           // _timer += deltaTime;
-            //if(_timer > frames.)
+            if (Done) return;
 
-            throw new NotImplementedException();
+            timer += deltaTime;
+            if(timer > frames[currentFrameIndex].Duration)
+            {
+                timer = 0;
+                currentFrameIndex++;
+
+                if (currentFrameIndex >= frames.Length)
+                {
+                    if (Loop)
+                        currentFrameIndex = 0;
+                    else Done = true;
+                }
+            }
         }
 
         /// <summary>
@@ -73,6 +86,13 @@ namespace AWorldDestroyed.Utility
         public Sprite GetCurrentFrameSprite()
         {
             return frames[currentFrameIndex].Sprite;
+        }
+
+        public void Reset()
+        {
+            currentFrameIndex = 0;
+            timer = 0;
+            Done = false;
         }
     }
 }

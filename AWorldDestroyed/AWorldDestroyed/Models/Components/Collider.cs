@@ -20,6 +20,7 @@ namespace AWorldDestroyed.Models.Components
     /// </summary>
     class Collider : Component
     {
+        public bool IsTrigger { get; set; }
         public Vector2 Size { get; set; }
         public Vector2 Offset { get; set; }
 

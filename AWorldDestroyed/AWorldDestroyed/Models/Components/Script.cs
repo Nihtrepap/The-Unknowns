@@ -19,6 +19,8 @@ namespace AWorldDestroyed.Models.Components
         {
         }
 
+        //public abstract void Initialize();
+
         public abstract void Update(double deltaTime);
 
         public abstract override Component Copy();

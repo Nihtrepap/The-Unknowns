@@ -60,8 +60,8 @@ namespace AWorldDestroyed.Models.Components
         {
             get
             {
-                float x = (float)Math.Cos(Rotation);
-                float y = (float)Math.Sin(Rotation);
+                float x = (float)Math.Cos(MathHelper.ToRadians(Rotation));
+                float y = (float)Math.Sin(MathHelper.ToRadians(Rotation));
 
                 return new Vector2(x, y);
             }

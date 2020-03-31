@@ -2,25 +2,43 @@
 using AWorldDestroyed.Models.Components;
 using AWorldDestroyed.Utility;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace AWorldDestroyed.Scripts
 {
     class PlayerMovement : Script
     {
+        //SpriteRenderer renderer;
+        RigidBody rb;
+
+        //public override void Initialize()
+        //{
+        //}
+
         public override void Update(double deltaTime)
         {
-            float speed = 1f;
-            if (InputManager.IsKeyPressed(Keys.D))
-                AttachedTo.Transform.Translate(new Vector2(1, 0) * speed * (float)deltaTime);
-            if (InputManager.IsKeyPressed(Keys.A))
-                AttachedTo.Transform.Translate(new Vector2(-1, 0) * speed * (float)deltaTime);
-            if (InputManager.IsKeyPressed(Keys.W))
-                AttachedTo.Transform.Translate(new Vector2(0, -1) * speed * (float)deltaTime);
-            if (InputManager.IsKeyPressed(Keys.S))
-                AttachedTo.Transform.Translate(new Vector2(0, 1) * speed * (float)deltaTime);
+            if (rb == null) rb = AttachedTo.GetComponent<RigidBody>();
 
-            if (InputManager.IsKeyPressed(Keys.Space))
+            float speed = 0.4f;
+            rb.Velocity = Vector2.Zero;
+            if (InputManager.IsKeyPressed(Keys.Right))
+            {
+                AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.None;
+                rb.Velocity += new Vector2(1, 0) * speed;
+            }
+            if (InputManager.IsKeyPressed(Keys.Left))
+            {
+                if (!InputManager.IsKeyPressed(Keys.LeftShift))
+                    AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.FlipHorizontally;
+                rb.Velocity += new Vector2(-1, 0) * speed;
+            }
+            if (InputManager.IsKeyPressed(Keys.Up))
+                rb.Velocity += new Vector2(0, -1) * speed;
+            if (InputManager.IsKeyPressed(Keys.Down))
+                rb.Velocity += new Vector2(0, 1) * speed;
+
+            if (InputManager.IsKeyPressed(Keys.RightShift))
                 AttachedTo.Transform.Translate(AttachedTo.Transform.Forward * speed * (float)deltaTime);
 
             if (InputManager.IsKeyPressed(Keys.PageDown))

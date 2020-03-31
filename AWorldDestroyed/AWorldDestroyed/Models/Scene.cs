@@ -101,7 +101,7 @@ namespace AWorldDestroyed.Models
         {
             GameObject[] gameObjects = objectHandler.Query(Camera.View);
 
-            SpriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, 
+            SpriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp, null, 
                 null, null, Camera.GetTranslationMatrix());
 
             for (int i = 0; i < 50; i++)

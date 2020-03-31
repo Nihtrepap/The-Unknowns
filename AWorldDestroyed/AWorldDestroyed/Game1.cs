@@ -13,6 +13,8 @@ namespace AWorldDestroyed
     public class Game1 : Game
     {
         public static Sprite Sprite;
+        public static Sprite Sprite2;
+        public static Texture2D TestTileset;
         public static Texture2D Pixel;
 
         GraphicsDeviceManager graphics;
@@ -44,9 +46,14 @@ namespace AWorldDestroyed
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Sprite2 = new Sprite(Content.Load<Texture2D>("Sprites/Enemy/Monster"),
+                new Rectangle(0, 0, 85, 92));
 
             Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
                 new Rectangle(0, 0, 42, 72));
+
+            TestTileset = Content.Load<Texture2D>("Sprites/Tiles/TestTiles");
+
             Pixel = new Texture2D(GraphicsDevice, 1, 1);
             Color[] data = { Color.White };
             Pixel.SetData(data);

@@ -34,19 +34,19 @@ namespace AWorldDestroyed.Models.Components
         /// </summary>
         public SpriteRenderer()
         {
+            Color = Color.White;
+            SortingOrder = 0;
+            SortingLayer = (SortingLayer)Enum.Parse(typeof(SortingLayer), "Default");
+            SpriteEffect = SpriteEffects.None;
         }
 
         /// <summary>
         /// Create a new SpriteRenderer instance with a specified sprite.
         /// </summary>
         /// <param name="sprite">The sprite this SpriteRenderer will hold.</param>
-        public SpriteRenderer(Sprite sprite)
+        public SpriteRenderer(Sprite sprite) : this()
         {
             Sprite = sprite;
-            Color = Color.White;
-            SortingOrder = 0;
-            SortingLayer = (SortingLayer)Enum.Parse(typeof(SortingLayer), "Default");
-            SpriteEffect = SpriteEffects.None;
         }
 
         /// <summary>

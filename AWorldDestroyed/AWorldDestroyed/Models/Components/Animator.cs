@@ -41,16 +41,26 @@ namespace AWorldDestroyed.Models.Components
         /// <param name="deltaTime">Time in milliseconds since last update</param>
         public void Update(double deltaTime)
         {
-            throw new NotImplementedException();
+            if (currentAnimation != null)
+            {
+                currentAnimation.Update(deltaTime);
+                if (!currentAnimation.Done)
+                    AttachedTo.GetComponent<SpriteRenderer>().Sprite = currentAnimation.GetCurrentFrameSprite();
+            }
         }
+
         /// <summary>
         /// Start an animation or switch which one is playing.
         /// </summary>
         /// <param name="name">Name of animation to play.</param>
-        public void Play(string name)
+        public void ChangeAnimation(string name)
         {
             if (!animations.ContainsKey(name))
                 throw new ArgumentException($"Animator has no Animation {name}.");
+
+            if (currentAnimation != animations[name])
+                animations[name].Reset();
+
             currentAnimation = animations[name];
         }
 
@@ -58,7 +68,7 @@ namespace AWorldDestroyed.Models.Components
         /// Adds animation into animator.
         /// </summary>
         /// <param name="animation">Animation object</param>
-        public void Add(string name, Animation animation)
+        public void AddAnimation(string name, Animation animation)
         {
             animations[name] = animation;
             if (currentAnimation == null) currentAnimation = animation;
