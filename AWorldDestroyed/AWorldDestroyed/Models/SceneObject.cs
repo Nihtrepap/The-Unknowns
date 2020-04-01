@@ -95,6 +95,20 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">The type of component to retrieve.</typeparam>
+        /// <returns>.</returns>
+        public List<T> GetComponents<T>() where T : Component
+        {
+            List<T> a = new List<T>();
+            foreach (Component component in components)
+                if (component is T comp) a.Add(comp);
+
+            return a;
+        }
+
+        /// <summary>
         /// Try getting a component that is attached to this object of the specified Type.
         /// </summary>
         /// <typeparam name="T">The type of component to retrieve.</typeparam>

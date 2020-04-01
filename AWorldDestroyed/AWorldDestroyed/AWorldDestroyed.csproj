@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Map\MapData.cs" />
     <Compile Include="Models\Components\Animator.cs" />
     <Compile Include="Models\Components\Script.cs" />
     <Compile Include="Scenes\FirstScene.cs" />
@@ -79,6 +80,7 @@
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />

@@ -26,6 +26,7 @@ namespace AWorldDestroyed.Models
     /// </summary>
     public abstract class Scene
     {
+        public bool Debug { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
 
         protected Camera Camera;
@@ -128,10 +129,44 @@ namespace AWorldDestroyed.Models
                         obj.Transform.Scale,
                         renderer.SpriteEffect,
                         sortingOrder);
+
+                    if (Debug)
+                    {
+                        if (obj.Name == "tile")
+                        {
+
+                        }
+                        foreach (Collider collider in obj.GetComponents<Collider>())
+                        {
+                            SpriteBatch.Draw(
+                                Game1.Pixel,
+                                (Rectangle)collider.GetRectangle(),
+                                null,
+                                Color.Red * 0.3f,
+                                0f,
+                                Vector2.Zero,
+                                SpriteEffects.None,
+                                sortingOrder + 0.0001f);
+                        }
+                    }
+
+                    OnObjectDraw(obj);
                 }
             }
 
             SpriteBatch.End();
+
+            SpriteBatch.Begin();
+            OnGUIDraw();
+            SpriteBatch.End();
+        }
+
+        protected virtual void OnGUIDraw()
+        {
+        }
+
+        protected virtual void OnObjectDraw(GameObject gameObject)
+        {
         }
 
         /// <summary>

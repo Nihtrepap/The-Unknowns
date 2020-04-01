@@ -40,8 +40,8 @@ namespace AWorldDestroyed.Models.Components
         /// <returns>Floating point 2D-rectangle.</returns>
         public RectangleF GetRectangle()
         {
-            Vector2 position = AttachedTo.Transform.Position + Offset;
-            return new RectangleF(position, Size);
+            Vector2 position = AttachedTo.Transform.WorldPosition + Offset;
+            return new RectangleF(position, Size * AttachedTo.Transform.Scale);
         }
 
         /// <summary>

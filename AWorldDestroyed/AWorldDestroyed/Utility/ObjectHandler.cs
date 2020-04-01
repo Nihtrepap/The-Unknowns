@@ -65,23 +65,34 @@ namespace AWorldDestroyed.Utility
                 obj.Update(deltaTime);
             }
 
-            for (int i = 0; i < objects.Length; i++)
+            //QuadTree<GameObject> c = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
+
+            // Collision handling.
+            foreach (GameObject mainObject in objects)
             {
-                GameObject mainObject = objects[i];
                 if (mainObject.HasCollider)
                 {
-                    for (int j = i; j < objects.Length; j++)
+                    foreach (Collider collider in mainObject.GetComponents<Collider>())
                     {
-                        if (mainObject == objects[j] ||
-                            !objects[j].HasCollider) continue;
+                        RectangleF objColRange = collider.GetRectangle();
+                        List<GameObject> nearby = quadTree.Query(new RectangleF(
+                            objColRange.X - objColRange.Width,
+                            objColRange.Y - objColRange.Height,
+                            objColRange.Width * 3,
+                            objColRange.Height * 3));
 
-                        if (mainObject.HasComponent<RigidBody>())
+                        foreach (GameObject other in nearby)
                         {
-                            ResolveCollision(mainObject, objects[j]);
-                        }
-                        else if (objects[j].HasComponent<RigidBody>())
-                        {
-                            ResolveCollision(objects[j], mainObject);
+                            if (mainObject == other ||
+                                !other.HasCollider) continue;
+
+                            foreach (Collider otherCollider in other.GetComponents<Collider>())
+                            {
+                                if (mainObject.HasComponent<RigidBody>())
+                                    ResolveCollision(mainObject, other, collider, otherCollider);
+                                //else if (other.HasComponent<RigidBody>())
+                                //    ResolveCollision(other, mainObject, otherCollider, collider);
+                            }
                         }
                     }
                 }
@@ -124,13 +135,13 @@ namespace AWorldDestroyed.Utility
                 && obj.Left < other.Right;
         }
 
-        private void ResolveCollision(GameObject obj, GameObject other)
+        private void ResolveCollision(GameObject obj, GameObject other, Collider objCollider, Collider otherCollider)
         {
             //if (!obj.HasCollider || !other.colliderEnabled || !other.alive) return;
 
             RigidBody objRigidbody = obj.GetComponent<RigidBody>();
-            Collider objCollider = obj.GetComponent<Collider>();
-            Collider otherCollider = other.GetComponent<Collider>();
+            //Collider objCollider = obj.GetComponent<Collider>();
+            //Collider otherCollider = other.GetComponent<Collider>();
 
             // when moving Down and hits another objects Top side
             if (objRigidbody.Velocity.Y > 0 && IsTouchingTop(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
