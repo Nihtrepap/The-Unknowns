@@ -57,11 +57,31 @@ namespace AWorldDestroyed.Map
         public int Height;
 
         [XmlElement("data")]
-        public string Data;
-        //public int[] Data;
+        public string rawData;
+
+        private int[] _data;
 
         public Layer()
         {
+            
+        }
+
+        public int[] Data
+        {
+            get => Array.ConvertAll(rawData.Split(','), s => int.Parse(s));
         }
     }
+
+    //[XmlRoot("data")]
+    //public class Data
+    //{
+    //    [XmlElement("data")]
+    //    public string rawData;
+    //    public int[] 
+
+    //    public Data()
+    //    {
+
+    //    }
+    //}
 }
