@@ -20,8 +20,7 @@ namespace AWorldDestroyed.Map
         [XmlAttribute("tileheight")]
         public int Tileheight;
 
-        [XmlArray("map")]
-        [XmlArrayItem("layer")]
+        [XmlElement("layer")]
         public Layer[] Layers;
 
         public Map()
@@ -45,6 +44,7 @@ namespace AWorldDestroyed.Map
     }
 
     [Serializable]
+    [XmlRoot("layer")]
     public class Layer
     {
         [XmlAttribute("name")]
@@ -56,8 +56,9 @@ namespace AWorldDestroyed.Map
         [XmlAttribute("height")]
         public int Height;
 
-        [XmlAttribute("data")]
-        public int[] Data;
+        [XmlElement("data")]
+        public string Data;
+        //public int[] Data;
 
         public Layer()
         {
