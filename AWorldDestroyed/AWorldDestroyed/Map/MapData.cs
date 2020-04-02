@@ -9,7 +9,7 @@ namespace AWorldDestroyed.Map
 {
     [Serializable]
     [XmlRoot("map")]
-    public class Map
+    public class MapData
     {
         [XmlAttribute("width")]
         public int Width;
@@ -23,24 +23,12 @@ namespace AWorldDestroyed.Map
         [XmlElement("layer")]
         public Layer[] Layers;
 
-        public Map()
+        [XmlElement("tileset")]
+        public TileSet[] TileSets;
+
+        public MapData()
         {
         }
-        //public MapData(string name, Model.Tile[,] mapdata)
-        //{
-        //    Name = name;
-
-        //    Width = mapdata.GetLength(1);
-        //    Height = mapdata.GetLength(0);
-
-        //    Data = new string[Height][];
-        //    for (int i = 0; i < Height; i++)
-        //        Data[i] = new string[Width];
-
-        //    for (int y = 0; y < Height; y++)
-        //        for (int x = 0; x < Width; x++)
-        //            Data[y][x] = mapdata[y, x].Name;
-        //}
     }
 
     [Serializable]
@@ -63,25 +51,24 @@ namespace AWorldDestroyed.Map
 
         public Layer()
         {
-            
         }
 
         public int[] Data
         {
-            get => Array.ConvertAll(rawData.Split(','), s => int.Parse(s));
+            get
+            {
+                if (_data == null) return _data = Array.ConvertAll(rawData.Split(','), s => int.Parse(s));
+                else return _data;
+            }
         }
     }
 
-    //[XmlRoot("data")]
-    //public class Data
-    //{
-    //    [XmlElement("data")]
-    //    public string rawData;
-    //    public int[] 
+    public class TileSet
+    {
+        [XmlAttribute("firstgid")]
+        public int FirstGId;
 
-    //    public Data()
-    //    {
-
-    //    }
-    //}
+        [XmlAttribute("source")]
+        public string Source;
+    }
 }

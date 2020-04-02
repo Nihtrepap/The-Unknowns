@@ -18,7 +18,6 @@ namespace AWorldDestroyed.Scenes
         {
         }
 
-
         //Skapa en TileMap
         //XmlSerializer serializer = new XmlSerializer(typeof(MapData));
         //using (FileStream fs = new FileStream("testXml.xml", FileMode.Create, FileAccess.Write))
@@ -30,10 +29,10 @@ namespace AWorldDestroyed.Scenes
             Debug = true;
 
             // Read a TileMap
-            XmlSerializer serializer = new XmlSerializer(typeof(Map.Map));
+            XmlSerializer serializer = new XmlSerializer(typeof(MapData));
             using (FileStream fs = new FileStream(@"..\..\..\..\Content\Maps\Map1.xml", FileMode.Open, FileAccess.Read))
             {
-                Map.Map map = serializer.Deserialize(fs) as Map.Map;
+                MapData map = serializer.Deserialize(fs) as MapData;
             }
             //XElement map = XElement.Load(@"..\..\..\..\Content\Maps\Map1.xml");
             //map.

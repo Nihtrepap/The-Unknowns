@@ -20,6 +20,7 @@ namespace AWorldDestroyed.Utility
     /// </summary>
     public enum SortingLayer
     {
+        Map,
         Default, // Default sortingLayer.
         // Add values here.
     }
