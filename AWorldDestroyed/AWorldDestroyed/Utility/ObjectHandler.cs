@@ -70,16 +70,16 @@ namespace AWorldDestroyed.Utility
             // Collision handling.
             foreach (GameObject mainObject in objects)
             {
-                if (mainObject.HasCollider)
+                if (mainObject.HasCollider && mainObject.HasComponent<RigidBody>())
                 {
                     foreach (Collider collider in mainObject.GetComponents<Collider>())
                     {
                         RectangleF objColRange = collider.GetRectangle();
                         List<GameObject> nearby = quadTree.Query(new RectangleF(
-                            objColRange.X - objColRange.Width,
-                            objColRange.Y - objColRange.Height,
-                            objColRange.Width * 3,
-                            objColRange.Height * 3));
+                            objColRange.X - (2 * 32),
+                            objColRange.Y - (2 * 32),
+                            objColRange.Width + (4 * 32),
+                            objColRange.Height + (4 * 32)));
 
                         foreach (GameObject other in nearby)
                         {
@@ -88,8 +88,7 @@ namespace AWorldDestroyed.Utility
 
                             foreach (Collider otherCollider in other.GetComponents<Collider>())
                             {
-                                if (mainObject.HasComponent<RigidBody>())
-                                    ResolveCollision(mainObject, other, collider, otherCollider);
+                                 ResolveCollision(mainObject, other, collider, otherCollider);
                                 //else if (other.HasComponent<RigidBody>())
                                 //    ResolveCollision(other, mainObject, otherCollider, collider);
                             }
@@ -143,53 +142,6 @@ namespace AWorldDestroyed.Utility
             //Collider objCollider = obj.GetComponent<Collider>();
             //Collider otherCollider = other.GetComponent<Collider>();
 
-            // when moving Down and hits another objects Top side
-            if (objRigidbody.Velocity.Y > 0 && IsTouchingTop(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
-            {
-                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
-                {
-                    obj.Transform.Position = new Vector2(
-                        obj.Transform.Position.X,
-                        otherCollider.GetRectangle().Top - objCollider.Size.Y - objCollider.Offset.Y);
-
-                    objRigidbody.Velocity *= Vector2.UnitX;
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
-                }
-                else
-                {
-                    if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
-
-                    if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
-                }
-            }
-            // when moving Up and hits another objects Bottom side
-            else if (objRigidbody.Velocity.Y < 0 && IsTouchingBottom(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
-            {
-                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
-                {
-                    obj.Transform.Position = new Vector2(
-                        obj.Transform.Position.X,
-                        otherCollider.GetRectangle().Bottom - objCollider.Offset.Y);
-
-                    objRigidbody.Velocity *= Vector2.UnitX;
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
-                }
-                else
-                {
-                    if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
-
-                    if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
-                }
-            }
-
             //// when moving Right and hits another objects Left side
             if (objRigidbody.Velocity.X > 0 && IsTouchingLeft(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
             {
@@ -237,6 +189,55 @@ namespace AWorldDestroyed.Utility
                         other.OnTrigger(obj);
                 }
             }
+
+            // when moving Down and hits another objects Top side
+            if (objRigidbody.Velocity.Y > 0 && IsTouchingTop(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
+            {
+                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
+                {
+                    obj.Transform.Position = new Vector2(
+                        obj.Transform.Position.X,
+                        otherCollider.GetRectangle().Top - objCollider.Size.Y - objCollider.Offset.Y);
+
+                    objRigidbody.Velocity *= Vector2.UnitX;
+
+                    obj.OnCollision(other);
+                    other.OnCollision(obj);
+                }
+                else
+                {
+                    if (objCollider.IsTrigger)
+                        obj.OnTrigger(other);
+
+                    if (otherCollider.IsTrigger)
+                        other.OnTrigger(obj);
+                }
+            }
+            // when moving Up and hits another objects Bottom side
+            else if (objRigidbody.Velocity.Y < 0 && IsTouchingBottom(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
+            {
+                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
+                {
+                    obj.Transform.Position = new Vector2(
+                        obj.Transform.Position.X,
+                        otherCollider.GetRectangle().Bottom - objCollider.Offset.Y);
+
+                    objRigidbody.Velocity *= Vector2.UnitX;
+
+                    obj.OnCollision(other);
+                    other.OnCollision(obj);
+                }
+                else
+                {
+                    if (objCollider.IsTrigger)
+                        obj.OnTrigger(other);
+
+                    if (otherCollider.IsTrigger)
+                        other.OnTrigger(obj);
+                }
+            }
+            
+
 
         }
         /// <summary>

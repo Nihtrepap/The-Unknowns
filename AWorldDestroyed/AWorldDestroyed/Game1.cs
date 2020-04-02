@@ -16,6 +16,7 @@ namespace AWorldDestroyed
         public static Sprite Sprite2;
         public static Texture2D TestTileset;
         public static Texture2D Pixel;
+        public static Texture2D TileSet_01;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -45,6 +46,10 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void LoadContent()
         {
+            ContentManager.Init(Content, GraphicsDevice);
+            ContentManager.AddTexture("TileSet_01", "Sprites/Tiles/TileSet_01");
+
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprite2 = new Sprite(Content.Load<Texture2D>("Sprites/Enemy/Monster"),
                 new Rectangle(0, 0, 85, 92));
@@ -52,7 +57,13 @@ namespace AWorldDestroyed
             Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
                 new Rectangle(0, 0, 42, 72));
 
-            TestTileset = Content.Load<Texture2D>("Sprites/Tiles/TestTiles");
+            //TestTileset = Content.Load<Texture2D>("Sprites/Tiles/TestTiles");
+            //XmlSerializer serializer = new XmlSerializer(typeof(MapData));
+            //using (FileStream fs = new FileStream(@"..\..\..\..\Content\Maps\Map_01.xml", FileMode.Open, FileAccess.Read))
+            //{
+            //    MapData map = serializer.Deserialize(fs) as MapData;
+            //}
+            TileSet_01 = Content.Load<Texture2D>("Sprites/Tiles/TileSet_01");
 
             Pixel = new Texture2D(GraphicsDevice, 1, 1);
             Color[] data = { Color.White };
@@ -77,6 +88,7 @@ namespace AWorldDestroyed
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update();
+            Window.Title = (1000f / gameTime.ElapsedGameTime.TotalMilliseconds).ToString();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
                 || Keyboard.GetState().IsKeyDown(Keys.Escape))

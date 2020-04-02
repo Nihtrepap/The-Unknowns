@@ -15,6 +15,7 @@ namespace AWorldDestroyed.Scripts
         //public override void Initialize()
         //{
         //}
+        float acc = 0;
 
         public override void Update(double deltaTime)
         {
@@ -38,6 +39,12 @@ namespace AWorldDestroyed.Scripts
             if (InputManager.IsKeyPressed(Keys.Down))
                 rb.Velocity += new Vector2(0, 1) * speed;
 
+            if (InputManager.IsKeyPressed(Keys.Space))
+            {
+                acc = -1f;
+            }
+                rb.Velocity += new Vector2(0, 1) * speed;
+
             if (InputManager.IsKeyPressed(Keys.RightShift))
                 AttachedTo.Transform.Translate(AttachedTo.Transform.Forward * speed * (float)deltaTime);
 
@@ -45,6 +52,9 @@ namespace AWorldDestroyed.Scripts
                 AttachedTo.Transform.Rotation -= speed * 5;
             if (InputManager.IsKeyPressed(Keys.PageUp))
                 AttachedTo.Transform.Rotation += speed * 5;
+
+            acc += 0.005f;
+            rb.Velocity += new Vector2(0, acc);
         }
 
         public override Component Copy()

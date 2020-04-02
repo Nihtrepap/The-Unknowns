@@ -28,14 +28,33 @@ namespace AWorldDestroyed.Scenes
         {
             Debug = true;
 
-            // Read a TileMap
-            XmlSerializer serializer = new XmlSerializer(typeof(MapData));
-            using (FileStream fs = new FileStream(@"..\..\..\..\Content\Maps\Map1.xml", FileMode.Open, FileAccess.Read))
+            //// Read a TileMap
+            //XmlSerializer serializer = new XmlSerializer(typeof(MapData));
+            //using (FileStream fs = new FileStream(@"..\..\..\..\Content\Maps\Map_01.xml", FileMode.Open, FileAccess.Read))
+            //{
+            //    MapData map = serializer.Deserialize(fs) as MapData;
+            //}
+            MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_01.xml");
+
+            Texture2D spriteSheet = ContentManager.Load<Texture2D>(@"..\..\..\..\Content\Sprites\Tiles\" + Path.GetFileNameWithoutExtension(mapData.TileSets[0].Source));
+            Point tileSize = new Point(mapData.TileWidth, mapData.TileHeight);
+            for (int i = 0; i < mapData.Layers.Length; i++)
             {
-                MapData map = serializer.Deserialize(fs) as MapData;
+                int soringOrder = i;
+                bool solid = (i == 2);
+                foreach (GameObject tile in MapLoader.LoadLayer(mapData.Layers[i], spriteSheet, tileSize, SortingLayer.Map, soringOrder, solid, new Vector2(-920, -100)))
+                {
+                    AddObject(tile);
+                }
             }
-            //XElement map = XElement.Load(@"..\..\..\..\Content\Maps\Map1.xml");
-            //map.
+
+            //GameObject a = new GameObject();
+            //SpriteRenderer b = new SpriteRenderer
+            //{
+            //    Sprite = new Sprite(Game1.TileSet_01)
+            //};
+            //a.AddComponent(b);
+            //AddObject(a);
 
             Player p = new Player();
             AddObject(p);
@@ -44,22 +63,37 @@ namespace AWorldDestroyed.Scenes
             //AddObject(e);
             CameraFollow = p;
 
-            for (int i = 0; i < 20; i++)
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    //for (int j = 0; j < 10; j++)
+            //    //{
+            //    GameObject tile = new GameObject();
+            //    tile.AddComponent(new Collider(new Vector2(32, 32)));
+            //    SpriteRenderer renderer = new SpriteRenderer
+            //    {
+            //        SortingOrder = -1,
+            //        Sprite = new Sprite(Game1.TestTileset, new Rectangle(103, 20, 32, 32))
+            //    };
+            //    tile.AddComponent(renderer);
+            //    tile.Transform.Position = new Vector2(i * 32, 32);
+            //    tile.Name = "tile";
+            //    AddObject(tile);
+            //    //}
+            //}
+        }
+
+        protected override void OnObjectDraw(GameObject gameObject, float sortingOrder)
+        {
+            if (gameObject.HasComponent<RigidBody>())
             {
-                //for (int j = 0; j < 10; j++)
-                //{
-                GameObject tile = new GameObject();
-                tile.AddComponent(new Collider(new Vector2(32, 32)));
-                SpriteRenderer renderer = new SpriteRenderer
-                {
-                    SortingOrder = -1,
-                    Sprite = new Sprite(Game1.TestTileset, new Rectangle(103, 20, 32, 32))
-                };
-                tile.AddComponent(renderer);
-                tile.Transform.Position = new Vector2(i * 32, 32);
-                tile.Name = "tile";
-                AddObject(tile);
-                //}
+                RectangleF objColRange = gameObject.GetComponent<Collider>().GetRectangle();
+                RectangleF col = new RectangleF(
+                            objColRange.X - (2 * 32),
+                            objColRange.Y - (2 * 32),
+                            objColRange.Width + (4 * 32),
+                            objColRange.Height + (4 * 32));
+
+                SpriteBatch.Draw(Game1.Pixel, (Rectangle)col, null, Color.BlueViolet * 0.6f, 0f, Vector2.Zero, SpriteEffects.None, sortingOrder);
             }
         }
 
@@ -89,7 +123,7 @@ namespace AWorldDestroyed.Scenes
             rb.Name = "Rb";
             AddComponent(rb);
             AddComponent<PlayerMovement>();
-            AddComponent(new Collider(new Vector2(42, 72)) { Name = "Collider"});
+            AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset=new Vector2(16, 5)});
 
             animator = new Animator();
             animator.Name = "anmimatort";
@@ -103,6 +137,7 @@ namespace AWorldDestroyed.Scenes
 
         public override void Update(double deltaTime)
         {
+            //rb.Velocity += new Vector2(0, 0.5f);
 
             base.Update(deltaTime);
         }

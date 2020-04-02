@@ -16,9 +16,9 @@ namespace AWorldDestroyed.Map
         [XmlAttribute("height")]
         public int Height;
         [XmlAttribute("tilewidth")]
-        public int Tilewidth;
+        public int TileWidth;
         [XmlAttribute("tileheight")]
-        public int Tileheight;
+        public int TileHeight;
 
         [XmlElement("layer")]
         public Layer[] Layers;

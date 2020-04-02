@@ -132,10 +132,6 @@ namespace AWorldDestroyed.Models
 
                     if (Debug)
                     {
-                        if (obj.Name == "tile")
-                        {
-
-                        }
                         foreach (Collider collider in obj.GetComponents<Collider>())
                         {
                             SpriteBatch.Draw(
@@ -150,7 +146,7 @@ namespace AWorldDestroyed.Models
                         }
                     }
 
-                    OnObjectDraw(obj);
+                    OnObjectDraw(obj, sortingOrder);
                 }
             }
 
@@ -165,7 +161,7 @@ namespace AWorldDestroyed.Models
         {
         }
 
-        protected virtual void OnObjectDraw(GameObject gameObject)
+        protected virtual void OnObjectDraw(GameObject gameObject, float sortingOrder)
         {
         }
 

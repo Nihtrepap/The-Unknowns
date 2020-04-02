@@ -42,6 +42,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Map\Level.cs" />
     <Compile Include="Map\MapData.cs" />
     <Compile Include="Models\Components\Animator.cs" />
     <Compile Include="Models\Components\Script.cs" />
@@ -52,6 +53,8 @@
     <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Models\GameObject.cs" />
+    <Compile Include="Utility\ContentManager.cs" />
+    <Compile Include="Utility\MapLoader.cs" />
     <Compile Include="Utility\SortingLayer.cs" />
     <Compile Include="Models\Components\RigidBody.cs" />
     <Compile Include="Models\Components\SpriteRenderer.cs" />
