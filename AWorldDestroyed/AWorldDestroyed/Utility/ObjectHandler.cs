@@ -50,7 +50,7 @@ namespace AWorldDestroyed.Utility
         /// <param name="bounds"></param>
         public void Update(double deltaTime, RectangleF bounds)
         {
-            quadTree = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
+            quadTree = new QuadTree<GameObject>(new RectangleF(-2500, -2500, 5000, 5000), 3);
             foreach (GameObject obj in GameObjects)
             {
                 quadTree.Insert(obj.Transform.WorldPosition, obj);
@@ -72,6 +72,7 @@ namespace AWorldDestroyed.Utility
             {
                 if (mainObject.HasCollider && mainObject.HasComponent<RigidBody>())
                 {
+
                     foreach (Collider collider in mainObject.GetComponents<Collider>())
                     {
                         RectangleF objColRange = collider.GetRectangle();
@@ -142,55 +143,7 @@ namespace AWorldDestroyed.Utility
             //Collider objCollider = obj.GetComponent<Collider>();
             //Collider otherCollider = other.GetComponent<Collider>();
 
-            //// when moving Right and hits another objects Left side
-            if (objRigidbody.Velocity.X > 0 && IsTouchingLeft(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
-            {
-                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
-                {
-                    obj.Transform.Position = new Vector2(
-                      otherCollider.GetRectangle().Left - objCollider.Size.X - objCollider.Offset.X,
-                      obj.Transform.Position.Y);
-
-                    objRigidbody.Velocity *= Vector2.UnitY;
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
-                }
-                else
-                {
-                    if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
-
-                    if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
-                }
-
-            }
-            // when moving Left and hits another objects Right side
-            else if (objRigidbody.Velocity.X < 0 && IsTouchingRight(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
-            {
-                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
-                {
-                    obj.Transform.Position = new Vector2(
-                    otherCollider.GetRectangle().Right - objCollider.Offset.X,
-                    obj.Transform.Position.Y);
-
-                    objRigidbody.Velocity *= Vector2.UnitY;
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
-                }
-                else
-                {
-                    if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
-
-                    if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
-                }
-            }
-
-            // when moving Down and hits another objects Top side
+            // When moving Down and hits another objects Top side.
             if (objRigidbody.Velocity.Y > 0 && IsTouchingTop(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
             {
                 if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
@@ -199,7 +152,8 @@ namespace AWorldDestroyed.Utility
                         obj.Transform.Position.X,
                         otherCollider.GetRectangle().Top - objCollider.Size.Y - objCollider.Offset.Y);
 
-                    objRigidbody.Velocity *= Vector2.UnitX;
+                    //objRigidbody.Velocity *= Vector2.UnitX;
+                    objRigidbody.Velocity *= Vector2.UnitX * otherCollider.Friction;
                     objRigidbody.Acceleration *= Vector2.UnitX;
 
                     obj.OnCollision(other);
@@ -214,7 +168,7 @@ namespace AWorldDestroyed.Utility
                         other.OnTrigger(obj);
                 }
             }
-            // when moving Up and hits another objects Bottom side
+            // When moving Up and hits another objects Bottom side.
             else if (objRigidbody.Velocity.Y < 0 && IsTouchingBottom(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
             {
                 if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
@@ -238,10 +192,58 @@ namespace AWorldDestroyed.Utility
                         other.OnTrigger(obj);
                 }
             }
-            
 
+            // When moving Right and hits another objects Left side.
+            if (objRigidbody.Velocity.X > 0 && IsTouchingLeft(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
+            {
+                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
+                {
+                    obj.Transform.Position = new Vector2(
+                      otherCollider.GetRectangle().Left - objCollider.Size.X - objCollider.Offset.X,
+                      obj.Transform.Position.Y);
 
+                    objRigidbody.Velocity *= Vector2.UnitY;
+                    //objRigidbody.Velocity *= new Vector2(otherCollider.Friction, 1);
+
+                    obj.OnCollision(other);
+                    other.OnCollision(obj);
+                }
+                else
+                {
+                    if (objCollider.IsTrigger)
+                        obj.OnTrigger(other);
+
+                    if (otherCollider.IsTrigger)
+                        other.OnTrigger(obj);
+                }
+
+            }
+            // When moving Left and hits another objects Right side.
+            else if (objRigidbody.Velocity.X < 0 && IsTouchingRight(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
+            {
+                if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
+                {
+                    obj.Transform.Position = new Vector2(
+                    otherCollider.GetRectangle().Right - objCollider.Offset.X,
+                    obj.Transform.Position.Y);
+
+                    objRigidbody.Velocity *= Vector2.UnitY;
+                    //objRigidbody.Acceleration *= otherCollider.Friction;
+
+                    obj.OnCollision(other);
+                    other.OnCollision(obj);
+                }
+                else
+                {
+                    if (objCollider.IsTrigger)
+                        obj.OnTrigger(other);
+
+                    if (otherCollider.IsTrigger)
+                        other.OnTrigger(obj);
+                }
+            }
         }
+
         /// <summary>
         /// Add a new GameObject to the list of objects to be handled.
         /// </summary>

@@ -26,15 +26,14 @@ namespace AWorldDestroyed.Scenes
         //}
         public override void Load()
         {
-            Debug = true;
+            Debug = false;
 
             //// Read a TileMap
             //XmlSerializer serializer = new XmlSerializer(typeof(MapData));
             //using (FileStream fs = new FileStream(@"..\..\..\..\Content\Maps\Map_01.xml", FileMode.Open, FileAccess.Read))
             //{
-            //    MapData map = serializer.Deserialize(fs) as MapData;
-            //}
-            MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_01.xml");
+            //    MapData map = serializer.Deserialize(fs) as MapData;          //}
+            MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_02.xml");
 
             Texture2D spriteSheet = ContentManager.Load<Texture2D>(@"..\..\..\..\Content\Sprites\Tiles\" + Path.GetFileNameWithoutExtension(mapData.TileSets[0].Source));
             Point tileSize = new Point(mapData.TileWidth, mapData.TileHeight);
@@ -42,7 +41,7 @@ namespace AWorldDestroyed.Scenes
             {
                 int soringOrder = i;
                 bool solid = (i == 2);
-                foreach (GameObject tile in MapLoader.LoadLayer(mapData.Layers[i], spriteSheet, tileSize, SortingLayer.Map, soringOrder, solid, new Vector2(-920, -100)))
+                foreach (GameObject tile in MapLoader.LoadLayer(mapData.Layers[i], spriteSheet, tileSize, SortingLayer.Map, soringOrder, solid, new Vector2(-2020, -300)))
                 {
                     AddObject(tile);
                 }
@@ -84,22 +83,22 @@ namespace AWorldDestroyed.Scenes
 
         protected override void OnObjectDraw(GameObject gameObject, float sortingOrder)
         {
-            if (gameObject.HasComponent<RigidBody>())
-            {
-                RectangleF objColRange = gameObject.GetComponent<Collider>().GetRectangle();
-                RectangleF col = new RectangleF(
-                            objColRange.X - (2 * 32),
-                            objColRange.Y - (2 * 32),
-                            objColRange.Width + (4 * 32),
-                            objColRange.Height + (4 * 32));
+            //if (gameObject.HasComponent<RigidBody>())
+            //{
+            //    RectangleF objColRange = gameObject.GetComponent<Collider>().GetRectangle();
+            //    RectangleF col = new RectangleF(
+            //                objColRange.X - (2 * 32),
+            //                objColRange.Y - (2 * 32),
+            //                objColRange.Width + (4 * 32),
+            //                objColRange.Height + (4 * 32));
 
-                SpriteBatch.Draw(Game1.Pixel, (Rectangle)col, null, Color.BlueViolet * 0.6f, 0f, Vector2.Zero, SpriteEffects.None, sortingOrder);
-            }
+            //    SpriteBatch.Draw(Game1.Pixel, (Rectangle)col, null, Color.BlueViolet * 0.6f, 0f, Vector2.Zero, SpriteEffects.None, sortingOrder);
+            //}
         }
 
         protected override void OnGUIDraw()
         {
-            SpriteBatch.Draw(Game1.Pixel, new Rectangle(0, 0, 800, 30), null, Color.Orange);
+            //SpriteBatch.Draw(Game1.Pixel, new Rectangle(0, 0, 800, 30), null, Color.Orange);
 
             base.OnGUIDraw();
         }

@@ -20,7 +20,7 @@ namespace AWorldDestroyed.Scripts
         {
             if (rb == null) rb = AttachedTo.GetComponent<RigidBody>();
 
-            float speed = 0.004f;
+            float speed = 0.0008f * (float)deltaTime;
             //rb.Velocity = Vector2.Zero;
             if (InputManager.IsKeyPressed(Keys.Right))
             {
@@ -33,17 +33,11 @@ namespace AWorldDestroyed.Scripts
                     AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.FlipHorizontally;
                 rb.Velocity += new Vector2(-1, 0) * speed;
             }
-            if (InputManager.IsKeyPressed(Keys.Up))
-                rb.Velocity += new Vector2(0, -1) * speed;
-            if (InputManager.IsKeyPressed(Keys.Down))
-                rb.Velocity += new Vector2(0, 1) * speed;
-
-            if (InputManager.IsKeyPressed(Keys.Space))
-            {
-                rb.AddVelocity(new Vector2(0, -0.08f));
-            }
-            //rb.Velocity += new Vector2(0, 1) * speed;
-
+            if (InputManager.IsKeyJustPressed(Keys.Delete))
+                rb.Velocity += new Vector2(0, -0.03f) * (float)deltaTime;
+            //if (InputManager.IsKeyPressed(Keys.Down))
+            //    rb.Velocity += new Vector2(0, 1) * speed;
+            
             if (InputManager.IsKeyPressed(Keys.RightShift))
                 AttachedTo.Transform.Translate(AttachedTo.Transform.Forward * speed * (float)deltaTime);
 

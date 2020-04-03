@@ -23,6 +23,7 @@ namespace AWorldDestroyed.Models.Components
         public bool IsTrigger { get; set; }
         public Vector2 Size { get; set; }
         public Vector2 Offset { get; set; }
+        public float Friction { get; set; }
 
         /// <summary>
         /// Creates a collider.
@@ -32,6 +33,7 @@ namespace AWorldDestroyed.Models.Components
         {
             Size = size;
             Offset = Vector2.Zero;
+            Friction = 0.95f;
         }
 
         /// <summary>

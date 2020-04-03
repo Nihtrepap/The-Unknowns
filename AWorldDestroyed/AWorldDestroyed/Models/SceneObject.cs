@@ -91,8 +91,9 @@ namespace AWorldDestroyed.Models
             {
                 if (component is Script script) script.Update(deltaTime);
                 else if (component is Animator animator) animator.Update(deltaTime);
-                else if (component is RigidBody rigidBody) rigidBody.Update(deltaTime);
             }
+
+            GetComponent<RigidBody>()?.Update(deltaTime);
         }
 
         /// <summary>

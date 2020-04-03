@@ -28,6 +28,8 @@ namespace AWorldDestroyed.Models.Components
         public int SortingOrder { get; set; }
         public SortingLayer SortingLayer { get; set; }
         public SpriteEffects SpriteEffect { get; set; }
+        public bool FlipX { get; set; }
+        public bool FlipY { get; set; }
 
         /// <summary>
         /// Create a new SpriteRenderer instance.

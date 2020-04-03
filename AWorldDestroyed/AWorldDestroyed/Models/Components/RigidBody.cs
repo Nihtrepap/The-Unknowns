@@ -22,19 +22,23 @@ namespace AWorldDestroyed.Models.Components
     public class RigidBody : Component
     {
         public static int PixelsPerUnit = 32;
-        public static float DefaultGravity = 0.02f;
+        public static float DefaultGravity = 0.00004f;
 
         public Vector2 Velocity { get; set; }
+        public Vector2 MaxVelocity { get; set; }
+        public Vector2 Acceleration { get; set; }
+        public Vector2 MaxAcceleration { get; set; }
         public float Gravity { get; set; }
         public float Mass { get; set; }
-        public float Friction { get; set; }
-        public Vector2 Acceleration { get; set; }
         public float Power { get; set; }
 
         public RigidBody() : base()
         {
             Gravity = DefaultGravity;
             Mass = 1;
+
+            MaxVelocity = Vector2.One * 8f;
+            MaxAcceleration = Vector2.One * 8f;
         }
 
         /// <summary>
@@ -53,10 +57,23 @@ namespace AWorldDestroyed.Models.Components
 
         public void Update(double deltaTime)
         {
-            float deltaSec = (float)deltaTime / 1000f;
-            Velocity += Acceleration * deltaSec;
             Acceleration += new Vector2(0, Gravity);
-            //AttachedTo.Transform.Position += Velocity * deltaSec;
+            Velocity += Acceleration * (float)deltaTime;
+            //AttachedTo.Transform.Position += Velocity * ;
+
+            Vector2 vel = Velocity;
+            if (Velocity.X > MaxVelocity.X) vel.X = MaxVelocity.X;
+            else if (Velocity.X < -MaxVelocity.X) vel.X = -MaxVelocity.X;
+            if (Velocity.Y > MaxVelocity.Y) vel.Y = MaxVelocity.Y;
+            else if (Velocity.Y < -MaxVelocity.Y) vel.Y = -MaxVelocity.Y;
+            Velocity = vel;
+
+            Vector2 acc = Acceleration;
+            if (Acceleration.X > MaxAcceleration.X) acc.X = MaxAcceleration.X;
+            else if (Acceleration.X < -MaxAcceleration.X) acc.X = -MaxAcceleration.X;
+            if (Acceleration.Y > MaxAcceleration.Y) acc.Y = MaxAcceleration.Y;
+            else if (Acceleration.Y < -MaxAcceleration.Y) acc.Y = -MaxAcceleration.Y;
+            Acceleration = acc;
         }
 
         public override Component Copy() => throw new NotImplementedException();
