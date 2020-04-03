@@ -22,7 +22,7 @@ namespace AWorldDestroyed.Models.Components
     public class RigidBody : Component
     {
         public static int PixelsPerUnit = 32;
-        public static float DefaultGravity = 7f;
+        public static float DefaultGravity = 0.02f;
 
         public Vector2 Velocity { get; set; }
         public float Gravity { get; set; }
@@ -54,12 +54,12 @@ namespace AWorldDestroyed.Models.Components
         public void Update(double deltaTime)
         {
             float deltaSec = (float)deltaTime / 1000f;
-            Velocity += Acceleration;
-            AttachedTo.Transform.Position += Velocity;
-            Acceleration += new Vector2(0, Gravity) * deltaSec;
+            Velocity += Acceleration * deltaSec;
+            Acceleration += new Vector2(0, Gravity);
+            //AttachedTo.Transform.Position += Velocity * deltaSec;
         }
 
-        public override Component Copy()=> throw new NotImplementedException();
+        public override Component Copy() => throw new NotImplementedException();
 
 
         /// <summary>

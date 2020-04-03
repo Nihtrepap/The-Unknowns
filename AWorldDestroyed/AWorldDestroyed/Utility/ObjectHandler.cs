@@ -224,6 +224,7 @@ namespace AWorldDestroyed.Utility
                         otherCollider.GetRectangle().Bottom - objCollider.Offset.Y);
 
                     objRigidbody.Velocity *= Vector2.UnitX;
+                    objRigidbody.Acceleration *= Vector2.UnitX;
 
                     obj.OnCollision(other);
                     other.OnCollision(obj);
