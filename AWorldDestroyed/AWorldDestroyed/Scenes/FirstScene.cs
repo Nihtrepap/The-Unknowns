@@ -119,8 +119,13 @@ namespace AWorldDestroyed.Scenes
             renderer.Sprite.Origin = new Vector2(21, 0);
             AddComponent(renderer);
 
-            rb = new RigidBody();
-            rb.Name = "Rb";
+            rb = new RigidBody
+            {
+                Name = "Rb",
+                Mass = 78.6f,
+                Power = 9001 ^ 9001 // OMG OVER 9000
+            };
+            
             AddComponent(rb);
             AddComponent<PlayerMovement>();
             AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset=new Vector2(16, 5)});

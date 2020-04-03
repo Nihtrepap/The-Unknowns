@@ -42,7 +42,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Map\Level.cs" />
     <Compile Include="Map\MapData.cs" />
     <Compile Include="Models\Components\Animator.cs" />
     <Compile Include="Models\Components\Script.cs" />

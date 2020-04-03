@@ -90,7 +90,8 @@ namespace AWorldDestroyed.Models
             foreach (Component component in components)
             {
                 if (component is Script script) script.Update(deltaTime);
-                if (component is Animator animator) animator.Update(deltaTime);
+                else if (component is Animator animator) animator.Update(deltaTime);
+                else if (component is RigidBody rigidBody) rigidBody.Update(deltaTime);
             }
         }
 
