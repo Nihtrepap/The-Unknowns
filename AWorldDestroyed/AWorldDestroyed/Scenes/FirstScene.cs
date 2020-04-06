@@ -26,7 +26,7 @@ namespace AWorldDestroyed.Scenes
         //}
         public override void Load()
         {
-            Debug = false;
+            Debug = true;
 
             //// Read a TileMap
             //XmlSerializer serializer = new XmlSerializer(typeof(MapData));
@@ -124,7 +124,7 @@ namespace AWorldDestroyed.Scenes
                 Mass = 78.6f,
                 Power = 9001 ^ 9001 // OMG OVER 9000
             };
-            
+
             AddComponent(rb);
             AddComponent<PlayerMovement>();
             AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset=new Vector2(16, 5)});

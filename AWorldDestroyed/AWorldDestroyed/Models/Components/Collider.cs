@@ -33,7 +33,7 @@ namespace AWorldDestroyed.Models.Components
         {
             Size = size;
             Offset = Vector2.Zero;
-            Friction = 0.95f;
+            Friction = 0.92f;
         }
 
         /// <summary>

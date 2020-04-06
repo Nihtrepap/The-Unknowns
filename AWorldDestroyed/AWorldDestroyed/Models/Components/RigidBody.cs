@@ -22,7 +22,7 @@ namespace AWorldDestroyed.Models.Components
     public class RigidBody : Component
     {
         public static int PixelsPerUnit = 32;
-        public static float DefaultGravity = 0.00004f;
+        public static float DefaultGravity = 0.0004f;
 
         public Vector2 Velocity { get; set; }
         public Vector2 MaxVelocity { get; set; }

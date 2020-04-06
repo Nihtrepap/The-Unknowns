@@ -99,7 +99,7 @@ namespace AWorldDestroyed.Utility
 
                 RigidBody rb = mainObject.GetComponent<RigidBody>();
                 if (rb != null)
-                    mainObject.Transform.Translate(rb.Velocity * (float)deltaTime);
+                    mainObject.Transform.Translate(rb.Velocity);
             }
         }
 
@@ -169,7 +169,7 @@ namespace AWorldDestroyed.Utility
                 }
             }
             // When moving Up and hits another objects Bottom side.
-            else if (objRigidbody.Velocity.Y < 0 && IsTouchingBottom(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
+            else if (/*objRigidbody.Velocity.Y < 0 && */IsTouchingBottom(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
             {
                 if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
                 {
@@ -177,7 +177,7 @@ namespace AWorldDestroyed.Utility
                         obj.Transform.Position.X,
                         otherCollider.GetRectangle().Bottom - objCollider.Offset.Y);
 
-                    objRigidbody.Velocity *= Vector2.UnitX;
+                    objRigidbody.Velocity *= Vector2.UnitX * otherCollider.Friction;
                     objRigidbody.Acceleration *= Vector2.UnitX;
 
                     obj.OnCollision(other);
@@ -219,7 +219,7 @@ namespace AWorldDestroyed.Utility
 
             }
             // When moving Left and hits another objects Right side.
-            else if (objRigidbody.Velocity.X < 0 && IsTouchingRight(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
+            else if (/*objRigidbody.Velocity.X < 0 && */IsTouchingRight(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
             {
                 if (!objCollider.IsTrigger && !otherCollider.IsTrigger)
                 {
@@ -242,6 +242,10 @@ namespace AWorldDestroyed.Utility
                         other.OnTrigger(obj);
                 }
             }
+
+            
+
+            
         }
 
         /// <summary>
@@ -263,5 +267,13 @@ namespace AWorldDestroyed.Utility
                 if (gameObject.Destroyed) GameObjects.Remove(gameObject);
             }
         }
+    }
+
+    enum Side
+    {
+        Top,
+        Bottom,
+        Left,
+        Right
     }
 }
