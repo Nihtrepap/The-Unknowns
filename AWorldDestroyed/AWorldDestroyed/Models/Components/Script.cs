@@ -11,6 +11,8 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
+using AWorldDestroyed.Utility;
+
 namespace AWorldDestroyed.Models.Components
 {
     public abstract class Script : Component
@@ -24,5 +26,9 @@ namespace AWorldDestroyed.Models.Components
         public abstract void Update(double deltaTime);
 
         public abstract override Component Copy();
+
+        public virtual void OnCollision(GameObject other, Side side) { }
+
+        public virtual void OnTrigger(GameObject other, Side side) { }
     }
 }

@@ -18,6 +18,8 @@ namespace AWorldDestroyed
         public static Texture2D Pixel;
         public static Texture2D TileSet_01;
 
+        private SimpleFps simpleFps;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
@@ -26,6 +28,9 @@ namespace AWorldDestroyed
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            //graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferHeight = 200;
+            //graphics.PreferredBackBufferWidth = 300;
         }
 
         /// <summary>
@@ -36,6 +41,7 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void Initialize()
         {
+            simpleFps = new SimpleFps();
 
             base.Initialize();
         }
@@ -88,7 +94,8 @@ namespace AWorldDestroyed
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update();
-            Window.Title = (1000f / gameTime.ElapsedGameTime.TotalMilliseconds).ToString();
+            simpleFps.Update(gameTime);
+            Window.Title = simpleFps.msg;
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
                 || Keyboard.GetState().IsKeyDown(Keys.Escape))

@@ -9,42 +9,89 @@ namespace AWorldDestroyed.Scripts
 {
     class PlayerMovement : Script
     {
-        //SpriteRenderer renderer;
-        RigidBody rb;
+        private RigidBody rigidBody;
+        private Animator animator;
+        private bool canJump;
+        private bool isRunning;
 
-        //public override void Initialize()
-        //{
-        //}
+        private float walkSpeed = 0.04f;
+        private float runBoost = 2f;
 
+        private float maxWalkSpeed = 4f;
+        //private float maxRunSpeed = 8f;
+       
         public override void Update(double deltaTime)
         {
-            if (rb == null) rb = AttachedTo.GetComponent<RigidBody>();
+            if (rigidBody == null) rigidBody = AttachedTo.GetComponent<RigidBody>();
+            if (animator == null) animator = AttachedTo.GetComponent<Animator>();
 
-            float speed = 0.08f * (float)deltaTime;
-            //rb.Velocity = Vector2.Zero;
+            float speed = walkSpeed * (float)deltaTime;
+
+            isRunning = InputManager.IsKeyPressed(Keys.LeftShift);
+
+            // Walk
             if (InputManager.IsKeyPressed(Keys.Right))
             {
                 AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.None;
-                rb.Velocity += new Vector2(1, 0) * speed;
+                if (canJump && isRunning)
+                    rigidBody.Velocity += new Vector2(1, 0) * speed * runBoost;
+                else if (rigidBody.Velocity.X + speed < maxWalkSpeed)
+                    rigidBody.Velocity += new Vector2(1, 0) * speed;
+                if (canJump)
+                {
+                    if (rigidBody.Velocity.X > maxWalkSpeed)
+                        animator.ChangeAnimation("run");
+                    else animator.ChangeAnimation("walk");
+                }
             }
+           
             if (InputManager.IsKeyPressed(Keys.Left))
             {
-                if (!InputManager.IsKeyPressed(Keys.LeftShift))
-                    AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.FlipHorizontally;
-                rb.Velocity += new Vector2(-1, 0) * speed;
+                AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.FlipHorizontally;
+                if (canJump && isRunning)
+                    rigidBody.Velocity += new Vector2(-1, 0) * speed * runBoost;
+                else if (rigidBody.Velocity.X - speed > - maxWalkSpeed)
+                    rigidBody.Velocity += new Vector2(-1, 0) * speed;
+                if (canJump)
+                {
+                    if (rigidBody.Velocity.X < -maxWalkSpeed)
+                        animator.ChangeAnimation("run");
+                    else animator.ChangeAnimation("walk");
+                }
             }
-            if (InputManager.IsKeyJustPressed(Keys.Up))
-                rb.Velocity += new Vector2(0, -0.3f) * (float)deltaTime;
-            //if (InputManager.IsKeyPressed(Keys.Down))
-            //    rb.Velocity += new Vector2(0, 1) * speed;
+
+            // Jump
+            if (canJump && InputManager.IsKeyJustPressed(Keys.Up) && rigidBody.Velocity.Y < 0.1f)
+            {
+                rigidBody.Velocity += new Vector2(0, -0.3f) * (float)deltaTime;
+                canJump = false;
+            }
             
-            if (InputManager.IsKeyPressed(Keys.RightShift))
-                AttachedTo.Transform.Translate(AttachedTo.Transform.Forward * speed * (float)deltaTime);
+            if (!canJump)
+            {
+                rigidBody.Velocity *= new Vector2(0.99f, 1f);
+                animator.ChangeAnimation("jump");
+            }
+            else if (rigidBody.Velocity.LengthSquared() <= 0.8f)
+            {
+                animator.ChangeAnimation("idle");
+            }
+
+            ////////////////////////////////
+            //if (InputManager.IsKeyPressed(Keys.RightShift))
+            //    AttachedTo.Transform.Translate(AttachedTo.Transform.Forward * speed * (float)deltaTime);
 
             if (InputManager.IsKeyPressed(Keys.PageDown))
                 AttachedTo.Transform.Rotation -= speed * 5;
             if (InputManager.IsKeyPressed(Keys.PageUp))
                 AttachedTo.Transform.Rotation += speed * 5;
+            //////////////////////////////////
+        }
+
+        public override void OnCollision(GameObject other, Side side)
+        {
+            if (side == Side.Bottom && rigidBody.Velocity.Y > 0)
+                canJump = true;
         }
 
         public override Component Copy()

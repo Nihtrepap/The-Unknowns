@@ -70,9 +70,12 @@ namespace AWorldDestroyed.Utility
             // Collision handling.
             foreach (GameObject mainObject in objects)
             {
+                //for (int i = 0; i < objects.Length; i++)
+                //{
+                //    GameObject mainObject = objects[i];
+
                 if (mainObject.HasCollider && mainObject.HasComponent<RigidBody>())
                 {
-
                     foreach (Collider collider in mainObject.GetComponents<Collider>())
                     {
                         RectangleF objColRange = collider.GetRectangle();
@@ -82,9 +85,12 @@ namespace AWorldDestroyed.Utility
                             objColRange.Width + (4 * 32),
                             objColRange.Height + (4 * 32)));
 
-                        foreach (GameObject other in nearby)
-                        {
-                            if (mainObject == other ||
+                        //for (int j = i ; j < objects.Length; j++)
+                        //{
+                        //    GameObject other = objects[j];
+                            foreach (GameObject other in nearby)
+                            {
+                                if (mainObject == other ||
                                 !other.HasCollider) continue;
 
                             foreach (Collider otherCollider in other.GetComponents<Collider>())
@@ -152,20 +158,20 @@ namespace AWorldDestroyed.Utility
                         obj.Transform.Position.X,
                         otherCollider.GetRectangle().Top - objCollider.Size.Y - objCollider.Offset.Y);
 
+                    obj.OnCollision(other, Side.Bottom);
+                    other.OnCollision(obj, Side.Top);
+
                     //objRigidbody.Velocity *= Vector2.UnitX;
                     objRigidbody.Velocity *= Vector2.UnitX * otherCollider.Friction;
                     objRigidbody.Acceleration *= Vector2.UnitX;
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
                 }
                 else
                 {
                     if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
+                        obj.OnTrigger(other, Side.Bottom);
 
                     if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
+                        other.OnTrigger(obj, Side.Top);
                 }
             }
             // When moving Up and hits another objects Bottom side.
@@ -177,19 +183,19 @@ namespace AWorldDestroyed.Utility
                         obj.Transform.Position.X,
                         otherCollider.GetRectangle().Bottom - objCollider.Offset.Y);
 
-                    objRigidbody.Velocity *= Vector2.UnitX * otherCollider.Friction;
-                    objRigidbody.Acceleration *= Vector2.UnitX;
+                    obj.OnCollision(other, Side.Top);
+                    other.OnCollision(obj, Side.Bottom);
 
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
+                    objRigidbody.Velocity *= Vector2.UnitX;
+                    objRigidbody.Acceleration *= Vector2.UnitX;
                 }
                 else
                 {
                     if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
+                        obj.OnTrigger(other, Side.Top);
 
                     if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
+                        other.OnTrigger(obj, Side.Bottom);
                 }
             }
 
@@ -202,19 +208,19 @@ namespace AWorldDestroyed.Utility
                       otherCollider.GetRectangle().Left - objCollider.Size.X - objCollider.Offset.X,
                       obj.Transform.Position.Y);
 
+                    obj.OnCollision(other, Side.Right);
+                    other.OnCollision(obj, Side.Left);
+
                     objRigidbody.Velocity *= Vector2.UnitY;
                     //objRigidbody.Velocity *= new Vector2(otherCollider.Friction, 1);
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
                 }
                 else
                 {
                     if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
+                        obj.OnTrigger(other, Side.Right);
 
                     if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
+                        other.OnTrigger(obj, Side.Left);
                 }
 
             }
@@ -227,19 +233,19 @@ namespace AWorldDestroyed.Utility
                     otherCollider.GetRectangle().Right - objCollider.Offset.X,
                     obj.Transform.Position.Y);
 
+                    obj.OnCollision(other, Side.Left);
+                    other.OnCollision(obj, Side.Right);
+
                     objRigidbody.Velocity *= Vector2.UnitY;
                     //objRigidbody.Acceleration *= otherCollider.Friction;
-
-                    obj.OnCollision(other);
-                    other.OnCollision(obj);
                 }
                 else
                 {
                     if (objCollider.IsTrigger)
-                        obj.OnTrigger(other);
+                        obj.OnTrigger(other, Side.Left);
 
                     if (otherCollider.IsTrigger)
-                        other.OnTrigger(obj);
+                        other.OnTrigger(obj, Side.Right);
                 }
             }
 
@@ -269,7 +275,7 @@ namespace AWorldDestroyed.Utility
         }
     }
 
-    enum Side
+    public enum Side
     {
         Top,
         Bottom,

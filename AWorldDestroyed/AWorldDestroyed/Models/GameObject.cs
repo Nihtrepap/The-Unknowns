@@ -47,16 +47,24 @@ namespace AWorldDestroyed.Models
         /// Determines what happens when this object collisions with another GameObject.
         /// </summary>
         /// <param name="other">The GameObject this object collided with.</param>
-        public virtual void OnCollision(GameObject other)
+        public virtual void OnCollision(GameObject other, Side side)
         {
+            foreach (Script script in GetComponents<Script>())
+            {
+                script.OnCollision(other, side);
+            }
         }
 
         /// <summary>
         /// Determines what happens when another GameObject triggered this GameObject.
         /// </summary>
         /// <param name="other">The GameObject that triggered this object.</param>
-        public virtual void OnTrigger(GameObject other)
+        public virtual void OnTrigger(GameObject other, Side side)
         {
+            foreach (Script script in GetComponents<Script>())
+            {
+                script.OnTrigger(other, side);
+            }
         }
     }
 }

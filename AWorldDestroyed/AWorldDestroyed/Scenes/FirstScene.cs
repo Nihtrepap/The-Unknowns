@@ -129,12 +129,19 @@ namespace AWorldDestroyed.Scenes
             AddComponent<PlayerMovement>();
             AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset=new Vector2(16, 5)});
 
-            animator = new Animator();
-            animator.Name = "anmimatort";
-            Sprite[] sprites = Sprite.Slice(Game1.Sprite.Texture, new Rectangle(0,0,42,72), new Point(8, 1));
-            Animation walk = new Animation(sprites, 1000 / 10);
-            animator.AddAnimation("walk", walk);
-            //walk.Frames.Last().Event = () => { a.ChangeAnimation("something"); };
+            animator = new Animator
+            {
+                Name = "anmimatort"
+            };
+            Sprite[] spriteWalk = Sprite.Slice(Game1.Sprite.Texture, new Rectangle(0,0,42,72),      new Point(8, 1));
+            Sprite[] spriteRun =  Sprite.Slice(Game1.Sprite.Texture, new Rectangle(0, 72, 42, 72),  new Point(8, 1));
+            Sprite[] spriteIdle = Sprite.Slice(Game1.Sprite.Texture, new Rectangle(0, 144, 42, 72), new Point(1, 1));
+            Sprite[] spriteJump = Sprite.Slice(Game1.Sprite.Texture, new Rectangle(0, 216, 42, 72), new Point(8, 1));
+            
+            animator.AddAnimation("walk", new Animation(spriteWalk, 1000 / 10));
+            animator.AddAnimation("run", new Animation(spriteRun,   1000 / 30));
+            animator.AddAnimation("idle", new Animation(spriteIdle, 1000 / 10));
+            animator.AddAnimation("jump", new Animation(spriteJump, 1000 / 10));
 
             AddComponent(animator);
         }
@@ -145,6 +152,8 @@ namespace AWorldDestroyed.Scenes
 
             base.Update(deltaTime);
         }
+
+        
     }
 
     class Player2 : GameObject
