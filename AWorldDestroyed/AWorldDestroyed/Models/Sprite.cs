@@ -46,9 +46,10 @@ namespace AWorldDestroyed.Models
             SourceRectangle = sourceRectangle;
         }
 
-        public static Sprite[] Slice(Texture2D texture, Rectangle sourceRect, Point frames)
+        public static Sprite[] Slice(Texture2D texture, Rectangle sourceRect, Point frames, Vector2? origin = null)
         {
             Sprite[] sprites = new Sprite[frames.X * frames.Y];
+            Vector2 orig = origin == null ? Vector2.Zero : (Vector2)origin;
 
             for (int row = 0; row < frames.Y; row++)
             {
@@ -59,7 +60,10 @@ namespace AWorldDestroyed.Models
                         sourceRect.Y + sourceRect.Height * row);
 
                     int i = row * frames.X + col;
-                    sprites[i] = new Sprite(texture, new Rectangle(position, sourceRect.Size));
+                    sprites[i] = new Sprite(texture, new Rectangle(position, sourceRect.Size))
+                    {
+                        Origin = orig
+                    };
                 }
             }
             return sprites;

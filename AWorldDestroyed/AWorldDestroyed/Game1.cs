@@ -53,15 +53,17 @@ namespace AWorldDestroyed
         protected override void LoadContent()
         {
             ContentManager.Init(Content, GraphicsDevice);
-            ContentManager.AddTexture("TileSet_01", "Sprites/Tiles/TileSet_01");
+            //ContentManager.AddTexture("TileSet_02", "Sprites/Tiles/TileSet_02");
+            ContentManager.AddTexture("Enemy", "Sprites/Enemies/Monster");
+            ContentManager.AddTexture("Player", "Sprites/Player/Player_spriteSheet");
 
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Sprite2 = new Sprite(Content.Load<Texture2D>("Sprites/Enemy/Monster"),
-                new Rectangle(0, 0, 85, 92));
+            //Sprite2 = new Sprite(Content.Load<Texture2D>("Sprites/Enemy/Monster"),
+            //    new Rectangle(0, 0, 85, 92));
 
-            Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
-                new Rectangle(0, 0, 42, 72));
+            //Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
+            //    new Rectangle(0, 0, 42, 72));
 
             //TestTileset = Content.Load<Texture2D>("Sprites/Tiles/TestTiles");
             //XmlSerializer serializer = new XmlSerializer(typeof(MapData));

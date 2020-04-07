@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Sprites/Enemy/Monster.png
+#begin Sprites/Enemies/Monster.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +23,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Enemy/Monster.png
+/build:Sprites/Enemies/Monster.png
 
 #begin Sprites/Player/Player_spriteSheet.png
 /importer:TextureImporter

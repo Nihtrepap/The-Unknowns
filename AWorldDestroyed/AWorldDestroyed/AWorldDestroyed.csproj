@@ -42,10 +42,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\Enemy.cs" />
+    <Compile Include="GameObjects\Player.cs" />
     <Compile Include="Map\MapData.cs" />
     <Compile Include="Models\Components\Animator.cs" />
     <Compile Include="Models\Components\Script.cs" />
     <Compile Include="Scenes\FirstScene.cs" />
+    <Compile Include="Scripts\EnemyMovement.cs" />
     <Compile Include="Scripts\PlayerMovement.cs" />
     <Compile Include="SimpleFps.cs" />
     <Compile Include="Utility\Animation.cs" />
