@@ -91,8 +91,8 @@ namespace AWorldDestroyed.Models
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
-            objectHandler.Update(deltaTime, Camera.View);
             if (CameraFollow != null) Camera.Transform.Position = CameraFollow.Transform.Position - Camera.ViewSize * 0.5f;
+            objectHandler.Update(deltaTime, Camera.View);
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace AWorldDestroyed.Models
 
             for (int i = 0; i < 50; i++)
             {
-                SpriteBatch.Draw(Game1.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
-                SpriteBatch.Draw(Game1.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
+                SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
+                SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
             }
 
             foreach (GameObject obj in gameObjects)

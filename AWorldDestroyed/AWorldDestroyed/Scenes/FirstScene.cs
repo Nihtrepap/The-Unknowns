@@ -41,7 +41,7 @@ namespace AWorldDestroyed.Scenes
             AddObject(p);
             CameraFollow = p;
 
-            Enemy e = new Enemy(new Vector2(-0, 0));
+            Enemy e = new Enemy(new Vector2(-300, 300));
             AddObject(e);
         }
 
