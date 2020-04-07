@@ -113,27 +113,31 @@ namespace AWorldDestroyed.Models
 
             foreach (GameObject obj in gameObjects)
             {
-                if (obj.HasSpriteRenderer)
+                if (obj.Enabled && obj.HasSpriteRenderer)
                 {
                     SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-                    float sortingOrder = ((float)renderer.SortingLayer * 1000f + renderer.SortingOrder + 1000f) 
+                    float sortingOrder = ((float)renderer.SortingLayer * 1000f + renderer.SortingOrder + 1000f)
                         / (Enum.GetValues(typeof(SortingLayer)).Length * 1000f + 1000f);
 
-                    SpriteBatch.Draw(
-                        renderer.Sprite.Texture, 
-                        obj.Transform.WorldPosition,
-                        renderer.Sprite.SourceRectangle,
-                        renderer.Color,
-                        MathHelper.ToRadians(obj.Transform.WorldRotation),
-                        renderer.Sprite.Origin,
-                        obj.Transform.Scale,
-                        renderer.SpriteEffect,
-                        sortingOrder);
-
+                    if (renderer.Enabled)
+                    {
+                        SpriteBatch.Draw(
+                            renderer.Sprite.Texture,
+                            obj.Transform.WorldPosition,
+                            renderer.Sprite.SourceRectangle,
+                            renderer.Color,
+                            MathHelper.ToRadians(obj.Transform.WorldRotation),
+                            renderer.Sprite.Origin,
+                            obj.Transform.Scale,
+                            renderer.SpriteEffect,
+                            sortingOrder);
+                    }
                     if (Debug)
                     {
                         foreach (Collider collider in obj.GetComponents<Collider>())
                         {
+                            if (!collider.Enabled) continue;
+
                             SpriteBatch.Draw(
                                 Game1.Pixel,
                                 (Rectangle)collider.GetRectangle(),

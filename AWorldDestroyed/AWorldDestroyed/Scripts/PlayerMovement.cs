@@ -13,6 +13,8 @@ namespace AWorldDestroyed.Scripts
         private Animator animator;
         private bool canJump;
         private bool isRunning;
+        private bool attacking = false;
+
 
         private float walkSpeed = 0.04f;
         private float runBoost = 2f;
@@ -27,6 +29,20 @@ namespace AWorldDestroyed.Scripts
 
             float speed = walkSpeed * (float)deltaTime;
 
+            // ATTKACK
+            if (!attacking && InputManager.IsKeyJustPressed(Keys.Z))
+            {
+                attacking = true;
+                animator.ChangeAnimation("attack");
+                
+
+                //AttachedTo.GetComponent("Attack").Enabled
+            }else if (attacking && animator.GetCurrentAnimation().Done)
+            {
+                attacking = false;
+            }
+            else if (!attacking)
+            { 
             isRunning = InputManager.IsKeyPressed(Keys.LeftShift);
 
             // Walk
@@ -77,6 +93,7 @@ namespace AWorldDestroyed.Scripts
                 animator.ChangeAnimation("idle");
             }
 
+
             ////////////////////////////////
             //if (InputManager.IsKeyPressed(Keys.RightShift))
             //    AttachedTo.Transform.Translate(AttachedTo.Transform.Forward * speed * (float)deltaTime);
@@ -86,12 +103,30 @@ namespace AWorldDestroyed.Scripts
             if (InputManager.IsKeyPressed(Keys.PageUp))
                 AttachedTo.Transform.Rotation += speed * 5;
             //////////////////////////////////
+
+            }
         }
 
         public override void OnCollision(GameObject other, Side side)
         {
             if (side == Side.Bottom && rigidBody.Velocity.Y > 0)
                 canJump = true;
+        }
+
+        public override void OnTrigger(GameObject other, Side side)
+        {
+            // AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect
+
+            if (side == Side.Left && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
+            {
+                if (other.Tag == Tag.Enemy) other.Destroy();
+            }
+            else if (side == Side.Right && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.None)
+            {
+                if (other.Tag == Tag.Enemy) other.Destroy();
+            }
+
+            base.OnTrigger(other, side);
         }
 
         public override Component Copy()

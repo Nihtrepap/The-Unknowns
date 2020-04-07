@@ -74,6 +74,11 @@ namespace AWorldDestroyed.Models.Components
             if (currentAnimation == null) currentAnimation = animation;
         }
 
+        public Animation GetCurrentAnimation()
+        {
+            return currentAnimation;
+        }
+
         /// <summary>
         /// Make a new Animator instance with the same attribute values as this instance.
         /// </summary>

@@ -16,7 +16,7 @@ namespace AWorldDestroyed.Models
     /// <summary>
     /// A single frame of an animation.
     /// </summary>
-    public struct Frame
+    public class Frame
     {
         public readonly Sprite Sprite;
         public readonly int Duration;
@@ -39,7 +39,11 @@ namespace AWorldDestroyed.Models
         /// </summary>
         public void InvokeEvent()
         {
-            Event?.Invoke();
+            if (Event != null)
+            {
+            Event.Invoke();
+
+            }
         }
     }
 

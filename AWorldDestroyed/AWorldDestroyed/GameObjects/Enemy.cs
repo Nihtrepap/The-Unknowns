@@ -1,8 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// =============================================
+//         Editor:     Lone Maaherra
+//         Last edit:  2020-04-07
+// _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+//
+//       (\                 >+{{{o)> - kvaouk
+//    >+{{{{{0)> - kraouk      LL  
+//       /_\_
+//
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                <333333><                     
+//         <3333333><           <33333>< 
+
 using AWorldDestroyed.Models;
 using AWorldDestroyed.Models.Components;
 using AWorldDestroyed.Scripts;
@@ -22,7 +30,7 @@ namespace AWorldDestroyed.GameObjects
         public Enemy()
         {
             //Transform.Scale = Vector2.One * 0.5f;
-
+            Tag = Tag.Enemy;
             Texture2D spriteSheet = ContentManager.GetTexture("Enemy"); //.Load<Texture2D>(@"..\..\..\..\Content\Sprites\Enemy");
             
             Vector2 origin = new Vector2(42.5f, 0);

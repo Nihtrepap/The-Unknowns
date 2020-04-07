@@ -65,13 +65,16 @@ namespace AWorldDestroyed.Utility
             if (Done) return;
 
             timer += deltaTime;
+
             if(timer > frames[currentFrameIndex].Duration)
             {
+                frames[currentFrameIndex].InvokeEvent();
                 timer = 0;
                 currentFrameIndex++;
 
                 if (currentFrameIndex >= frames.Length)
                 {
+
                     if (Loop)
                         currentFrameIndex = 0;
                     else Done = true;
@@ -86,6 +89,11 @@ namespace AWorldDestroyed.Utility
         public Sprite GetCurrentFrameSprite()
         {
             return frames[currentFrameIndex].Sprite;
+        }
+
+        public Frame GetFrame(int index)
+        {
+            return frames[index];
         }
 
         public void Reset()

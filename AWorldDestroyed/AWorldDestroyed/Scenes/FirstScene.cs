@@ -21,7 +21,7 @@ namespace AWorldDestroyed.Scenes
 
         public override void Load()
         {
-            Debug = true;
+            Debug = false;
 
             MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_02.xml");
 
@@ -41,8 +41,12 @@ namespace AWorldDestroyed.Scenes
             AddObject(p);
             CameraFollow = p;
 
-            Enemy e = new Enemy(new Vector2(-300, 300));
+            for (int i = 0; i < 10; i++)
+            {
+            Enemy e = new Enemy(new Vector2(-700 + 100 * i, 250));
             AddObject(e);
+
+            }
         }
 
         protected override void OnObjectDraw(GameObject gameObject, float sortingOrder)
