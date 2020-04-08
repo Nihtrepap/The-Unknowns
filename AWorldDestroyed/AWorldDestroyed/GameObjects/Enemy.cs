@@ -45,7 +45,8 @@ namespace AWorldDestroyed.GameObjects
 
             AddComponent(animator);
             AddComponent(new Collider(new Vector2(40, 50)) { Name = "Collider", Offset = new Vector2(36, 62) - origin });
-            AddComponent(new Collider(new Vector2(106, 20)) { Name = "Attack", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false });
+            AddComponent(new Collider(new Vector2(53, 20)) { Name = "AttackLeft", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false });
+            AddComponent(new Collider(new Vector2(53, 20)) { Name = "AttackRight", Offset = new Vector2(55, 62) - origin, IsTrigger = true, Enabled = false });
             AddComponent(new SpriteRenderer());
             AddComponent<EnemyMovement>();
             AddComponent(new RigidBody
@@ -55,8 +56,20 @@ namespace AWorldDestroyed.GameObjects
                 Power = 9000 ^ 9000 // OMG OVER 9000
             });
 
-            attackAnimation.GetFrame(2).Event += () => { GetComponent("Attack").Enabled = true; };
-            attackAnimation.GetFrame(5).Event += () => { GetComponent("Attack").Enabled = false; };
+            attackAnimation.GetFrame(0).Event += () => 
+            {
+                if (GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
+                    GetComponent("AttackLeft").Enabled = true;
+                else
+                    GetComponent("AttackRight").Enabled = true;
+            };
+            attackAnimation.GetFrame(6).Event += () => 
+            {
+                if (GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
+                    GetComponent("AttackLeft").Enabled = false;
+                else
+                    GetComponent("AttackRight").Enabled = false;
+            };
 
         }
 

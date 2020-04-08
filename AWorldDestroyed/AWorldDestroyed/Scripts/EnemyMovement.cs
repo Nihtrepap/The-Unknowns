@@ -18,7 +18,7 @@ namespace AWorldDestroyed.Scripts
         private Animator animator;
 
         private float walkSpeed = 0.04f;
-        private float maxWalkSpeed = 4f;
+        private float maxWalkSpeed = 2f;
         private float distanceTravelled = 0;
         private float maxDistance = 100;
         private int direction = 1;
@@ -86,16 +86,7 @@ namespace AWorldDestroyed.Scripts
 
         public override void OnTrigger(GameObject other, Side side)
         {
-            // AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect
-
-            if (side == Side.Left && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
-            {
-                if (other.Tag == Tag.Player) other.Destroy();
-            }
-            else if (side == Side.Right && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.None)
-            {
-                if (other.Tag == Tag.Player) other.Destroy();
-            }
+            if (other.Tag == Tag.Player) other.Destroy();
 
             base.OnTrigger(other, side);
         }
