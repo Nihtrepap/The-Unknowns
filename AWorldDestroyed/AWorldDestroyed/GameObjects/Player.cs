@@ -32,8 +32,8 @@ namespace AWorldDestroyed.GameObjects
             Vector2 origin = new Vector2(21, 0);
             Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 42, 72), new Point(8, 1), origin);
             Sprite[] spriteRun = Sprite.Slice(spriteSheet, new Rectangle(0, 74, 42, 72), new Point(8, 1), origin);
-            Sprite[] spriteIdle = Sprite.Slice(spriteSheet, new Rectangle(225, 148, 17, 68), new Point(8, 1), new Vector2(8, 0));
-            Sprite[] spriteJump = Sprite.Slice(spriteSheet, new Rectangle(0, 218, 42, 72), new Point(8, 1), origin);
+            Sprite[] spriteIdle = Sprite.Slice(spriteSheet, new Rectangle(0, 148, 17, 68), new Point(8, 1), new Vector2(8, 0));
+            Sprite[] spriteJump = Sprite.Slice(spriteSheet, new Rectangle(0, 218, 42, 72), new Point(2, 1), origin);
             Sprite[] spriteAttack = Sprite.Slice(spriteSheet, new Rectangle(0, 218, 42, 72), new Point(8, 1), origin);
 
             Animation attackAnimation = new Animation(spriteAttack, 1000 / 50) { Loop = false };
@@ -49,8 +49,9 @@ namespace AWorldDestroyed.GameObjects
             animator.AddAnimation("attack", attackAnimation);
 
             AddComponent(animator);
-            AddComponent(new Collider(new Vector2(59, 23)) { Name = "Attack", Offset = new Vector2(-8, 25) - origin , IsTrigger = true, Enabled = false });
             AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset = new Vector2(16, 5) - origin });
+            AddComponent(new Collider(new Vector2(30, 23)) { Name = "AttackLeft", Offset = new Vector2(-14, 25) - origin , IsTrigger = true, Enabled = false });
+            AddComponent(new Collider(new Vector2(30, 23)) { Name = "AttackRight", Offset = new Vector2(29, 25) - origin , IsTrigger = true, Enabled = false });
             AddComponent(new SpriteRenderer());
             AddComponent<PlayerMovement>();
             AddComponent(new RigidBody
@@ -60,8 +61,20 @@ namespace AWorldDestroyed.GameObjects
                 Power = 9001 ^ 9001 // OMG OVER 9000 
             });
 
-            attackAnimation.GetFrame(2).Event += () => { GetComponent("Attack").Enabled = true; };
-            attackAnimation.GetFrame(5).Event += () => { GetComponent("Attack").Enabled = false; };
+            attackAnimation.GetFrame(2).Event += () => 
+            {
+                if (GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
+                    GetComponent("AttackLeft").Enabled = true;
+                else
+                    GetComponent("AttackRight").Enabled = true;
+            };
+            attackAnimation.GetFrame(5).Event += () => 
+            {
+                if (GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
+                    GetComponent("AttackLeft").Enabled = false;
+                else
+                    GetComponent("AttackRight").Enabled = false;
+            };
 
         }
 

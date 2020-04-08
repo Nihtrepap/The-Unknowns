@@ -117,15 +117,15 @@ namespace AWorldDestroyed.Scripts
         {
             // AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect
 
-            if (side == Side.Left && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
-            {
-                if (other.Tag == Tag.Enemy) other.Destroy();
-            }
-            else if (side == Side.Right && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.None)
-            {
-                if (other.Tag == Tag.Enemy) other.Destroy();
-            }
-
+            //if (side == Side.Left && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
+            //{
+            //    if (other.Tag == Tag.Enemy) other.Destroy();
+            //}
+            //else if (side == Side.Right && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.None)
+            //{
+            //    if (other.Tag == Tag.Enemy) other.Destroy();
+            //}
+            if (other.Tag == Tag.Enemy) other.Destroy();
             base.OnTrigger(other, side);
         }
 

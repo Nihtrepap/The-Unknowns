@@ -142,7 +142,7 @@ namespace AWorldDestroyed.Models
                                 Game1.Pixel,
                                 (Rectangle)collider.GetRectangle(),
                                 null,
-                                Color.Red * 0.3f,
+                                (collider.IsTrigger ? Color.Orange : Color.Red) * 0.3f,
                                 0f,
                                 Vector2.Zero,
                                 SpriteEffects.None,
