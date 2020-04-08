@@ -31,10 +31,14 @@ namespace AWorldDestroyed.Models
 
         protected Camera Camera;
         protected SceneObject CameraFollow;
+        protected Vector2? CameraMin;
+        protected Vector2? CameraMax;
+        protected ObjectHandler objectHandler;
 
-        private ObjectHandler objectHandler;
         //private UIObjectHandler uiObjectHandler;
         private bool _initialized;
+
+        
 
         /// <summary>
         /// Creates a new instance of the Scene class, with the specified spriteBatch and a collection of GameObjects. 
@@ -54,7 +58,8 @@ namespace AWorldDestroyed.Models
             SpriteBatch = spriteBatch;
 
             Camera = new Camera(cameraViewSize);
-            objectHandler = new ObjectHandler();
+            objectHandler = new ObjectHandler(new RectangleF(-2500, -2500, 5000, 5000));
+
         }
 
         public bool IsInitialized => _initialized;
@@ -92,7 +97,28 @@ namespace AWorldDestroyed.Models
         public void Update(double deltaTime)
         {
             if (CameraFollow != null) Camera.Transform.Position = CameraFollow.Transform.Position - Camera.ViewSize * 0.5f;
-            objectHandler.Update(deltaTime, Camera.View);
+
+            if (CameraMin != null)
+            {
+                Vector2 cameraMin = (Vector2)CameraMin;
+                Vector2 newPos = Camera.Transform.Position;
+
+                if (Camera.Transform.Position.X < cameraMin.X) newPos.X = cameraMin.X;
+                if (Camera.Transform.Position.Y < cameraMin.Y) newPos.Y = cameraMin.Y;
+                Camera.Transform.Position = newPos;
+            }
+            if (CameraMax != null)
+            {
+                Vector2 cameraMax = (Vector2)CameraMax;
+                Vector2 newPos = Camera.Transform.Position;
+
+                if (Camera.Transform.Position.X + Camera.ViewSize.X > cameraMax.X) newPos.X = cameraMax.X - Camera.ViewSize.X;
+                if (Camera.Transform.Position.Y + Camera.ViewSize.Y > cameraMax.Y) newPos.Y = cameraMax.Y - Camera.ViewSize.Y;
+                Camera.Transform.Position = newPos;
+            }
+
+            RectangleF bounds = Camera.View + new RectangleF(-Camera.ViewSize * 0.5f, Camera.ViewSize);
+            objectHandler.Update(deltaTime, bounds);
         }
 
         /// <summary>
@@ -100,16 +126,17 @@ namespace AWorldDestroyed.Models
         /// </summary>
         public void Draw()
         {
-            GameObject[] gameObjects = objectHandler.Query(Camera.View);
+            RectangleF bounds = Camera.View + new RectangleF(-Camera.ViewSize * 0.5f, Camera.ViewSize);
+            GameObject[] gameObjects = objectHandler.Query(bounds);
 
             SpriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp, null, 
                 null, null, Camera.GetTranslationMatrix());
 
-            for (int i = 0; i < 50; i++)
-            {
-                SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
-                SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
-            }
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
+            //    SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
+            //}
 
             foreach (GameObject obj in gameObjects)
             {

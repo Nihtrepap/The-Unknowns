@@ -25,15 +25,19 @@ namespace AWorldDestroyed.Utility
     public class ObjectHandler
     {
         public List<GameObject> GameObjects { get; set; }
+        public RectangleF WorldSize { get; set; }
+
         private QuadTree<GameObject> quadTree;
 
         /// <summary>
         /// Initialize a new ObjectHandler.
         /// </summary>
-        public ObjectHandler()
+        public ObjectHandler(RectangleF worldSize)
         {
+            WorldSize = worldSize;
+
             GameObjects = new List<GameObject>();
-            quadTree = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3); // TODO: Add boundary and capacitiy.
+            quadTree = new QuadTree<GameObject>(worldSize, 3);
         }
 
         /// <summary>
@@ -50,15 +54,14 @@ namespace AWorldDestroyed.Utility
         /// <param name="bounds"></param>
         public void Update(double deltaTime, RectangleF bounds)
         {
-            quadTree = new QuadTree<GameObject>(new RectangleF(-2500, -2500, 5000, 5000), 3);
+            quadTree = new QuadTree<GameObject>(WorldSize, 3);
             for (int i = GameObjects.Count - 1; i >= 0; i--)
             {
                 if (GameObjects[i].Destroyed) GameObjects.Remove(GameObjects[i]);
                 else
                     quadTree.Insert(GameObjects[i].Transform.WorldPosition, GameObjects[i]);
             }
-
-            //TODO: Expand bounds
+            
             GameObject[] objects = Query(bounds);
 
             // Update each GameObject
@@ -68,9 +71,7 @@ namespace AWorldDestroyed.Utility
 
                 obj.Update(deltaTime);
             }
-
-            //QuadTree<GameObject> c = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
-
+            
             // Collision handling.
             foreach (GameObject mainObject in objects)
             {

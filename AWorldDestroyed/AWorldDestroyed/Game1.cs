@@ -60,18 +60,7 @@ namespace AWorldDestroyed
 
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //Sprite2 = new Sprite(Content.Load<Texture2D>("Sprites/Enemy/Monster"),
-            //    new Rectangle(0, 0, 85, 92));
 
-            //Sprite = new Sprite(Content.Load<Texture2D>("Sprites/Player/Player_spriteSheet"), 
-            //    new Rectangle(0, 0, 42, 72));
-
-            //TestTileset = Content.Load<Texture2D>("Sprites/Tiles/TestTiles");
-            //XmlSerializer serializer = new XmlSerializer(typeof(MapData));
-            //using (FileStream fs = new FileStream(@"..\..\..\..\Content\Maps\Map_01.xml", FileMode.Open, FileAccess.Read))
-            //{
-            //    MapData map = serializer.Deserialize(fs) as MapData;
-            //}
             TileSet_01 = Content.Load<Texture2D>("Sprites/Tiles/TileSet_01");
 
             Pixel = new Texture2D(GraphicsDevice, 1, 1);
