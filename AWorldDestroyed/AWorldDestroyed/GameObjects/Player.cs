@@ -32,7 +32,7 @@ namespace AWorldDestroyed.GameObjects
             Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 42, 72), new Point(8, 1), origin);
             Sprite[] spriteRun = Sprite.Slice(spriteSheet, new Rectangle(0, 72, 42, 72), new Point(8, 1), origin);
             Sprite[] spriteIdle = Sprite.Slice(spriteSheet, new Rectangle(0, 144, 42, 72), new Point(1, 1), origin);
-            Sprite[] spriteJump = Sprite.Slice(spriteSheet, new Rectangle(0, 216, 42, 72), new Point(8, 1), origin);
+            Sprite[] spriteJump = Sprite.Slice(spriteSheet, new Rectangle(0, 288, 42, 72), new Point(2, 1), origin);
             Sprite[] spriteAttack = Sprite.Slice(spriteSheet, new Rectangle(0, 216, 42, 72), new Point(8, 1), origin);
 
             Animation attackAnimation = new Animation(spriteAttack, 1000 / 50) { Loop = false };
