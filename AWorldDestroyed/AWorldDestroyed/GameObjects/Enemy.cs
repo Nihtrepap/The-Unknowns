@@ -31,16 +31,21 @@ namespace AWorldDestroyed.GameObjects
         {
             //Transform.Scale = Vector2.One * 0.5f;
             Tag = Tag.Enemy;
-            Texture2D spriteSheet = ContentManager.GetTexture("Enemy"); //.Load<Texture2D>(@"..\..\..\..\Content\Sprites\Enemy");
+            Texture2D spriteSheet = ContentManager.GetTexture("EnemySprites"); //.Load<Texture2D>(@"..\..\..\..\Content\Sprites\Enemy");
             
-            Vector2 origin = new Vector2(42.5f, 0);
-            Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 85, 92), new Point(8, 1), origin);
+            Vector2 origin = new Vector2(55, 0);
+            Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 110, 115), new Point(8, 1), origin);
+            Sprite[] spriteAttack = Sprite.Slice(spriteSheet, new Rectangle(0, 115, 110, 115), new Point(7, 1), origin);
+
+            Animation attackAnimation = new Animation(spriteAttack, 1000 / 10) { Loop = false };
 
             Animator animator = new Animator();
             animator.AddAnimation("walk", new Animation(spriteWalk, 1000 / 10));
+            animator.AddAnimation("attack", attackAnimation);
 
             AddComponent(animator);
-            AddComponent(new Collider(new Vector2(45, 50)) { Offset = new Vector2(21, 36) - origin });
+            AddComponent(new Collider(new Vector2(40, 50)) { Name = "Collider", Offset = new Vector2(36, 62) - origin });
+            AddComponent(new Collider(new Vector2(106, 20)) { Name = "Attack", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false });
             AddComponent(new SpriteRenderer());
             AddComponent<EnemyMovement>();
             AddComponent(new RigidBody
@@ -49,6 +54,10 @@ namespace AWorldDestroyed.GameObjects
                 Mass = 109.6f,
                 Power = 9000 ^ 9000 // OMG OVER 9000
             });
+
+            attackAnimation.GetFrame(2).Event += () => { GetComponent("Attack").Enabled = true; };
+            attackAnimation.GetFrame(5).Event += () => { GetComponent("Attack").Enabled = false; };
+
         }
 
         public override void Update(double deltaTime)

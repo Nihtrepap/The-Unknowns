@@ -55,6 +55,7 @@ namespace AWorldDestroyed
             ContentManager.Init(Content, GraphicsDevice);
             //ContentManager.AddTexture("TileSet_02", "Sprites/Tiles/TileSet_02");
             ContentManager.AddTexture("Enemy", "Sprites/Enemies/Monster");
+            ContentManager.AddTexture("EnemySprites", "Sprites/Enemies/MonsterSpritesheet");
             ContentManager.AddTexture("Player", "Sprites/Player/Player_spriteSheet");
 
 

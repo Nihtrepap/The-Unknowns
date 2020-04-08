@@ -25,6 +25,7 @@ namespace AWorldDestroyed.GameObjects
         public Player()
         {
             Name = "Player";
+            Tag = Tag.Player;
 
             Texture2D spriteSheet = ContentManager.GetTexture("Player"); //Load<Texture2D>(@"..\..\..\..\Content\Sprites\Player\Player_spriteSheet");
 
