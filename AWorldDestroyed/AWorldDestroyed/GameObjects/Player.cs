@@ -31,10 +31,10 @@ namespace AWorldDestroyed.GameObjects
 
             Vector2 origin = new Vector2(21, 0);
             Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 42, 72), new Point(8, 1), origin);
-            Sprite[] spriteRun = Sprite.Slice(spriteSheet, new Rectangle(0, 72, 42, 72), new Point(8, 1), origin);
-            Sprite[] spriteIdle = Sprite.Slice(spriteSheet, new Rectangle(0, 144, 42, 72), new Point(1, 1), origin);
-            Sprite[] spriteJump = Sprite.Slice(spriteSheet, new Rectangle(0, 288, 42, 72), new Point(2, 1), origin);
-            Sprite[] spriteAttack = Sprite.Slice(spriteSheet, new Rectangle(0, 216, 42, 72), new Point(8, 1), origin);
+            Sprite[] spriteRun = Sprite.Slice(spriteSheet, new Rectangle(0, 74, 42, 72), new Point(8, 1), origin);
+            Sprite[] spriteIdle = Sprite.Slice(spriteSheet, new Rectangle(225, 148, 17, 68), new Point(8, 1), new Vector2(8, 0));
+            Sprite[] spriteJump = Sprite.Slice(spriteSheet, new Rectangle(0, 218, 42, 72), new Point(8, 1), origin);
+            Sprite[] spriteAttack = Sprite.Slice(spriteSheet, new Rectangle(0, 218, 42, 72), new Point(8, 1), origin);
 
             Animation attackAnimation = new Animation(spriteAttack, 1000 / 50) { Loop = false };
 
@@ -44,7 +44,7 @@ namespace AWorldDestroyed.GameObjects
             };
             animator.AddAnimation("walk", new Animation(spriteWalk, 1000 / 10));
             animator.AddAnimation("run", new Animation(spriteRun, 1000 / 30));
-            animator.AddAnimation("idle", new Animation(spriteIdle, 1000 / 10));
+            animator.AddAnimation("idle", new Animation(spriteIdle, 1000 / 7));
             animator.AddAnimation("jump", new Animation(spriteJump, 1000 / 10));
             animator.AddAnimation("attack", attackAnimation);
 
