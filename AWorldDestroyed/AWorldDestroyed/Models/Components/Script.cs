@@ -30,5 +30,9 @@ namespace AWorldDestroyed.Models.Components
         public virtual void OnCollision(GameObject other, Side side) { }
 
         public virtual void OnTrigger(GameObject other, Side side) { }
+
+        public virtual void OnTriggerEnter(GameObject other, Side side) { }
+
+        public virtual void OnTriggerExit(GameObject other, Side side) { }
     }
 }

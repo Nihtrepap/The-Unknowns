@@ -29,6 +29,7 @@ namespace AWorldDestroyed.Utility
 
         private QuadTree<GameObject> quadTree;
 
+        
         /// <summary>
         /// Initialize a new ObjectHandler.
         /// </summary>
@@ -61,7 +62,8 @@ namespace AWorldDestroyed.Utility
                 else
                     quadTree.Insert(GameObjects[i].Transform.WorldPosition, GameObjects[i]);
             }
-            
+
+            //TODO: Expand bounds
             GameObject[] objects = Query(bounds);
 
             // Update each GameObject
@@ -71,7 +73,9 @@ namespace AWorldDestroyed.Utility
 
                 obj.Update(deltaTime);
             }
-            
+
+            //QuadTree<GameObject> c = new QuadTree<GameObject>(new RectangleF(-1000, -1000, 2000, 2000), 3);
+
             // Collision handling.
             foreach (GameObject mainObject in objects)
             {
@@ -89,11 +93,11 @@ namespace AWorldDestroyed.Utility
                             objColRange.Y - (2 * 32),
                             objColRange.Width + (4 * 32),
                             objColRange.Height + (4 * 32)));
-                        
+
                         foreach (GameObject other in nearby)
                         {
-                            if (mainObject == other 
-                                || !other.Enabled 
+                            if (mainObject == other
+                                || !other.Enabled
                                 || !other.HasCollider) continue;
 
                             foreach (Collider otherCollider in other.GetComponents<Collider>())
@@ -115,33 +119,33 @@ namespace AWorldDestroyed.Utility
 
         private bool IsTouchingLeft(RectangleF obj, Vector2 objVelocity, RectangleF other)
         {
-            return obj.Right + objVelocity.X > other.Left 
-                && obj.Left < other.Left 
-                && obj.Bottom > other.Top 
+            return obj.Right + objVelocity.X > other.Left
+                && obj.Left < other.Left
+                && obj.Bottom > other.Top
                 && obj.Top < other.Bottom;
         }
 
         private bool IsTouchingRight(RectangleF obj, Vector2 objVelocity, RectangleF other)
         {
-            return obj.Left + objVelocity.X < other.Right 
-                && obj.Right > other.Right 
-                && obj.Bottom > other.Top 
+            return obj.Left + objVelocity.X < other.Right
+                && obj.Right > other.Right
+                && obj.Bottom > other.Top
                 && obj.Top < other.Bottom;
         }
 
         private bool IsTouchingTop(RectangleF obj, Vector2 objVelocity, RectangleF other)
         {
-            return obj.Bottom + objVelocity.Y > other.Top 
-                && obj.Top < other.Top 
-                && obj.Right > other.Left 
+            return obj.Bottom + objVelocity.Y > other.Top
+                && obj.Top < other.Top
+                && obj.Right > other.Left
                 && obj.Left < other.Right;
         }
 
         private bool IsTouchingBottom(RectangleF obj, Vector2 objVelocity, RectangleF other)
         {
-            return obj.Top + objVelocity.Y < other.Bottom 
-                && obj.Bottom > other.Bottom 
-                && obj.Right > other.Left 
+            return obj.Top + objVelocity.Y < other.Bottom
+                && obj.Bottom > other.Bottom
+                && obj.Right > other.Left
                 && obj.Left < other.Right;
         }
 
@@ -170,7 +174,7 @@ namespace AWorldDestroyed.Utility
                     objRigidbody.Velocity *= Vector2.UnitX * otherCollider.Friction;
                     objRigidbody.Acceleration *= Vector2.UnitX;
                 }
-          
+
                 if (objCollider.IsTrigger)
                     obj.OnTrigger(other, Side.Bottom);
 
@@ -192,7 +196,7 @@ namespace AWorldDestroyed.Utility
                     objRigidbody.Velocity *= Vector2.UnitX;
                     objRigidbody.Acceleration *= Vector2.UnitX;
                 }
-             
+
                 if (objCollider.IsTrigger)
                     obj.OnTrigger(other, Side.Top);
 
@@ -215,7 +219,7 @@ namespace AWorldDestroyed.Utility
                     objRigidbody.Velocity *= Vector2.UnitY;
                     //objRigidbody.Velocity *= new Vector2(otherCollider.Friction, 1);
                 }
-                
+
                 if (objCollider.IsTrigger)
                     obj.OnTrigger(other, Side.Right);
 
@@ -238,7 +242,7 @@ namespace AWorldDestroyed.Utility
                     objRigidbody.Velocity *= Vector2.UnitY;
                     //objRigidbody.Acceleration *= otherCollider.Friction;
                 }
-                
+
                 if (objCollider.IsTrigger)
                     obj.OnTrigger(other, Side.Left);
 
@@ -246,9 +250,9 @@ namespace AWorldDestroyed.Utility
                     other.OnTrigger(obj, Side.Right);
             }
 
-            
 
-            
+
+
         }
 
         /// <summary>
@@ -277,6 +281,7 @@ namespace AWorldDestroyed.Utility
         Top,
         Bottom,
         Left,
-        Right
+        Right,
+        Unknown
     }
 }

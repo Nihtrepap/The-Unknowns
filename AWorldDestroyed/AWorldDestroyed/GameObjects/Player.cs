@@ -25,6 +25,7 @@ namespace AWorldDestroyed.GameObjects
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public bool IsDead { get; private set; }
+  
 
         public Player()
         {
@@ -32,7 +33,6 @@ namespace AWorldDestroyed.GameObjects
             Tag = Tag.Player;
             MaxHealth = 100;
             Health = MaxHealth;
-            IsDead = false;
 
             Texture2D spriteSheet = ContentManager.GetTexture("Player"); //Load<Texture2D>(@"..\..\..\..\Content\Sprites\Player\Player_spriteSheet");
 
@@ -81,25 +81,32 @@ namespace AWorldDestroyed.GameObjects
                     GetComponent("AttackLeft").Enabled = false;
                 else
                     GetComponent("AttackRight").Enabled = false;
-            };
+            };  
 
         }
 
         public override void Update(double deltaTime)
         {
             //rb.Velocity += new Vector2(0, 0.5f);
+         
 
             base.Update(deltaTime);
         }
 
-        public void OnDeath()
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void TakeDamage(float amount)
         {
-            throw new System.NotImplementedException();
+            if (Health > 0) Health -= amount;
+            if (Health <= 0) OnDeath();
+        }
+
+        public void OnDeath()
+        {
+            if (Health <= 0)
+            {/*Death animation*/
+                this.Destroy();
+            }
+                //if (Death animation.GetCurrentAnimation().Done)   
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AWorldDestroyed.GameObjects;
 using AWorldDestroyed.Models;
 using AWorldDestroyed.Models.Components;
 using AWorldDestroyed.Utility;
@@ -79,16 +80,14 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
-        public override void OnCollision(GameObject other, Side side)
+        public override void OnTriggerEnter(GameObject other, Side side)
         {
-            
-        }
-
-        public override void OnTrigger(GameObject other, Side side)
-        {
-            if (other.Tag == Tag.Player) other.Destroy();
-
+            if (other.Tag == Tag.Player)
+            {
+                if(other is IDamageable player) { player.TakeDamage(25f); }
+            }
             base.OnTrigger(other, side);
+         
         }
 
         public override Component Copy()

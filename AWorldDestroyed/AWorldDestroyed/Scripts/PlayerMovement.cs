@@ -113,20 +113,14 @@ namespace AWorldDestroyed.Scripts
                 canJump = true;
         }
 
-        public override void OnTrigger(GameObject other, Side side)
+        public override void OnTriggerEnter(GameObject other, Side side)
         {
-            // AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect
-
-            //if (side == Side.Left && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.FlipHorizontally)
-            //{
-            //    if (other.Tag == Tag.Enemy) other.Destroy();
-            //}
-            //else if (side == Side.Right && AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect == SpriteEffects.None)
-            //{
-            //    if (other.Tag == Tag.Enemy) other.Destroy();
-            //}
-            if (other.Tag == Tag.Enemy) other.Destroy();
+            if (other.Tag == Tag.Enemy)
+            {
+                if (other is IDamageable enemy) { enemy.TakeDamage(50f); }
+            }
             base.OnTrigger(other, side);
+
         }
 
         public override Component Copy()

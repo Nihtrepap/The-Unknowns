@@ -18,10 +18,11 @@ namespace AWorldDestroyed.Scenes
         public FirstScene(SpriteBatch spriteBatch) : base(spriteBatch)
         {
         }
+        private Player p = new Player();
 
         public override void Load()
         {
-            Debug = false;
+            Debug = true;
 
             MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_02.xml");
 
@@ -42,11 +43,10 @@ namespace AWorldDestroyed.Scenes
 
             objectHandler.WorldSize = new RectangleF((Vector2)CameraMin, maxMapSize * tileSize.ToVector2());
 
-            Player p = new Player();
             AddObject(p);
             CameraFollow = p;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
             Enemy e = new Enemy(new Vector2(-700 + 100 * i, 250));
             AddObject(e);
@@ -71,7 +71,10 @@ namespace AWorldDestroyed.Scenes
 
         protected override void OnGUIDraw()
         {
-            SpriteBatch.Draw(Game1.Pixel, new Rectangle(0, 0, 800, 30), null, Color.Orange);
+            float healthWidth = (p.Health / p.MaxHealth) * 100f;
+            Rectangle healthBar = new Rectangle(15, 15, (int)healthWidth, 20);
+            //SpriteBatch.Draw(Game1.Pixel, new Rectangle(0, 0, 800, 30), null, Color.Orange);
+            SpriteBatch.Draw(Game1.Pixel, healthBar, null, Color.Red);
 
             base.OnGUIDraw();
         }

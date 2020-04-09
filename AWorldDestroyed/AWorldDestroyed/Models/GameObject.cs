@@ -13,6 +13,7 @@
 
 using AWorldDestroyed.Models.Components;
 using AWorldDestroyed.Utility;
+using System.Collections.Generic;
 
 namespace AWorldDestroyed.Models
 {
@@ -21,10 +22,13 @@ namespace AWorldDestroyed.Models
     /// </summary>
     public class GameObject : SceneObject
     {
+        private List<GameObject> triggeredGameObj;
+        private List<GameObject> triggeredThisFrame;
+
         /// <summary>
         /// Initialize a new GameObject.
         /// </summary>
-        public GameObject() : base()
+        public GameObject() : this(null)
         {
         }
 
@@ -34,6 +38,8 @@ namespace AWorldDestroyed.Models
         /// <param name="transform">A Transform component supplying transformation capabilites to this object.</param>
         public GameObject(Transform transform) : base(transform)
         {
+            triggeredGameObj = new List<GameObject>();
+            triggeredThisFrame = new List<GameObject>();
         }
 
         /// <summary>
@@ -41,6 +47,22 @@ namespace AWorldDestroyed.Models
         /// </summary>
         public virtual void OnOutOfScope()
         {
+        }
+
+        public override void Update(double deltaTime)
+        {
+            if (HasCollider)
+            {
+                for (int i = triggeredGameObj.Count - 1; i >= 0; i--)
+                {
+                    OnTriggerExit(triggeredGameObj[i], Side.Unknown);
+                    if (!triggeredThisFrame.Contains(triggeredGameObj[i]))
+                        triggeredGameObj.Remove(triggeredGameObj[i]);
+                }
+                triggeredThisFrame.Clear();
+            }
+
+            base.Update(deltaTime);
         }
 
         /// <summary>
@@ -61,10 +83,32 @@ namespace AWorldDestroyed.Models
         /// <param name="other">The GameObject that triggered this object.</param>
         public virtual void OnTrigger(GameObject other, Side side)
         {
-            foreach (Script script in GetComponents<Script>())
+            if (!triggeredGameObj.Contains(other))
             {
-                script.OnTrigger(other, side);
+                triggeredGameObj.Add(other);
+                OnTriggerEnter(other, side);
             }
+
+            if (!triggeredThisFrame.Contains(other)) triggeredThisFrame.Add(other);
+            foreach (Script script in GetComponents<Script>())
+                script.OnTrigger(other, side);
+        }
+
+        public virtual void OnTriggerEnter(GameObject other, Side side)
+        {
+            //triggeredGameObj.Add(other);
+            //triggeredThisFrame.Add(other);
+
+            foreach (Script script in GetComponents<Script>())
+                script.OnTriggerEnter(other, side);
+        }
+
+        public virtual void OnTriggerExit(GameObject other, Side side)
+        {
+            //triggeredThisFrame.Remove(other);
+
+            foreach (Script script in GetComponents<Script>())
+                script.OnTriggerExit(other, side);
         }
     }
 }
