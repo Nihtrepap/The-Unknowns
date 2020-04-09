@@ -58,6 +58,7 @@
     <Compile Include="Models\GameObject.cs" />
     <Compile Include="Utility\ContentManager.cs" />
     <Compile Include="Utility\IDamageable.cs" />
+    <Compile Include="Utility\IUpdateable.cs" />
     <Compile Include="Utility\MapLoader.cs" />
     <Compile Include="Utility\SortingLayer.cs" />
     <Compile Include="Models\Components\RigidBody.cs" />

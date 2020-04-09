@@ -22,8 +22,8 @@ namespace AWorldDestroyed.Models
     /// </summary>
     public class GameObject : SceneObject
     {
-        private List<GameObject> triggeredGameObj;
-        private List<GameObject> triggeredThisFrame;
+        //private List<GameObject> triggeredGameObj;
+        //private List<GameObject> triggeredThisFrame;
 
         /// <summary>
         /// Initialize a new GameObject.
@@ -38,8 +38,8 @@ namespace AWorldDestroyed.Models
         /// <param name="transform">A Transform component supplying transformation capabilites to this object.</param>
         public GameObject(Transform transform) : base(transform)
         {
-            triggeredGameObj = new List<GameObject>();
-            triggeredThisFrame = new List<GameObject>();
+            //triggeredGameObj = new List<GameObject>();
+            //triggeredThisFrame = new List<GameObject>();
         }
 
         /// <summary>
@@ -49,66 +49,50 @@ namespace AWorldDestroyed.Models
         {
         }
 
-        public override void Update(double deltaTime)
-        {
-            if (HasCollider)
-            {
-                for (int i = triggeredGameObj.Count - 1; i >= 0; i--)
-                {
-                    OnTriggerExit(triggeredGameObj[i], Side.Unknown);
-                    if (!triggeredThisFrame.Contains(triggeredGameObj[i]))
-                        triggeredGameObj.Remove(triggeredGameObj[i]);
-                }
-                triggeredThisFrame.Clear();
-            }
+        ///// <summary>
+        ///// Determines what happens when this object collisions with another GameObject.
+        ///// </summary>
+        ///// <param name="other">The GameObject this object collided with.</param>
+        //public virtual void OnCollision(GameObject other, Side side)
+        //{
+        //    foreach (Script script in GetComponents<Script>())
+        //    {
+        //        script.OnCollision(other, side);
+        //    }
+        //}
 
-            base.Update(deltaTime);
-        }
+        ///// <summary>
+        ///// Determines what happens when another GameObject triggered this GameObject.
+        ///// </summary>
+        ///// <param name="other">The GameObject that triggered this object.</param>
+        //public virtual void OnTrigger(GameObject other, Side side)
+        //{
+        //    //if (!triggeredGameObj.Contains(other))
+        //    //{
+        //    //    triggeredGameObj.Add(other);
+        //    //    OnTriggerEnter(other, side);
+        //    //}
 
-        /// <summary>
-        /// Determines what happens when this object collisions with another GameObject.
-        /// </summary>
-        /// <param name="other">The GameObject this object collided with.</param>
-        public virtual void OnCollision(GameObject other, Side side)
-        {
-            foreach (Script script in GetComponents<Script>())
-            {
-                script.OnCollision(other, side);
-            }
-        }
+        //    //if (!triggeredThisFrame.Contains(other)) triggeredThisFrame.Add(other);
+        //    foreach (Script script in GetComponents<Script>())
+        //        script.OnTrigger(other, side);
+        //}
 
-        /// <summary>
-        /// Determines what happens when another GameObject triggered this GameObject.
-        /// </summary>
-        /// <param name="other">The GameObject that triggered this object.</param>
-        public virtual void OnTrigger(GameObject other, Side side)
-        {
-            if (!triggeredGameObj.Contains(other))
-            {
-                triggeredGameObj.Add(other);
-                OnTriggerEnter(other, side);
-            }
+        //public virtual void OnTriggerEnter(GameObject other, Side side)
+        //{
+        //    //triggeredGameObj.Add(other);
+        //    //triggeredThisFrame.Add(other);
 
-            if (!triggeredThisFrame.Contains(other)) triggeredThisFrame.Add(other);
-            foreach (Script script in GetComponents<Script>())
-                script.OnTrigger(other, side);
-        }
+        //    foreach (Script script in GetComponents<Script>())
+        //        script.OnTriggerEnter(other, side);
+        //}
 
-        public virtual void OnTriggerEnter(GameObject other, Side side)
-        {
-            //triggeredGameObj.Add(other);
-            //triggeredThisFrame.Add(other);
+        //public virtual void OnTriggerExit(GameObject other, Side side)
+        //{
+        //    //triggeredThisFrame.Remove(other);
 
-            foreach (Script script in GetComponents<Script>())
-                script.OnTriggerEnter(other, side);
-        }
-
-        public virtual void OnTriggerExit(GameObject other, Side side)
-        {
-            //triggeredThisFrame.Remove(other);
-
-            foreach (Script script in GetComponents<Script>())
-                script.OnTriggerExit(other, side);
-        }
+        //    foreach (Script script in GetComponents<Script>())
+        //        script.OnTriggerExit(other, side);
+        //}
     }
 }

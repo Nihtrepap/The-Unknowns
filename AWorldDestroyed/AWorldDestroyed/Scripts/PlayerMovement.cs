@@ -107,20 +107,18 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
-        public override void OnCollision(GameObject other, Side side)
+        public void OnCollision(Collider collider, GameObject other, Side side)
         {
             if (side == Side.Bottom && rigidBody.Velocity.Y > 0)
                 canJump = true;
         }
 
-        public override void OnTriggerEnter(GameObject other, Side side)
+        public void OnTriggerEnter(Collider collider, GameObject other, Side side)
         {
             if (other.Tag == Tag.Enemy)
             {
-                if (other is IDamageable enemy) { enemy.TakeDamage(50f); }
+                if (other is IDamageable enemy) { enemy.TakeDamage(34f); }
             }
-            base.OnTrigger(other, side);
-
         }
 
         public override Component Copy()

@@ -15,24 +15,22 @@ using AWorldDestroyed.Utility;
 
 namespace AWorldDestroyed.Models.Components
 {
-    public abstract class Script : Component
+    public abstract class Script : Component, IUpdateable
     {
         public Script() : base()
         {
         }
 
-        //public abstract void Initialize();
-
         public abstract void Update(double deltaTime);
 
         public abstract override Component Copy();
 
-        public virtual void OnCollision(GameObject other, Side side) { }
+        //public virtual void OnCollision(GameObject other, Side side) { }
 
-        public virtual void OnTrigger(GameObject other, Side side) { }
+        //public virtual void OnTrigger(GameObject other, Side side) { }
 
-        public virtual void OnTriggerEnter(GameObject other, Side side) { }
+        //public virtual void OnTriggerEnter(GameObject other, Side side) { }
 
-        public virtual void OnTriggerExit(GameObject other, Side side) { }
+        //public virtual void OnTriggerExit(GameObject other, Side side) { }
     }
 }

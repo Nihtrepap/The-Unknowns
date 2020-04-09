@@ -25,7 +25,6 @@ namespace AWorldDestroyed.GameObjects
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public bool IsDead { get; private set; }
-  
 
         public Player()
         {
@@ -56,11 +55,11 @@ namespace AWorldDestroyed.GameObjects
             animator.AddAnimation("attack", attackAnimation);
 
             AddComponent(animator);
-            AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset = new Vector2(16, 5) - origin });
-            AddComponent(new Collider(new Vector2(30, 23)) { Name = "AttackLeft", Offset = new Vector2(-14, 25) - origin, IsTrigger = true, Enabled = false });
-            AddComponent(new Collider(new Vector2(30, 23)) { Name = "AttackRight", Offset = new Vector2(29, 25) - origin, IsTrigger = true, Enabled = false });
+            PlayerMovement movement = AddComponent<PlayerMovement>();
+            AddComponent(new Collider(new Vector2(13, 62)) { Name = "Collider", Offset = new Vector2(16, 5) - origin }).OnCollision += movement.OnCollision;
+            AddComponent(new Collider(new Vector2(30, 23)) { Name = "AttackLeft", Offset = new Vector2(-14, 25) - origin, IsTrigger = true, Enabled = false }).OnTriggerEnter += movement.OnTriggerEnter;
+            AddComponent(new Collider(new Vector2(30, 23)) { Name = "AttackRight", Offset = new Vector2(29, 25) - origin, IsTrigger = true, Enabled = false }).OnTriggerEnter += movement.OnTriggerEnter;
             AddComponent(new SpriteRenderer());
-            AddComponent<PlayerMovement>();
             AddComponent(new RigidBody
             {
                 Name = "Rb",

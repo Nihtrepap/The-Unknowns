@@ -19,7 +19,7 @@ namespace AWorldDestroyed.Models
     public class Frame
     {
         public readonly Sprite Sprite;
-        public readonly int Duration;
+        public int Duration;
         public event FrameEvent Event;
 
         /// <summary>

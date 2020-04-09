@@ -22,7 +22,7 @@ namespace AWorldDestroyed.Models.Components
     /// <summary>
     /// Animator takes care of what animation to run.
     /// </summary>
-    public class Animator : Component
+    public class Animator : Component, Utility.IUpdateable
     {
         private Dictionary<string, Animation> animations;
         private Animation currentAnimation;

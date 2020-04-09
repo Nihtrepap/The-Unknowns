@@ -25,10 +25,12 @@ namespace AWorldDestroyed.GameObjects
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public bool IsDead { get; private set; }
+        public Vector2 HomePos { get; set; }
 
         public Enemy(Vector2 position) : this()
         {
             Transform.Position = position;
+            HomePos = position;
         }
 
         public Enemy()
@@ -44,27 +46,25 @@ namespace AWorldDestroyed.GameObjects
             Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 110, 115), new Point(8, 1), origin);
             Sprite[] spriteAttack = Sprite.Slice(spriteSheet, new Rectangle(0, 115, 110, 115), new Point(7, 1), origin);
 
-            Animation attackAnimation = new Animation(spriteAttack, 1000 / 30) { Loop = false };
+            Animation attackAnimation = new Animation(spriteAttack, 1000 / 12) { Loop = false };
+            attackAnimation.GetFrame(spriteAttack.Length - 1).Duration = 200;
 
             Animator animator = new Animator();
             animator.AddAnimation("walk", new Animation(spriteWalk, 1000 / 10));
             animator.AddAnimation("attack", attackAnimation);
 
+            EnemyMovement movement = AddComponent<EnemyMovement>();
             AddComponent(animator);
             AddComponent(new Collider(new Vector2(40, 50)) { Name = "Collider", Offset = new Vector2(36, 62) - origin });
-            AddComponent(new Collider(new Vector2(53, 20)) { Name = "AttackLeft", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false });
-            AddComponent(new Collider(new Vector2(53, 20)) { Name = "AttackRight", Offset = new Vector2(55, 62) - origin, IsTrigger = true, Enabled = false });
-            AddComponent(new Collider(new Vector2(700, 50)) { Name = "Aggro", Offset = new Vector2(-300, 62) - origin, IsTrigger = true });
-            AddComponent(new Collider(new Vector2(106, 20)) { Name = "AttackAggro", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false });
+            AddComponent(new Collider(new Vector2(53, 20)) { Name = "AttackLeft", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false }).OnTriggerEnter += movement.OnHit;
+            AddComponent(new Collider(new Vector2(53, 20)) { Name = "AttackRight", Offset = new Vector2(55, 62) - origin, IsTrigger = true, Enabled = false }).OnTriggerEnter += movement.OnHit;
+            AddComponent(new Collider(new Vector2(106, 20)) { Name = "AttackRange", Offset = new Vector2(2, 62) - origin, IsTrigger = true, Enabled = false }).OnTrigger += movement.OnPlayerInAttackRange;
+            Collider rangeTrigger = AddComponent(new Collider(new Vector2(700, 50)) { Name = "AggroRange", Offset = new Vector2(-300, 62) - origin, IsTrigger = true });
+            rangeTrigger.OnTriggerEnter += movement.OnPlayerInSight;
+            rangeTrigger.OnTriggerExit += movement.OnPlayerOutOfSight;
 
             AddComponent(new SpriteRenderer());
-            AddComponent<EnemyMovement>();
-            AddComponent(new RigidBody
-            {
-                Name = "EnemyRb",
-                Mass = 109.6f,
-                Power = 9000 ^ 9000 // OMG OVER 9000
-            });
+            AddComponent(new RigidBody { Name = "EnemyRb", Mass = 109.6f, Power = 9000 ^ 9000 });
 
             attackAnimation.GetFrame(4).Event += () => 
             {
@@ -87,6 +87,8 @@ namespace AWorldDestroyed.GameObjects
         {
             base.Update(deltaTime);
         }
+
+        public bool IsHome => (Transform.Position - HomePos).Length() <= 30f;
 
         public void TakeDamage(float amount)
         {

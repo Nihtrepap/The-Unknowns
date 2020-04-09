@@ -18,12 +18,14 @@ namespace AWorldDestroyed.Scripts
         private RigidBody rigidBody;
         private Animator animator;
 
+        private EnemyState state = EnemyState.Home;
+        private Transform target = null;
         private float walkSpeed = 0.04f;
         private float maxWalkSpeed = 2f;
         private float distanceTravelled = 0;
         private float maxDistance = 100;
         private int direction = 1;
-        private bool attacking = false;
+        //private bool attacking = false;
 
 
         public override void Update(double deltaTime)
@@ -34,33 +36,19 @@ namespace AWorldDestroyed.Scripts
             float speed = walkSpeed * (float)deltaTime;
 
             // ATTKACK
-            if (!attacking && InputManager.IsKeyJustPressed(Keys.E))
+            if (state == EnemyState.Attacking)
             {
-                attacking = true;
-                animator.ChangeAnimation("attack");
-
-
-                //AttachedTo.GetComponent("Attack").Enabled
+                if (animator.GetCurrentAnimation().Done)
+                {
+                    state = EnemyState.Aggro;
+                    animator.GetCurrentAnimation().Reset();
+                }
             }
-            else if (attacking && animator.GetCurrentAnimation().Done)
+            else if (state == EnemyState.Home)
             {
-                attacking = false;
-            }
-            else if (!attacking)
-            {
-
                 if (distanceTravelled < maxDistance)
                 {
-                    if (direction > 0 && rigidBody.Velocity.X + speed < maxWalkSpeed)
-                    {
-                        AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.None;
-                        rigidBody.Velocity += new Vector2(1, 0) * speed;
-                    }
-                    else if (direction < 0 && rigidBody.Velocity.X - speed > -maxWalkSpeed)
-                    {
-                        AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.FlipHorizontally;
-                        rigidBody.Velocity += new Vector2(-1, 0) * speed;
-                    }
+                    Walk(direction > 0, speed);
                     distanceTravelled += Math.Abs(rigidBody.Velocity.X);
                 }
                 else
@@ -68,31 +56,85 @@ namespace AWorldDestroyed.Scripts
                     direction *= -1;
                     distanceTravelled = 0;
                 }
-
-                if (InputManager.IsKeyHeld(Keys.E))
+            }
+            else if (state == EnemyState.Aggro)
+            {
+                Walk(target.Position.X >= AttachedTo.Transform.Position.X, speed);
+            }
+            else if (state == EnemyState.GoingHome)
+            {
+                if (!((Enemy)AttachedTo).IsHome)
                 {
-                    animator.ChangeAnimation("attack");
+                    Walk(((Enemy)AttachedTo).HomePos.X >= AttachedTo.Transform.Position.X, speed);
                 }
-                else
-                {
-                    animator.ChangeAnimation("walk");
-                }
+                else state = EnemyState.Home;
             }
         }
 
-        public override void OnTriggerEnter(GameObject other, Side side)
+        public void OnHit(Collider collider, GameObject other, Side side)
         {
             if (other.Tag == Tag.Player)
             {
-                if(other is IDamageable player) { player.TakeDamage(25f); }
+                if(other is IDamageable player) { player.TakeDamage(15f); }
             }
-            base.OnTrigger(other, side);
-         
+        }
+
+        public void OnPlayerInAttackRange(Collider collider, GameObject other, Side side)
+        {
+            if (other.Tag == Tag.Player)
+            {
+                state = EnemyState.Attacking;
+                animator.ChangeAnimation("attack");
+            }
+        }
+
+        public void OnPlayerInSight(Collider collider, GameObject other, Side side)
+        {
+            if (other.Tag == Tag.Player)
+            {
+                state = EnemyState.Aggro;
+                target = other.Transform;
+                AttachedTo.GetComponent("AttackRange").Enabled = true;
+            }
+        }
+
+        public void OnPlayerOutOfSight(Collider collider, GameObject other, Side side)
+        {
+            if (other.Transform == target)
+            {
+                state = EnemyState.GoingHome;
+                target = null;
+                AttachedTo.GetComponent("AttackRange").Enabled = false;
+            }
         }
 
         public override Component Copy()
         {
             throw new NotImplementedException();
+        }
+
+
+        private void Walk(bool right, float speed)
+        {
+            animator.ChangeAnimation("walk");
+            if (right && rigidBody.Velocity.X + speed < maxWalkSpeed)
+            {
+                AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.None;
+                rigidBody.Velocity += new Vector2(1, 0) * speed;
+            }
+            else if (!right && rigidBody.Velocity.X - speed > -maxWalkSpeed)
+            {
+                AttachedTo.GetComponent<SpriteRenderer>().SpriteEffect = SpriteEffects.FlipHorizontally;
+                rigidBody.Velocity += new Vector2(-1, 0) * speed;
+            }
+        }
+
+        enum EnemyState
+        {
+            Home,
+            GoingHome,
+            Aggro,
+            Attacking
         }
     }
 }

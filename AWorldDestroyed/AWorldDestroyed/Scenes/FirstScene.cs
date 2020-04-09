@@ -22,7 +22,7 @@ namespace AWorldDestroyed.Scenes
 
         public override void Load()
         {
-            Debug = true;
+            Debug = false;
 
             MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_02.xml");
 
@@ -46,7 +46,7 @@ namespace AWorldDestroyed.Scenes
             AddObject(p);
             CameraFollow = p;
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 6; i++)
             {
             Enemy e = new Enemy(new Vector2(-700 + 100 * i, 250));
             AddObject(e);
@@ -56,6 +56,17 @@ namespace AWorldDestroyed.Scenes
 
         protected override void OnObjectDraw(GameObject gameObject, float sortingOrder)
         {
+            if (Debug)
+            {
+                if (gameObject is Player player)
+                {
+                    SpriteBatch.Draw(Game1.Pixel, new Rectangle(player.Transform.Position.ToPoint(), new Point(4)), null, Color.Black, 0f, Vector2.Zero, SpriteEffects.None, sortingOrder + 0.0001f);
+                }
+                if (gameObject is Enemy enemy)
+                {
+                    SpriteBatch.Draw(Game1.Pixel, new Rectangle(enemy.Transform.Position.ToPoint(), new Point(4)), null, Color.Black, 0f, Vector2.Zero, SpriteEffects.None, sortingOrder + 0.0001f);
+                }
+            }
             //if (gameObject.HasComponent<RigidBody>())
             //{
             //    RectangleF objColRange = gameObject.GetComponent<Collider>().GetRectangle();
@@ -71,7 +82,7 @@ namespace AWorldDestroyed.Scenes
 
         protected override void OnGUIDraw()
         {
-            float healthWidth = (p.Health / p.MaxHealth) * 100f;
+            float healthWidth = (p.Health / p.MaxHealth) * 700f;
             Rectangle healthBar = new Rectangle(15, 15, (int)healthWidth, 20);
             //SpriteBatch.Draw(Game1.Pixel, new Rectangle(0, 0, 800, 30), null, Color.Orange);
             SpriteBatch.Draw(Game1.Pixel, healthBar, null, Color.Red);

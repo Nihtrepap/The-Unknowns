@@ -89,8 +89,7 @@ namespace AWorldDestroyed.Models
         {
             foreach (Component component in components)
             {
-                if (component is Script script) script.Update(deltaTime);
-                else if (component is Animator animator) animator.Update(deltaTime);
+                if (component is IUpdateable updateable) updateable.Update(deltaTime);
             }
 
             GetComponent<RigidBody>()?.Update(deltaTime);
@@ -137,26 +136,30 @@ namespace AWorldDestroyed.Models
         /// Adds a component of type T to this object.
         /// </summary>
         /// <typeparam name="T">The type of component to add.</typeparam>
-        public void AddComponent<T>() where T : Component, new()
+        public T AddComponent<T>() where T : Component, new()
         {
             T component = new T();
 
             AddComponent(component);
+
+            return component;
         }
 
         /// <summary>
         /// Adds a component to this object.
         /// </summary>
         /// <param name="component">The component to add.</param>
-        public void AddComponent(Component component)
+        public T AddComponent<T>(T component) where T : Component
         {
-            if (component == null) return;
-            
+            if (component == null) return null;
+
             component.AttachedTo = this;
             components.Add(component);
-            
+
             if (component is Collider) HasCollider = true;
             if (component is SpriteRenderer) HasSpriteRenderer = true;
+
+            return component;
         }
 
         /// <summary>

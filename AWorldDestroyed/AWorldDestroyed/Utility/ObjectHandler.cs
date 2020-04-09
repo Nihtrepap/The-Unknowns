@@ -167,19 +167,19 @@ namespace AWorldDestroyed.Utility
                         obj.Transform.Position.X,
                         otherCollider.GetRectangle().Top - objCollider.Size.Y - objCollider.Offset.Y);
 
-                    obj.OnCollision(other, Side.Bottom);
-                    other.OnCollision(obj, Side.Top);
+                    objCollider.Collide(other, Side.Bottom);
+                    otherCollider.Collide(obj, Side.Top);
 
                     //objRigidbody.Velocity *= Vector2.UnitX;
                     objRigidbody.Velocity *= Vector2.UnitX * otherCollider.Friction;
                     objRigidbody.Acceleration *= Vector2.UnitX;
                 }
 
-                if (objCollider.IsTrigger)
-                    obj.OnTrigger(other, Side.Bottom);
+                if (objCollider.IsTrigger && !otherCollider.IsTrigger)
+                    objCollider.Trigger(other, Side.Bottom);
 
-                if (otherCollider.IsTrigger)
-                    other.OnTrigger(obj, Side.Top);
+                else if (otherCollider.IsTrigger && !objCollider.IsTrigger)
+                    otherCollider.Trigger(obj, Side.Top);
             }
             // When moving Up and hits another objects Bottom side.
             else if (/*objRigidbody.Velocity.Y < 0 && */IsTouchingBottom(objCollider.GetRectangle(), objRigidbody.Velocity, otherCollider.GetRectangle()))
@@ -190,18 +190,18 @@ namespace AWorldDestroyed.Utility
                         obj.Transform.Position.X,
                         otherCollider.GetRectangle().Bottom - objCollider.Offset.Y);
 
-                    obj.OnCollision(other, Side.Top);
-                    other.OnCollision(obj, Side.Bottom);
+                    objCollider.Collide(other, Side.Top);
+                    otherCollider.Collide(obj, Side.Bottom);
 
                     objRigidbody.Velocity *= Vector2.UnitX;
                     objRigidbody.Acceleration *= Vector2.UnitX;
                 }
 
-                if (objCollider.IsTrigger)
-                    obj.OnTrigger(other, Side.Top);
+                if (objCollider.IsTrigger && !otherCollider.IsTrigger)
+                    objCollider.Trigger(other, Side.Top);
 
-                if (otherCollider.IsTrigger)
-                    other.OnTrigger(obj, Side.Bottom);
+                else if (otherCollider.IsTrigger && !objCollider.IsTrigger)
+                    otherCollider.Trigger(obj, Side.Bottom);
             }
 
             // When moving Right and hits another objects Left side.
@@ -213,18 +213,18 @@ namespace AWorldDestroyed.Utility
                       otherCollider.GetRectangle().Left - objCollider.Size.X - objCollider.Offset.X,
                       obj.Transform.Position.Y);
 
-                    obj.OnCollision(other, Side.Right);
-                    other.OnCollision(obj, Side.Left);
+                    objCollider.Collide(other, Side.Right);
+                    otherCollider.Collide(obj, Side.Left);
 
                     objRigidbody.Velocity *= Vector2.UnitY;
                     //objRigidbody.Velocity *= new Vector2(otherCollider.Friction, 1);
                 }
 
-                if (objCollider.IsTrigger)
-                    obj.OnTrigger(other, Side.Right);
+                if (objCollider.IsTrigger && !otherCollider.IsTrigger)
+                    objCollider.Trigger(other, Side.Right);
 
-                if (otherCollider.IsTrigger)
-                    other.OnTrigger(obj, Side.Left);
+                else if (otherCollider.IsTrigger && !objCollider.IsTrigger)
+                    otherCollider.Trigger(obj, Side.Left);
 
             }
             // When moving Left and hits another objects Right side.
@@ -236,23 +236,19 @@ namespace AWorldDestroyed.Utility
                     otherCollider.GetRectangle().Right - objCollider.Offset.X,
                     obj.Transform.Position.Y);
 
-                    obj.OnCollision(other, Side.Left);
-                    other.OnCollision(obj, Side.Right);
+                    objCollider.Collide(other, Side.Left);
+                    otherCollider.Collide(obj, Side.Right);
 
                     objRigidbody.Velocity *= Vector2.UnitY;
                     //objRigidbody.Acceleration *= otherCollider.Friction;
                 }
 
-                if (objCollider.IsTrigger)
-                    obj.OnTrigger(other, Side.Left);
+                if (objCollider.IsTrigger && !otherCollider.IsTrigger)
+                    objCollider.Trigger(other, Side.Left);
 
-                if (otherCollider.IsTrigger)
-                    other.OnTrigger(obj, Side.Right);
+                else if (otherCollider.IsTrigger && !objCollider.IsTrigger)
+                    otherCollider.Trigger(obj, Side.Right);
             }
-
-
-
-
         }
 
         /// <summary>
