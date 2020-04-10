@@ -102,9 +102,9 @@ namespace AWorldDestroyed.Models.Components
         }
 
         /// <summary>
-        /// Get a copy of this Transform.
+        /// Get a copy of this Transform instance with the same attribute values as this instance.
         /// </summary>
-        /// <returns>A copy of this Transform.</returns>
+        /// <returns>A copy of this Transform instance.</returns>
         public override Component Copy()
         {
             return new Transform(Position, Scale, Rotation);

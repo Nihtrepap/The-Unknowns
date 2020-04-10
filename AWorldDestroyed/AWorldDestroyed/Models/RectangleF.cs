@@ -172,8 +172,8 @@ namespace AWorldDestroyed
         /// Make it possible to + two RectangleF.
         /// Operator overloading
         /// </summary>
-        /// <param name="a">The Rectangle to convert.</param>
-        /// <param name="b">The Rectangle to convert.</param>
+        /// <param name="a">The left-side RectangleF.</param>
+        /// <param name="b">The right-side RectangleF.</param>
         /// <returns></returns>
         public static RectangleF operator +(RectangleF a, RectangleF b)
         {
@@ -183,8 +183,8 @@ namespace AWorldDestroyed
         /// Make it possible to - two RectangleF.
         /// Operator overloading
         /// </summary>
-        /// <param name="a">The Rectangle to convert.</param>
-        /// <param name="b">The Rectangle to convert.</param>
+        /// <param name="a">The left-side RectangleF.</param>
+        /// <param name="b">The right-side RectangleF.</param>
         /// <returns></returns>
         public static RectangleF operator -(RectangleF a, RectangleF b)
         {

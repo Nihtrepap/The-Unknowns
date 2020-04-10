@@ -20,6 +20,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AWorldDestroyed.GameObjects
 {
+    /// <summary>
+    /// Defines an enemy that walks back and forth in its "home space" until 
+    /// the player gets close, then the enemy chases the player and tries to 
+    /// hit it with a melee attack.
+    /// </summary>
     public class Enemy : GameObject, IDamageable
     {
         public float Health { get; set; }
@@ -27,12 +32,19 @@ namespace AWorldDestroyed.GameObjects
         public bool IsDead { get; private set; }
         public Vector2 HomePos { get; set; }
 
+        /// <summary>
+        /// Creates a new instance of the Enemy class and places the enemy at the given postion.
+        /// </summary>
+        /// <param name="position">The home position of the enemy.</param>
         public Enemy(Vector2 position) : this()
         {
             Transform.Position = position;
             HomePos = position;
         }
 
+        /// <summary>
+        /// Creates a new instance of the Enemy class.
+        /// </summary>
         public Enemy()
         {
             //Transform.Scale = Vector2.One * 0.5f;
@@ -40,7 +52,7 @@ namespace AWorldDestroyed.GameObjects
             Tag = Tag.Enemy;
             MaxHealth = 100;
             Health = MaxHealth;
-            Texture2D spriteSheet = ContentManager.GetTexture("EnemySprites"); //.Load<Texture2D>(@"..\..\..\..\Content\Sprites\Enemy");
+            Texture2D spriteSheet = ContentManager.GetTexture("EnemySprites"); 
             
             Vector2 origin = new Vector2(55, 0);
             Sprite[] spriteWalk = Sprite.Slice(spriteSheet, new Rectangle(0, 0, 110, 115), new Point(8, 1), origin);
@@ -80,22 +92,26 @@ namespace AWorldDestroyed.GameObjects
                 else
                     GetComponent("AttackRight").Enabled = false;
             };
-
         }
 
-        public override void Update(double deltaTime)
-        {
-            base.Update(deltaTime);
-        }
-
+        /// <summary>
+        /// Marks whether the enemy is at its home position or not.
+        /// </summary>
         public bool IsHome => (Transform.Position - HomePos).Length() <= 30f;
 
+        /// <summary>
+        /// Reduces enemy Health based on the given amount.
+        /// </summary>
+        /// <param name="amount">The amount of damage to take.</param>
         public void TakeDamage(float amount)
         {
             if (Health > 0) Health -= amount;
             if (Health <= 0) OnDeath();
         }
 
+        /// <summary>
+        /// Determines what happens when the enemy Health reach zero.
+        /// </summary>
         public void OnDeath()
         {
             if (Health <= 0)

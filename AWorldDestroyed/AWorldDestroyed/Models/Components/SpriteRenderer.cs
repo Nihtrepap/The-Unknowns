@@ -54,7 +54,7 @@ namespace AWorldDestroyed.Models.Components
         /// <summary>
         /// Make a new SpriteRenderer instance with the same attribute values as this instance.
         /// </summary>
-        /// <returns>SpriteRenderer object</returns>
+        /// <returns>A copy of this SpriteRenderer instance.</returns>
         public override Component Copy()
         {
             return new SpriteRenderer(this.Sprite)

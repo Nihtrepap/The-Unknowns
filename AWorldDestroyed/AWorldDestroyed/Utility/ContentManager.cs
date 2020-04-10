@@ -61,7 +61,7 @@ namespace AWorldDestroyed.Utility
         /// </summary>
         /// <typeparam name="T">The Type of the content to be loaded.</typeparam>
         /// <param name="path">The path to the pipelined content.</param>
-        /// <returns></returns>
+        /// <returns>The loaded content.</returns>
         public static T Load<T>(string path)
         {
             return _content.Load<T>(path);

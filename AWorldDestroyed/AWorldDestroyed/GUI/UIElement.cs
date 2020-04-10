@@ -20,6 +20,9 @@ using System;
 
 namespace AWorldDestroyed.GUI
 {
+    /// <summary>
+    /// Base class for all UIElements.
+    /// </summary>
     public class UIElement : SceneObject
     {
         public static SpriteFont DefaultFont { get; set; }
@@ -41,9 +44,12 @@ namespace AWorldDestroyed.GUI
         public event KeyEventHandler KeyDown;
         public event KeyEventHandler KeyUp;
 
+        /// <summary>
+        /// Create a new instance of the UIElement class.
+        /// </summary>
         public UIElement() : base()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

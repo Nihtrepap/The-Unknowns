@@ -40,11 +40,7 @@ namespace AWorldDestroyed.Models
         /// </summary>
         public void InvokeEvent()
         {
-            if (Event != null)
-            {
-            Event.Invoke();
-
-            }
+            if (Event != null) Event.Invoke();
         }
     }
 }

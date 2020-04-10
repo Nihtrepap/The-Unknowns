@@ -136,6 +136,7 @@ namespace AWorldDestroyed.Models
         /// Adds a component of type T to this object.
         /// </summary>
         /// <typeparam name="T">The type of component to add.</typeparam>
+        /// <returns>The instance of the added component.</returns>
         public T AddComponent<T>() where T : Component, new()
         {
             T component = new T();
@@ -149,6 +150,7 @@ namespace AWorldDestroyed.Models
         /// Adds a component to this object.
         /// </summary>
         /// <param name="component">The component to add.</param>
+        /// <returns>The instance of the added component.</returns>
         public T AddComponent<T>(T component) where T : Component
         {
             if (component == null) return null;

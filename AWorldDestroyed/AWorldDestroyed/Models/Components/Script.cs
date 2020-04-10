@@ -17,20 +17,17 @@ namespace AWorldDestroyed.Models.Components
 {
     public abstract class Script : Component, IUpdateable
     {
-        public Script() : base()
-        {
-        }
-
+        /// <summary>
+        /// Defines what happens when the script is updated.
+        /// </summary>
+        /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public abstract void Update(double deltaTime);
 
+        /// <summary>
+        /// Defines a way to make a copy of the Script instance with the 
+        /// same attribute values as this instance.
+        /// </summary>
+        /// <returns>A copy of this Script instance.</returns>
         public abstract override Component Copy();
-
-        //public virtual void OnCollision(GameObject other, Side side) { }
-
-        //public virtual void OnTrigger(GameObject other, Side side) { }
-
-        //public virtual void OnTriggerEnter(GameObject other, Side side) { }
-
-        //public virtual void OnTriggerExit(GameObject other, Side side) { }
     }
 }

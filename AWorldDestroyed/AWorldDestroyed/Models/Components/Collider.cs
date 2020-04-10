@@ -20,7 +20,7 @@ namespace AWorldDestroyed.Models.Components
     public delegate void ColliderEvent(Collider collider, GameObject other, Side side);
     
     /// <summary>
-    /// Define bounds for collision detection.
+    /// Defines bounds for collision detection.
     /// </summary>
     public class Collider : Component, Utility.IUpdateable
     {
@@ -38,9 +38,9 @@ namespace AWorldDestroyed.Models.Components
         private List<GameObject> triggeredThisFrame;
 
         /// <summary>
-        /// Creates a collider.
+        /// Creates a new instance of the Collider class with the given size.
         /// </summary>
-        /// <param name="size">Size.</param>
+        /// <param name="size">The height and width of the Collider.</param>
         public Collider(Vector2 size) :base()
         {
             Size = size;
@@ -51,6 +51,11 @@ namespace AWorldDestroyed.Models.Components
             triggeredThisFrame = new List<GameObject>();
         }
 
+        /// <summary>
+        /// Updates the lists that handle OnEnter and OnExit detection.
+        /// Fires OnExit event if an object has left the area.
+        /// </summary>
+        /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
             for (int i = triggeredGameObj.Count - 1; i >= 0; i--)
@@ -74,6 +79,11 @@ namespace AWorldDestroyed.Models.Components
             return new RectangleF(position, Size * AttachedTo.Transform.Scale);
         }
 
+        /// <summary>
+        /// Method to fire trigger events based on certain conditions.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <param name="side"></param>
         public void Trigger(GameObject other, Side side)
         {
             if (!triggeredGameObj.Contains(other))
@@ -87,15 +97,20 @@ namespace AWorldDestroyed.Models.Components
             OnTrigger?.Invoke(this, other, side);
         }
 
+        /// <summary>
+        /// Method to fire collision events.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <param name="side"></param>
         public void Collide(GameObject other, Side side)
         {
             OnCollision?.Invoke(this, other, side);
         }
 
         /// <summary>
-        /// Get a copy of this collider.
+        /// Creates a copy of the Collider instance with the same attribute values as this instance.
         /// </summary>
-        /// <returns>Collider copy.</returns>
+        /// <returns>A copy of this Collider instance.</returns>
         public override Component Copy()
         {
             return new Collider(this.Size)

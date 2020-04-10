@@ -38,10 +38,8 @@ namespace AWorldDestroyed.Models
         //private UIObjectHandler uiObjectHandler;
         private bool _initialized;
 
-        
-
         /// <summary>
-        /// Creates a new instance of the Scene class, with the specified spriteBatch and a collection of GameObjects. 
+        /// Creates a new instance of the Scene class, with the specified spriteBatch. 
         /// </summary>
         /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
         public Scene(SpriteBatch spriteBatch) : this(spriteBatch, new Vector2(800, 480))
@@ -49,7 +47,7 @@ namespace AWorldDestroyed.Models
         }
 
         /// <summary>
-        /// Creates a new instance of the Scene class, with the specified spriteBatch, camera view size and a collection of GameObjects. 
+        /// Creates a new instance of the Scene class, with the specified spriteBatch, camera view size. 
         /// </summary>
         /// <param name="spriteBatch">A MonoGame SpriteBatch.</param>
         /// <param name="cameraViewSize">The view size of the camera in this Scene.</param>
@@ -62,6 +60,9 @@ namespace AWorldDestroyed.Models
 
         }
 
+        /// <summary>
+        /// Have this Scene have been initialized?
+        /// </summary>
         public bool IsInitialized => _initialized;
 
         /// <summary>
@@ -132,12 +133,6 @@ namespace AWorldDestroyed.Models
             SpriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp, null, 
                 null, null, Camera.GetTranslationMatrix());
 
-            //for (int i = 0; i < 50; i++) Tablecloth
-            //{
-            //    SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
-            //    SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
-            //}
-
             foreach (GameObject obj in gameObjects)
             {
                 if (obj.Enabled && obj.HasSpriteRenderer)
@@ -166,7 +161,7 @@ namespace AWorldDestroyed.Models
                             if (!collider.Enabled) continue;
 
                             SpriteBatch.Draw(
-                                Game1.Pixel,
+                                ContentManager.Pixel,
                                 (Rectangle)collider.GetRectangle(),
                                 null,
                                 (collider.IsTrigger ? Color.Orange : Color.Red) * 0.3f,
@@ -224,9 +219,9 @@ namespace AWorldDestroyed.Models
         /// Add a UIElement to this Scene.
         /// </summary>
         /// <param name="uIElement">The UIElement to add.</param>
+        [Obsolete("AddUIObject is not supported is this version.")]        
         public void AddUIObject(UIElement uIElement)
         {
-
         }
     }
 }

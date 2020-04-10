@@ -12,17 +12,15 @@
 //         <3333333><           <33333>< 
 
 using AWorldDestroyed.Utility;
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-
 
 namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Animator takes care of what animation to run.
     /// </summary>
-    public class Animator : Component, Utility.IUpdateable
+    public class Animator : Component, IUpdateable
     {
         private Dictionary<string, Animation> animations;
         private Animation currentAnimation;
@@ -36,9 +34,9 @@ namespace AWorldDestroyed.Models.Components
         }
 
         /// <summary>
-        /// This method is used to update the animation.
+        /// Updates the current animation and sets the sprite for the SpriteRenderer.
         /// </summary>
-        /// <param name="deltaTime">Time in milliseconds since last update</param>
+        /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
             if (currentAnimation != null)
@@ -74,6 +72,10 @@ namespace AWorldDestroyed.Models.Components
             if (currentAnimation == null) currentAnimation = animation;
         }
 
+        /// <summary>
+        /// Get the animation that is currently set to play in this Animator.
+        /// </summary>
+        /// <returns>The currently active Animation.</returns>
         public Animation GetCurrentAnimation()
         {
             return currentAnimation;
@@ -82,7 +84,7 @@ namespace AWorldDestroyed.Models.Components
         /// <summary>
         /// Make a new Animator instance with the same attribute values as this instance.
         /// </summary>
-        /// <returns>Animator object</returns>
+        /// <returns>A copy of this Animator instance.</returns>
         public override Component Copy()
         {
             return new Animator()
@@ -90,7 +92,6 @@ namespace AWorldDestroyed.Models.Components
                 animations = new Dictionary<string, Animation>(this.animations),
                 currentAnimation = this.currentAnimation
             };
-
         }
     }
 }

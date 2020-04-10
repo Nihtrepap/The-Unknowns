@@ -32,6 +32,9 @@ namespace AWorldDestroyed.Models.Components
         public float Mass { get; set; }
         public float Power { get; set; }
 
+        /// <summary>
+        /// Creates a new instance of the RigidBody class.
+        /// </summary>
         public RigidBody() : base()
         {
             Gravity = DefaultGravity;
@@ -44,22 +47,29 @@ namespace AWorldDestroyed.Models.Components
         /// <summary>
         /// Adds velocity to the object.
         /// </summary>
-        /// <param name="amount">Amount of velocity speed</param>
+        /// <param name="amount">Amount of velocity speed.</param>
         public void AddVelocity(Vector2 amount)
         {
             Velocity += amount;
         }
 
+        /// <summary>
+        /// Adds force/acceleration to the object.
+        /// </summary>
+        /// <param name="force">Amount of acceleration change.</param>
         public void AddForce(Vector2 force)
         {
             Acceleration += force;
         }
 
+        /// <summary>
+        /// Updates acceleration and velocity and makes sure that the values are within range.
+        /// </summary>
+        /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
         {
             Acceleration += new Vector2(0, Gravity);
             Velocity += Acceleration * (float)deltaTime;
-            //AttachedTo.Transform.Position += Velocity * ;
 
             Vector2 vel = Velocity;
             if (Velocity.X > MaxVelocity.X) vel.X = MaxVelocity.X;
@@ -76,14 +86,10 @@ namespace AWorldDestroyed.Models.Components
             Acceleration = acc;
         }
 
-        public override Component Copy() => throw new NotImplementedException();
-
-
         /// <summary>
-        /// Creates a copy of Animator object.
+        /// Creates a copy of the RigidBody instance with the same attribute values as this instance.
         /// </summary>
-        /// <returns>RigidBody object</returns>
-        // public object Copy() => this.MemberwiseClone();
-
+        /// <returns>A copy of this RigidBody instance.</returns>
+        public override Component Copy() => throw new NotImplementedException();
     }
 }

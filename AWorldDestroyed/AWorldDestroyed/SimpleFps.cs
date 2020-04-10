@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This class was copied from https://community.monogame.net/t/a-simple-monogame-fps-display-class/10545
+
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

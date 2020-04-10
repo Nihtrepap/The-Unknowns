@@ -20,12 +20,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AWorldDestroyed.GameObjects
 {
+    /// <summary>
+    /// Defines the player that can be moved around using the arrow keys.
+    /// </summary>
     public class Player : GameObject, IDamageable
     {
         public float Health { get; set; }
         public float MaxHealth { get; set; }
         public bool IsDead { get; private set; }
 
+        /// <summary>
+        /// Create a new instance of the Player class.
+        /// </summary>
         public Player()
         {
             Name = "Player";
@@ -81,31 +87,27 @@ namespace AWorldDestroyed.GameObjects
                 else
                     GetComponent("AttackRight").Enabled = false;
             };  
-
         }
 
-        public override void Update(double deltaTime)
-        {
-            //rb.Velocity += new Vector2(0, 0.5f);
-         
-
-            base.Update(deltaTime);
-        }
-
-
+        /// <summary>
+        /// Reduces player Health based on the given amount.
+        /// </summary>
+        /// <param name="amount">The amount of damage to take.</param>
         public void TakeDamage(float amount)
         {
             if (Health > 0) Health -= amount;
             if (Health <= 0) OnDeath();
         }
 
+        /// <summary>
+        /// Determines what happens when the player Health reach zero.
+        /// </summary>
         public void OnDeath()
         {
             if (Health <= 0)
             {/*Death animation*/
                 this.Destroy();
             }
-                //if (Death animation.GetCurrentAnimation().Done)   
         }
     }
 }

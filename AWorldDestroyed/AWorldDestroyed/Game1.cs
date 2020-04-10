@@ -12,11 +12,11 @@ namespace AWorldDestroyed
     /// </summary>
     public class Game1 : Game
     {
-        public static Sprite Sprite;
-        public static Sprite Sprite2;
-        public static Texture2D TestTileset;
-        public static Texture2D Pixel;
-        public static Texture2D TileSet_01;
+        //public static Sprite Sprite;
+        //public static Sprite Sprite2;
+        //public static Texture2D TestTileset;
+        //public static Texture2D Pixel;
+        //public static Texture2D TileSet_01;
 
         private SimpleFps simpleFps;
 
@@ -28,6 +28,7 @@ namespace AWorldDestroyed
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            IsFixedTimeStep = false;
             //graphics.IsFullScreen = true;
             //graphics.PreferredBackBufferHeight = 200;
             //graphics.PreferredBackBufferWidth = 300;
@@ -53,19 +54,11 @@ namespace AWorldDestroyed
         protected override void LoadContent()
         {
             ContentManager.Init(Content, GraphicsDevice);
-            //ContentManager.AddTexture("TileSet_02", "Sprites/Tiles/TileSet_02");
             ContentManager.AddTexture("Enemy", "Sprites/Enemies/Monster");
             ContentManager.AddTexture("EnemySprites", "Sprites/Enemies/MonsterSpritesheet");
             ContentManager.AddTexture("Player", "Sprites/Player/Player_spriteSheet");
 
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            TileSet_01 = Content.Load<Texture2D>("Sprites/Tiles/TileSet_01");
-
-            Pixel = new Texture2D(GraphicsDevice, 1, 1);
-            Color[] data = { Color.White };
-            Pixel.SetData(data);
 
             SceneManager.AddScene("1", new FirstScene(spriteBatch));
         }
