@@ -22,7 +22,7 @@ namespace AWorldDestroyed.Scenes
 
         public override void Load()
         {
-            Debug = false;
+            Debug = true;
 
             MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_02.xml");
 

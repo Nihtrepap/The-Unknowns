@@ -14,14 +14,12 @@
 using System;
 using AWorldDestroyed.Models.Components;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// A camera like object that determines what is displayed on the screen.
     /// </summary>
-
     public class Camera
     {
         public Transform Transform { get; private set; }
@@ -71,6 +69,7 @@ namespace AWorldDestroyed.Utility
         /// <returns>The world point of the given screen point.</returns>
         public Vector2 ScreenToWorldPoint(Vector2 point)
         {
+            throw new NotImplementedException();
             //return Vector2((point.x + self.transform.position.x) / self.transform.scale.x,
             //           (point.y + self.transform.position.y) / self.transform.scale.y)
 
@@ -84,6 +83,7 @@ namespace AWorldDestroyed.Utility
         /// <returns>The screen point of the given world point.</returns>
         public Vector2 WorldToScreenPoint(Vector2 point)
         {
+            throw new NotImplementedException();
             //return Vector2((point.x * self.transform.scale.x - self.transform.position.x),
             //           (point.y * self.transform.scale.y - self.transform.position.y))
 
