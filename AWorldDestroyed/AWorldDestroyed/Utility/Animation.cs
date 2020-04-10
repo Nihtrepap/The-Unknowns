@@ -57,7 +57,7 @@ namespace AWorldDestroyed.Utility
         }
 
         /// <summary>
-        /// This method is used to update the animation.
+        /// Update the animation and change frame if the frame duration has passed.
         /// </summary>
         /// <param name="deltaTime">Time in milliseconds since last update.</param>
         public void Update(double deltaTime)
@@ -74,7 +74,6 @@ namespace AWorldDestroyed.Utility
 
                 if (currentFrameIndex >= frames.Length)
                 {
-
                     if (Loop)
                         currentFrameIndex = 0;
                     else Done = true;
@@ -91,11 +90,21 @@ namespace AWorldDestroyed.Utility
             return frames[currentFrameIndex].Sprite;
         }
 
+        /// <summary>
+        /// Returns the frame of the given index.
+        /// </summary>
+        /// <param name="index">The index of the frame.</param>
+        /// <returns>The frame with the given index.</returns>
         public Frame GetFrame(int index)
         {
+            if (index < 0 || index >= frames.Length)
+                throw new IndexOutOfRangeException($"{Name} animation has no Frame with index {index}.");
             return frames[index];
         }
 
+        /// <summary>
+        /// Resets the animation.
+        /// </summary>
         public void Reset()
         {
             currentFrameIndex = 0;
