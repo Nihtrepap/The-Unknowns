@@ -132,7 +132,7 @@ namespace AWorldDestroyed.Models
             SpriteBatch.Begin(SpriteSortMode.FrontToBack, null, SamplerState.PointClamp, null, 
                 null, null, Camera.GetTranslationMatrix());
 
-            //for (int i = 0; i < 50; i++)
+            //for (int i = 0; i < 50; i++) Tablecloth
             //{
             //    SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000 + (2000/50) * i, -1000, (2000/50), 2000), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
             //    SpriteBatch.Draw(ContentManager.Pixel, new Rectangle(-1000, -1000 + (2000 / 50) * i, 2000, (2000 / 50)), (i%2==0 ? Color.Gray : Color.White) * 0.5f);
@@ -188,10 +188,18 @@ namespace AWorldDestroyed.Models
             SpriteBatch.End();
         }
 
+        /// <summary>
+        /// Method will take care of what GUI to the scene.
+        /// </summary>
         protected virtual void OnGUIDraw()
         {
         }
 
+        /// <summary>
+        /// Here we can set what to happen with objects on draw. 
+        /// </summary>
+        /// <param name="gameObject">A gameobject.</param>
+        /// <param name="sortingOrder">A sorting order.</param>
         protected virtual void OnObjectDraw(GameObject gameObject, float sortingOrder)
         {
         }
@@ -204,7 +212,6 @@ namespace AWorldDestroyed.Models
         {
             if (gameObject == null || objectHandler.GameObjects.Contains(gameObject)) return;
 
-            //gameObjects.Add(gameObject);
             objectHandler.AddObject(gameObject);
 
             foreach (GameObject obj in gameObject.Children)
@@ -219,11 +226,7 @@ namespace AWorldDestroyed.Models
         /// <param name="uIElement">The UIElement to add.</param>
         public void AddUIObject(UIElement uIElement)
         {
-            // Need UIHandler.
-            //if (uIElement == null || uIElements.Contains(uIElement))
-            //    return;
 
-            //uIElements.Add(uIElement);
         }
     }
 }

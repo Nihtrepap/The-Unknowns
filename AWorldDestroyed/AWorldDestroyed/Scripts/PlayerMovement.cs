@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace AWorldDestroyed.Scripts
 {
+    /// <summary>
+    /// This is used to handle all the Enemy object movements.
+    /// </summary>
     class PlayerMovement : Script
     {
         private RigidBody rigidBody;
@@ -15,13 +18,15 @@ namespace AWorldDestroyed.Scripts
         private bool isRunning;
         private bool attacking = false;
 
-
         private float walkSpeed = 0.04f;
         private float runBoost = 2f;
-
         private float maxWalkSpeed = 4f;
-        //private float maxRunSpeed = 8f;
-       
+
+
+        /// <summary>
+        /// Update PlayerMovement.
+        /// </summary>
+        /// <param name="deltaTime">Time in milliseconds since last update</param>
         public override void Update(double deltaTime)
         {
             if (rigidBody == null) rigidBody = AttachedTo.GetComponent<RigidBody>();
@@ -35,8 +40,6 @@ namespace AWorldDestroyed.Scripts
                 attacking = true;
                 animator.ChangeAnimation("attack");
                 
-
-                //AttachedTo.GetComponent("Attack").Enabled
             }else if (attacking && animator.GetCurrentAnimation().Done)
             {
                 attacking = false;
@@ -107,12 +110,24 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// Determine what happens when player touches other objects.
+        /// </summary>
+        /// <param name="collider">A Collider.</param>
+        /// <param name="other">A GameObject.</param>
+        /// <param name="side">An enum Side.(Used to check objects side)</param>
         public void OnCollision(Collider collider, GameObject other, Side side)
         {
             if (side == Side.Bottom && rigidBody.Velocity.Y > 0)
                 canJump = true;
         }
 
+        /// <summary>
+        /// Determine what happens when player trigger/pokes other objects.
+        /// </summary>
+        /// <param name="collider">A Collider.</param>
+        /// <param name="other">A GameObject.</param>
+        /// <param name="side">An enum Side.(Used to check objects side)</param>
         public void OnTriggerEnter(Collider collider, GameObject other, Side side)
         {
             if (other.Tag == Tag.Enemy)
@@ -121,6 +136,10 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// Get a copy of this Component.
+        /// </summary>
+        /// <returns>PlayerMovement.</returns>
         public override Component Copy()
         {
             return new PlayerMovement();

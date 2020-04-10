@@ -21,6 +21,7 @@ namespace AWorldDestroyed.Models
         public readonly Sprite Sprite;
         public int Duration;
         public event FrameEvent Event;
+        public delegate void FrameEvent();
 
         /// <summary>
         /// Create a new Frame with given Sprite and duration.
@@ -46,6 +47,4 @@ namespace AWorldDestroyed.Models
             }
         }
     }
-
-    public delegate void FrameEvent();
 }

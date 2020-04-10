@@ -45,7 +45,14 @@ namespace AWorldDestroyed.Models
             Texture = texture;
             SourceRectangle = sourceRectangle;
         }
-
+        /// <summary>
+        /// Slice out frames from spritesheets.
+        /// </summary>
+        /// <param name="texture">A Texture2D.</param>
+        /// <param name="sourceRect">A Rectangle.</param>
+        /// <param name="frames">A Point.</param>
+        /// <param name="origin">A Vector2D.</param>
+        /// <returns></returns>
         public static Sprite[] Slice(Texture2D texture, Rectangle sourceRect, Point frames, Vector2? origin = null)
         {
             Sprite[] sprites = new Sprite[frames.X * frames.Y];

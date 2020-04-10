@@ -168,12 +168,24 @@ namespace AWorldDestroyed
         {
             return new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
         }
-        
+        /// <summary>
+        /// Make it possible to + two RectangleF.
+        /// Operator overloading
+        /// </summary>
+        /// <param name="a">The Rectangle to convert.</param>
+        /// <param name="b">The Rectangle to convert.</param>
+        /// <returns></returns>
         public static RectangleF operator +(RectangleF a, RectangleF b)
         {
             return new RectangleF(a.Position + b.Position, a.Size + b.Size);
         }
-
+        /// <summary>
+        /// Make it possible to - two RectangleF.
+        /// Operator overloading
+        /// </summary>
+        /// <param name="a">The Rectangle to convert.</param>
+        /// <param name="b">The Rectangle to convert.</param>
+        /// <returns></returns>
         public static RectangleF operator -(RectangleF a, RectangleF b)
         {
             return new RectangleF(a.Position - b.Position, a.Size - b.Size);

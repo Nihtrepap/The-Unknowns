@@ -13,6 +13,10 @@ using System.Xml.Serialization;
 
 namespace AWorldDestroyed.Scenes
 {
+    /// <summary>
+    /// This class is used to draw and load with SpriteBatch.
+    /// Mainly a test class.
+    /// </summary>
     class FirstScene : Scene
     {
         public FirstScene(SpriteBatch spriteBatch) : base(spriteBatch)
@@ -20,9 +24,12 @@ namespace AWorldDestroyed.Scenes
         }
         private Player p = new Player();
 
+        /// <summary>
+        /// Loads all GameObjects and UIElements in this Scene.
+        /// </summary>
         public override void Load()
         {
-            Debug = false;
+            Debug = true;
 
             MapData mapData = MapLoader.XmlMapReader(@"..\..\..\..\Content\Maps\Map_02.xml");
 
@@ -54,6 +61,11 @@ namespace AWorldDestroyed.Scenes
             }
         }
 
+        /// <summary>
+        /// Here we set what to happen with objects on draw. 
+        /// </summary>
+        /// <param name="gameObject">A gameobject.</param>
+        /// <param name="sortingOrder">A sorting order.</param>
         protected override void OnObjectDraw(GameObject gameObject, float sortingOrder)
         {
             if (Debug)
@@ -79,7 +91,9 @@ namespace AWorldDestroyed.Scenes
             //    SpriteBatch.Draw(Game1.Pixel, (Rectangle)col, null, Color.BlueViolet * 0.6f, 0f, Vector2.Zero, SpriteEffects.None, sortingOrder);
             //}
         }
-
+        /// <summary>
+        /// Here we set what to happen with GUI on draw.
+        /// </summary>
         protected override void OnGUIDraw()
         {
             float healthWidth = (p.Health / p.MaxHealth) * 700f;

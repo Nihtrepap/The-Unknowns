@@ -1,18 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AWorldDestroyed.GameObjects;
 using AWorldDestroyed.Models;
 using AWorldDestroyed.Models.Components;
 using AWorldDestroyed.Utility;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace AWorldDestroyed.Scripts
 {
+
+    /// <summary>
+    /// This is used to handle all the Enemy object movements.
+    /// </summary>
     public class EnemyMovement : Script
     {
         private RigidBody rigidBody;
@@ -25,9 +24,11 @@ namespace AWorldDestroyed.Scripts
         private float distanceTravelled = 0;
         private float maxDistance = 100;
         private int direction = 1;
-        //private bool attacking = false;
 
-
+        /// <summary>
+        /// Update EnemyMovement.
+        /// </summary>
+        /// <param name="deltaTime">Time in milliseconds since last update</param>
         public override void Update(double deltaTime)
         {
             if (rigidBody == null) rigidBody = AttachedTo.GetComponent<RigidBody>();
@@ -35,7 +36,6 @@ namespace AWorldDestroyed.Scripts
 
             float speed = walkSpeed * (float)deltaTime;
 
-            // ATTKACK
             if (state == EnemyState.Attacking)
             {
                 if (animator.GetCurrentAnimation().Done)
@@ -71,6 +71,12 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// Determines what happens when enemy hits other object.
+        /// </summary>
+        /// <param name="collider">A Collider.</param>
+        /// <param name="other">A GameObject.</param>
+        /// <param name="side">An enum Side.(Used to check objects side)</param>
         public void OnHit(Collider collider, GameObject other, Side side)
         {
             if (other.Tag == Tag.Player)
@@ -79,6 +85,12 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// Determines what happens when enemy attacks other object.
+        /// </summary>
+        /// <param name="collider">A Collider.</param>
+        /// <param name="other">A GameObject.</param>
+        /// <param name="side">An enum Side.(Used to check objects side)</param>
         public void OnPlayerInAttackRange(Collider collider, GameObject other, Side side)
         {
             if (other.Tag == Tag.Player)
@@ -88,6 +100,12 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// Determines what happens when enemy notice other object.
+        /// </summary>
+        /// <param name="collider">A Collider.</param>
+        /// <param name="other">A GameObject.</param>
+        /// <param name="side">An enum Side.(Used to check objects side)</param>
         public void OnPlayerInSight(Collider collider, GameObject other, Side side)
         {
             if (other.Tag == Tag.Player)
@@ -98,6 +116,12 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// Determines what happens when other object get "out of sight" from enemy.
+        /// </summary>
+        /// <param name="collider">A Collider.</param>
+        /// <param name="other">A GameObject.</param>
+        /// <param name="side">An enum Side.(Used to check objects side)</param>
         public void OnPlayerOutOfSight(Collider collider, GameObject other, Side side)
         {
             if (other.Transform == target)
@@ -108,12 +132,11 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
-        public override Component Copy()
-        {
-            throw new NotImplementedException();
-        }
-
-
+        /// <summary>
+        /// Determines what happens when other object walks.
+        /// </summary>
+        /// <param name="right">A bool(used to get enemies direction).</param>
+        /// <param name="speed">A float for movement speed.</param>
         private void Walk(bool right, float speed)
         {
             animator.ChangeAnimation("walk");
@@ -129,12 +152,24 @@ namespace AWorldDestroyed.Scripts
             }
         }
 
+        /// <summary>
+        /// An enum used to determine state of the object.
+        /// </summary>
         enum EnemyState
         {
             Home,
             GoingHome,
             Aggro,
             Attacking
+        }
+
+        /// <summary>
+        /// Get a copy of this Component.
+        /// </summary>
+        /// <returns>EnemyMovement.</returns>
+        public override Component Copy()
+        {
+            return new EnemyMovement();
         }
     }
 }
