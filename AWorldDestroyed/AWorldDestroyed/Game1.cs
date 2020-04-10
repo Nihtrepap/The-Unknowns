@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AWorldDestroyed.Models;
+using AWorldDestroyed.Scenes;
+using AWorldDestroyed.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,6 +12,14 @@ namespace AWorldDestroyed
     /// </summary>
     public class Game1 : Game
     {
+        //public static Sprite Sprite;
+        //public static Sprite Sprite2;
+        //public static Texture2D TestTileset;
+        //public static Texture2D Pixel;
+        //public static Texture2D TileSet_01;
+
+        private SimpleFps simpleFps;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
@@ -16,6 +27,11 @@ namespace AWorldDestroyed
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            IsMouseVisible = true;
+            IsFixedTimeStep = false;
+            //graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferHeight = 200;
+            //graphics.PreferredBackBufferWidth = 300;
         }
 
         /// <summary>
@@ -26,7 +42,7 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            simpleFps = new SimpleFps();
 
             base.Initialize();
         }
@@ -37,10 +53,14 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            ContentManager.Init(Content, GraphicsDevice);
+            ContentManager.AddTexture("Enemy", "Sprites/Enemies/Monster");
+            ContentManager.AddTexture("EnemySprites", "Sprites/Enemies/MonsterSpritesheet");
+            ContentManager.AddTexture("Player", "Sprites/Player/Player_spriteSheet");
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            SceneManager.AddScene("1", new FirstScene(spriteBatch));
         }
 
         /// <summary>
@@ -49,7 +69,6 @@ namespace AWorldDestroyed
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -59,10 +78,15 @@ namespace AWorldDestroyed
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            InputManager.Update();
+            simpleFps.Update(gameTime);
+            Window.Title = simpleFps.msg;
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
+                || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            SceneManager.ActiveScene.Update(gameTime.ElapsedGameTime.TotalMilliseconds);
 
             base.Update(gameTime);
         }
@@ -74,9 +98,9 @@ namespace AWorldDestroyed
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
+            
+            SceneManager.ActiveScene.Draw();
+            
             base.Draw(gameTime);
         }
     }

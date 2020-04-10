@@ -1,6 +1,6 @@
 ﻿// =============================================
 //         Editor:     Lone Maaherra
-//         Last edit:  2020-03-19 
+//         Last edit:  2020-03-23 
 // _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
 //
 //       (\                 >+{{{o)> - kvaouk
@@ -11,13 +11,17 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
-    /// Represents a collection of objects that share a purpose in a game. 
-    /// Supplies modularity to scene design and a unified way to handle scene objects.
+    /// Represents a layer in which a SpriteRenderer will render a Sprite.
+    /// SpriteRenderer will draw Sprites in order of lowest value to highest 
+    /// (high value means on top of things with lower value on the screen).
     /// </summary>
-    interface ISceneLayer
+    public enum SortingLayer
     {
+        Map,
+        Default, // Default sortingLayer.
+        // Add values here.
     }
 }

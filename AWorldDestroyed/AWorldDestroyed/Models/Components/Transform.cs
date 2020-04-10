@@ -14,7 +14,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace AWorldDestroyed.Models
+namespace AWorldDestroyed.Models.Components
 {
     /// <summary>
     /// Position, rotation and scale of an object.
@@ -26,32 +26,28 @@ namespace AWorldDestroyed.Models
         public float Rotation { get; set; }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified SceneObject reference.
+        /// Creates a new instance of Transform.
         /// </summary>
-        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
-        public Transform(SceneObject sceneObject) : this(sceneObject, Vector2.Zero)
+        public Transform() : this(Vector2.Zero)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified SceneObject reference and position.
+        /// Creates a new instance of Transform, with the specified position.
         /// </summary>
-        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
-        public Transform(SceneObject sceneObject, Vector2 position) : this(sceneObject, position, Vector2.One, 0f)
+        public Transform(Vector2 position) : this(position, Vector2.One, 0f)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of Transform, with the specified SceneObject reference, position, scale and rotation.
+        /// Creates a new instance of Transform, with the specified position, scale and rotation.
         /// </summary>
-        /// <param name="sceneObject">The SceneObject this Transform is attached to.</param>
         /// <param name="position">The position of this Transform.</param>
         /// <param name="scale">The scale of this Transform.</param>
-        /// <param name="rotation">The rotation of this Transform.</param>
-        public Transform(SceneObject sceneObject, Vector2 position, Vector2 scale, float rotation)
+        /// <param name="rotation">The rotation of this Transform in degrees.</param>
+        public Transform(Vector2 position, Vector2 scale, float rotation)
         {
-            SceneObject = sceneObject;
             Position = position;
             Scale = scale;
             Rotation = rotation;
@@ -64,8 +60,8 @@ namespace AWorldDestroyed.Models
         {
             get
             {
-                float x = -(float)Math.Sin(MathHelper.ToRadians(Rotation));
-                float y = -(float)Math.Cos(MathHelper.ToRadians(Rotation));
+                float x = (float)Math.Cos(MathHelper.ToRadians(Rotation));
+                float y = (float)Math.Sin(MathHelper.ToRadians(Rotation));
 
                 return new Vector2(x, y);
             }
@@ -78,16 +74,17 @@ namespace AWorldDestroyed.Models
         {
             get
             {
-                if (SceneObject.Parent == null) return Position;
+                if (AttachedTo?.Parent == null) return Position;
                 else
                 {
-                    float angle = MathHelper.ToRadians(SceneObject.Parent.Transform.Rotation);
-                    Vector2 center = SceneObject.Parent.Transform.Position;
+                    float angle = MathHelper.ToRadians(AttachedTo.Parent.Transform.WorldRotation);
+                    Vector2 center = AttachedTo.Parent.Transform.WorldPosition;
+                    Vector2 deltaPos =  Position;
 
-                    float rotatedX = (float)(Math.Cos(angle) * (Position.X - center.X) - Math.Sin(angle) * (Position.Y - center.Y) + center.X);
-                    float rotatedY = (float)(Math.Sin(angle) * (Position.X - center.X) + Math.Cos(angle) * (Position.Y - center.Y) + center.Y);
+                    float rotatedX = (float)(Math.Cos(angle) * deltaPos.X - Math.Sin(angle) * deltaPos.Y) + center.X;
+                    float rotatedY = (float)(Math.Sin(angle) * deltaPos.X + Math.Cos(angle) * deltaPos.Y) + center.Y;
 
-                    return new Vector2(rotatedX, rotatedY) + SceneObject.Parent.Transform.WorldPosition;
+                    return new Vector2(rotatedX, rotatedY);
                 }
             }
         }
@@ -99,18 +96,18 @@ namespace AWorldDestroyed.Models
         {
             get 
             { 
-                if (SceneObject.Parent == null) return Rotation;
-                else return Rotation + SceneObject.Parent.Transform.WorldRotation;
+                if (AttachedTo?.Parent == null) return Rotation;
+                else return Rotation + AttachedTo.Parent.Transform.WorldRotation;
             }
         }
 
         /// <summary>
-        /// Get a copy of this Transform.
+        /// Get a copy of this Transform instance with the same attribute values as this instance.
         /// </summary>
-        /// <returns>A copy of this Transform.</returns>
+        /// <returns>A copy of this Transform instance.</returns>
         public override Component Copy()
         {
-            return new Transform(SceneObject, Position, Scale, Rotation);
+            return new Transform(Position, Scale, Rotation);
         }
 
         /// <summary>

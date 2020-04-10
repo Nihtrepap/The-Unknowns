@@ -11,14 +11,14 @@
 //                <333333><                     
 //         <3333333><           <33333><
 
-namespace AWorldDestroyed
+namespace AWorldDestroyed.Utility
 {
     /// <summary>
     /// Marker values that you can use to identify objects.
     /// </summary>
     public enum Tag
     {
-        Untagged = 0x00, // Default tag.
+        Untagged, // Default tag.
         Player,
         Enemy,
     }

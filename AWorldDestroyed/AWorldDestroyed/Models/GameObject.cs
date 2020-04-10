@@ -11,50 +11,30 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
+using AWorldDestroyed.Models.Components;
+
 namespace AWorldDestroyed.Models
 {
     /// <summary>
     /// Base class for all objects related to the actual game, such as creatures and maptiles.
     /// </summary>
-    class GameObject : SceneObject
+    public class GameObject : SceneObject
     {
         /// <summary>
-        /// Initialize a new GameObject within the context of a given SceneLayer.
+        /// Initialize a new GameObject.
         /// </summary>
-        /// <param name="sceneLayer">The SceneLayer related to this object.</param>
-        public GameObject(SceneLayer sceneLayer) : base(sceneLayer)
-        {
-        }
+        public GameObject() : this(null){ }
 
         /// <summary>
-        /// Initialize a new GameObject within the context of a given SceneLayer, with a given Transform component.
+        /// Initialize a new GameObject with a given Transform component.
         /// </summary>
-        /// <param name="sceneLayer">The SceneLayer related to this object.</param>
         /// <param name="transform">A Transform component supplying transformation capabilites to this object.</param>
-        public GameObject(SceneLayer sceneLayer, Transform transform) : base(sceneLayer, transform)
-        {
-        }
+        public GameObject(Transform transform) : base(transform){ }
 
         /// <summary>
         /// Determines what happens when the object is out of scope of the camera.
         /// </summary>
         public virtual void OnOutOfScope()
-        {
-        }
-
-        /// <summary>
-        /// Determines what happens when the object collisions with another GameObject.
-        /// </summary>
-        /// <param name="other">The GameObject this object collided with.</param>
-        public virtual void OnCollision(GameObject other)
-        {
-        }
-
-        /// <summary>
-        /// Determines what happens when this GameObject is triggered another GameObject.
-        /// </summary>
-        /// <param name="other">The GameObject that triggered this object.</param>
-        public virtual void OnTrigger(GameObject other)
         {
         }
     }

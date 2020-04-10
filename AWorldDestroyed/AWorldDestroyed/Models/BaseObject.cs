@@ -11,6 +11,9 @@
 //                <333333><                     
 //         <3333333><           <33333>< 
 
+using System;
+using AWorldDestroyed.Utility;
+
 namespace AWorldDestroyed.Models
 {
     /// <summary>
@@ -39,7 +42,7 @@ namespace AWorldDestroyed.Models
         {
             Enabled = true;
             Name = name;
-            Tag = 0;
+            Tag = (Tag)Enum.Parse(typeof(Tag), "Untagged");
 
             id++;
         }
